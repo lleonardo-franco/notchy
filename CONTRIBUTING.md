@@ -140,6 +140,7 @@ Useful while debugging:
 - **Swift and SwiftUI.** Models use `@Observable`; UI code runs on the main actor. Services own side effects; views stay thin.
 - **No comments in code.** Prefer clear names and small functions that explain themselves.
 - **Follow the patterns around you.** Match the naming, file layout and formatting of the code you are editing.
+- **Name what you add.** Icon-only buttons need a `help:` (it doubles as the VoiceOver label); custom controls need `accessibilityLabel` and, when they show a value, `accessibilityValue`.
 - **Never block the main thread.** Run AppleScript through `AppleScript.run`, which has a timeout.
 - **Respect sleep and lock.** Timers and polling must skip work while `SystemActivity.shared.paused` is true.
 - **New permission?** Add it to `PermissionCenter`, the welcome window, the usage string in `Info.plist` and the permissions table in every README.

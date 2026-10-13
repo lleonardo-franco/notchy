@@ -275,6 +275,15 @@ T = {
 "Atualizações": ("Updates", "Actualizaciones"),
 "Relatar problema…": ("Report a problem…", "Informar de un problema…"),
 "Copiar diagnóstico": ("Copy diagnostics", "Copiar diagnóstico"),
+"Abrir o player": ("Open the player", "Abrir el reproductor"),
+"Anterior": ("Previous", "Anterior"),
+"Próxima": ("Next", "Siguiente"),
+"Posição": ("Position", "Posición"),
+"%@ de %@": ("%@ of %@", "%@ de %@"),
+"Brilho": ("Brightness", "Brillo"),
+"Bateria": ("Battery", "Batería"),
+"Uso do Claude (%@)": ("Claude usage (%@)", "Uso de Claude (%@)"),
+"Abre o terminal da sessão": ("Opens the session's terminal", "Abre la terminal de la sesión"),
 }
 
 INFO = {

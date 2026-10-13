@@ -4,6 +4,8 @@ All notable changes to Notchy are documented here. The format is based on [Keep 
 
 ## Unreleased
 
+- VoiceOver: names for icon buttons, badges, Claude status, shelf items and drop zones; the playback position, volume, brightness, battery and quota read their values, and the position can be adjusted
+
 - The installer, the `notchy` command and the Claude Code hooks installer follow the Mac's language (English, Portuguese or Spanish), with `NOTCHY_LANG` to force one
 
 - Report a problem from Settings → About: opens a bug report already filled with the version, macOS, Mac model, signature, permissions and settings; or copy the same diagnostics

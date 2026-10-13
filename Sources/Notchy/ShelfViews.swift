@@ -88,6 +88,8 @@ struct DropZone: View {
             RoundedRectangle(cornerRadius: 14, style: .continuous)
                 .strokeBorder(targeted ? highlight : .white.opacity(0.2), style: StrokeStyle(lineWidth: 1.5, dash: [6, 5]))
         )
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(title))
         .scaleEffect(targeted ? 1.02 : 1)
         .animation(.spring(response: 0.25, dampingFraction: 0.7), value: targeted)
     }
@@ -139,6 +141,13 @@ struct ShelfTile: View {
         .onHover { hovering = $0 }
         .onTapGesture(count: 2) { shelf.open(item) }
         .draggable(item.url)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(item.name)
+        .accessibilityAddTraits(.isButton)
+        .accessibilityAction { shelf.open(item) }
+        .accessibilityAction(named: Text("Mostrar no Finder")) { shelf.reveal([item]) }
+        .accessibilityAction(named: Text("Enviar por AirDrop")) { shelf.airDrop([item.url]) }
+        .accessibilityAction(named: Text("Remover")) { shelf.remove(item) }
         .contextMenu {
             Button("Abrir") { shelf.open(item) }
             Button("Mostrar no Finder") { shelf.reveal([item]) }
