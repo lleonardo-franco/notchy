@@ -169,3 +169,12 @@ final class BadgeService {
         return value
     }
 }
+
+#if DEBUG
+extension BadgeService {
+    func demo(_ badges: [String: String]) {
+        self.badges = badges
+        trusted = true
+    }
+}
+#endif

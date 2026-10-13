@@ -168,3 +168,12 @@ final class CalendarService {
         return nil
     }
 }
+
+#if DEBUG
+extension CalendarService {
+    func demo(_ events: [AgendaEvent]) {
+        self.events = events
+        access = .granted
+    }
+}
+#endif

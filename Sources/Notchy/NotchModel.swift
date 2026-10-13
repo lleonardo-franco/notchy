@@ -652,3 +652,23 @@ final class NotchModel {
         return NSRect(x: shapeRect.minX, y: screenFrame.maxY - height, width: shapeRect.width, height: height)
     }
 }
+
+#if DEBUG
+extension NotchModel {
+    func demoScreen(_ frame: NSRect, notchWidth: CGFloat, notchHeight: CGFloat) {
+        screenFrame = frame
+        self.notchWidth = notchWidth
+        self.notchHeight = notchHeight
+    }
+
+    func demo(expanded: Bool, tab: Tab? = nil, peek: Peek? = nil, hud: LevelHUD? = nil, fileDrag: Bool = false) {
+        state = expanded ? .expanded : .collapsed
+        if let tab {
+            self.tab = tab
+        }
+        self.peek = peek
+        self.hud = hud
+        self.fileDrag = fileDrag
+    }
+}
+#endif

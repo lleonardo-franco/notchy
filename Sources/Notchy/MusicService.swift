@@ -405,3 +405,16 @@ final class MusicService {
         )
     }
 }
+
+#if DEBUG
+extension MusicService {
+    func demo(_ track: Track, artwork: NSImage?, playing: Bool, position: Double) {
+        self.track = track
+        self.artwork = artwork
+        self.accent = artwork?.dominantColor()
+        isPlaying = playing
+        anchorPosition = position
+        anchorDate = Date()
+    }
+}
+#endif

@@ -135,3 +135,11 @@ final class ClipboardService {
         }
     }
 }
+
+#if DEBUG
+extension ClipboardService {
+    func demo(_ items: [ClipItem]) {
+        self.items = items
+    }
+}
+#endif

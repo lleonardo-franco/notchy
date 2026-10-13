@@ -132,3 +132,11 @@ final class PowerService {
         return nil
     }
 }
+
+#if DEBUG
+extension PowerService {
+    func demo(_ state: PowerState?) {
+        self.state = state
+    }
+}
+#endif
