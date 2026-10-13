@@ -246,6 +246,22 @@ T = {
 "conecte o carregador": ("plug in the charger", "conecta el cargador"),
 "Este Mac": ("This Mac", "Este Mac"),
 "Avisar quando o carregador do Mac for conectado e quando a bateria estiver baixa": ("Alert when the Mac's charger is connected and when its battery is low", "Avisar cuando se conecte el cargador del Mac y cuando la batería esté baja"),
+"Compacto": ("Compact", "Compacto"),
+"Normal": ("Regular", "Normal"),
+"Grande": ("Large", "Grande"),
+"Laranja": ("Orange", "Naranja"),
+"Azul": ("Blue", "Azul"),
+"Roxo": ("Purple", "Morado"),
+"Rosa": ("Pink", "Rosa"),
+"Verde": ("Green", "Verde"),
+"Grafite": ("Graphite", "Grafito"),
+"Rápida": ("Fast", "Rápida"),
+"Suave": ("Relaxed", "Suave"),
+"Tamanho do notch aberto": ("Size of the open notch", "Tamaño del notch abierto"),
+"Cor de destaque": ("Accent color", "Color de acento"),
+"Velocidade das animações": ("Animation speed", "Velocidad de las animaciones"),
+"Aparência": ("Appearance", "Apariencia"),
+"Com \"Reduzir movimento\" ligado nos Ajustes do Sistema, as animações ficam mínimas.": ("With \"Reduce motion\" on in System Settings, animations are kept to a minimum.", "Con \"Reducir movimiento\" activado en los Ajustes del Sistema, las animaciones son mínimas."),
 }
 
 INFO = {

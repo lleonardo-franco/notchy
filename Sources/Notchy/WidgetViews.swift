@@ -79,6 +79,8 @@ struct TabPill: View {
     let selected: Bool
     let action: () -> Void
 
+    @Environment(\.notchHighlight) private var highlight
+
     @State var hovering = false
 
     var body: some View {
@@ -89,7 +91,7 @@ struct TabPill: View {
                 .padding(.horizontal, 10)
                 .frame(height: 22)
                 .background(
-                    Capsule().fill(.white.opacity(selected ? 0.14 : (hovering ? 0.06 : 0)))
+                    Capsule().fill(selected ? highlight.opacity(0.3) : .white.opacity(hovering ? 0.06 : 0))
                 )
                 .contentShape(Capsule())
         }

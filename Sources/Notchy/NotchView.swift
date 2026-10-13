@@ -36,6 +36,7 @@ struct NotchView: View {
     var body: some View {
         let shape = NotchShape(topRadius: model.topRadius, bottomRadius: model.bottomRadius)
         let tint = model.accentColor ?? .clear
+        let highlight = model.prefs.highlight.color
         ZStack(alignment: .top) {
             shape
                 .fill(Color.black)
@@ -43,13 +44,13 @@ struct NotchView: View {
 
             Capsule()
                 .fill(LinearGradient(
-                    colors: [.clear, Color.claude, Color(red: 1, green: 0.88, blue: 0.74), Color.claude, .clear],
+                    colors: [.clear, highlight, Color.white.opacity(0.85), highlight, .clear],
                     startPoint: .leading,
                     endPoint: .trailing
                 ))
                 .frame(width: model.glowWidth, height: 3)
-                .shadow(color: Color.claude.opacity(0.9), radius: 8)
-                .shadow(color: Color.claude.opacity(0.5), radius: 2)
+                .shadow(color: highlight.opacity(0.9), radius: 8)
+                .shadow(color: highlight.opacity(0.5), radius: 2)
                 .offset(y: model.notchHeight - 1.5)
                 .opacity(model.glowOpacity)
                 .zIndex(1)
@@ -75,10 +76,11 @@ struct NotchView: View {
         .frame(width: model.size.width, height: model.size.height)
         .animation(model.shapeAnimation, value: model.mode)
         .animation(model.shapeAnimation, value: model.size)
-        .animation(.easeInOut(duration: 0.25), value: model.peek)
+        .animation(model.fadeAnimation, value: model.peek)
         .animation(.easeInOut(duration: 0.6), value: model.accentColor)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .environment(\.colorScheme, .dark)
+        .environment(\.notchHighlight, highlight)
     }
 
     @ViewBuilder
@@ -220,14 +222,16 @@ struct CollapsedContent: View {
 struct FarewellContent: View {
     let model: NotchModel
 
+    @Environment(\.notchHighlight) private var highlight
+
     var body: some View {
         VStack(spacing: 0) {
             Color.clear.frame(height: model.notchHeight)
             HStack(spacing: 7) {
                 Image(systemName: "power")
                     .font(.system(size: 11, weight: .bold))
-                    .foregroundStyle(Color.claude)
-                    .shadow(color: Color.claude.opacity(0.8), radius: 4)
+                    .foregroundStyle(highlight)
+                    .shadow(color: highlight.opacity(0.8), radius: 4)
                     .symbolEffect(.pulse, options: .repeating)
                 Text("Até logo")
                     .fontWeight(.semibold)
@@ -246,6 +250,8 @@ struct FarewellContent: View {
 struct PeekIcon: View {
     let style: NotchModel.PeekStyle
 
+    @Environment(\.notchHighlight) private var highlight
+
     var body: some View {
         switch style {
         case .waiting:
@@ -259,11 +265,11 @@ struct PeekIcon: View {
         case .info:
             Image(systemName: "sparkles")
                 .font(.system(size: 11))
-                .foregroundStyle(Color.claude)
+                .foregroundStyle(highlight)
         case .meeting:
             Image(systemName: "calendar")
                 .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(Color.claude)
+                .foregroundStyle(highlight)
         case .app(let app):
             AppGlyph(app: app, trigger: "", size: 16)
         case .device(let symbol):

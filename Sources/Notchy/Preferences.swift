@@ -1,5 +1,6 @@
-import Foundation
+import AppKit
 import Observation
+import SwiftUI
 
 @MainActor
 @Observable
@@ -68,6 +69,95 @@ final class Preferences {
         }
     }
 
+    enum NotchSize: String, CaseIterable, Identifiable {
+        case compact
+        case regular
+        case large
+
+        var id: String { rawValue }
+
+        var title: String {
+            switch self {
+            case .compact: return String(localized: "Compacto")
+            case .regular: return String(localized: "Normal")
+            case .large: return String(localized: "Grande")
+            }
+        }
+
+        var width: CGFloat {
+            switch self {
+            case .compact: return 480
+            case .regular: return 540
+            case .large: return 620
+            }
+        }
+
+        var contentHeight: CGFloat {
+            switch self {
+            case .compact: return 140
+            case .regular: return 164
+            case .large: return 204
+            }
+        }
+    }
+
+    enum Highlight: String, CaseIterable, Identifiable {
+        case orange
+        case blue
+        case purple
+        case pink
+        case green
+        case graphite
+
+        var id: String { rawValue }
+
+        var title: String {
+            switch self {
+            case .orange: return String(localized: "Laranja")
+            case .blue: return String(localized: "Azul")
+            case .purple: return String(localized: "Roxo")
+            case .pink: return String(localized: "Rosa")
+            case .green: return String(localized: "Verde")
+            case .graphite: return String(localized: "Grafite")
+            }
+        }
+
+        var color: Color {
+            switch self {
+            case .orange: return .claude
+            case .blue: return Color(red: 0.25, green: 0.56, blue: 1)
+            case .purple: return Color(red: 0.62, green: 0.42, blue: 0.98)
+            case .pink: return Color(red: 0.98, green: 0.36, blue: 0.62)
+            case .green: return Color(red: 0.24, green: 0.8, blue: 0.47)
+            case .graphite: return Color(white: 0.72)
+            }
+        }
+    }
+
+    enum AnimationSpeed: String, CaseIterable, Identifiable {
+        case fast
+        case regular
+        case relaxed
+
+        var id: String { rawValue }
+
+        var title: String {
+            switch self {
+            case .fast: return String(localized: "Rápida")
+            case .regular: return String(localized: "Normal")
+            case .relaxed: return String(localized: "Suave")
+            }
+        }
+
+        var scale: Double {
+            switch self {
+            case .fast: return 0.7
+            case .regular: return 1
+            case .relaxed: return 1.5
+            }
+        }
+    }
+
     static let allTabs = ["claude", "agenda", "weather", "clipboard", "bluetooth", "shelf"]
     static let layoutChanged = Notification.Name("NotchyLayoutChanged")
 
@@ -131,6 +221,18 @@ final class Preferences {
         didSet { defaults.set(BadgeApp.allCases.map(\.rawValue).filter(disabledBadges.contains), forKey: "disabledBadges") }
     }
 
+    var notchSize: NotchSize {
+        didSet { defaults.set(notchSize.rawValue, forKey: "notchSize") }
+    }
+
+    var highlight: Highlight {
+        didSet { defaults.set(highlight.rawValue, forKey: "highlight") }
+    }
+
+    var animationSpeed: AnimationSpeed {
+        didSet { defaults.set(animationSpeed.rawValue, forKey: "animationSpeed") }
+    }
+
     var batteryAlerts: Bool {
         didSet { defaults.set(batteryAlerts, forKey: "batteryAlerts") }
     }
@@ -181,6 +283,9 @@ final class Preferences {
         otherPlayers = stored.object(forKey: "otherPlayers") as? Bool ?? true
         levelHUD = stored.object(forKey: "levelHUD") as? Bool ?? true
         batteryAlerts = stored.object(forKey: "batteryAlerts") as? Bool ?? true
+        notchSize = NotchSize(rawValue: stored.string(forKey: "notchSize") ?? "") ?? .regular
+        highlight = Highlight(rawValue: stored.string(forKey: "highlight") ?? "") ?? .orange
+        animationSpeed = AnimationSpeed(rawValue: stored.string(forKey: "animationSpeed") ?? "") ?? .regular
         bluetoothAlerts = stored.object(forKey: "bluetoothAlerts") as? Bool ?? true
         meetingLead = stored.object(forKey: "meetingLead") as? Int ?? 5
         meetingCountdown = stored.object(forKey: "meetingCountdown") as? Bool ?? true

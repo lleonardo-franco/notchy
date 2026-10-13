@@ -83,8 +83,7 @@ final class NotchModel {
     static let panelSize = CGSize(width: 680, height: 460)
     static let rowHeight: CGFloat = 40
     static let tabsHeight: CGFloat = 26
-    static let contentHeight: CGFloat = 164
-    static let expandedWidth: CGFloat = 540
+
     static let approvalWidth: CGFloat = 470
     static let approvalBoxHeight: CGFloat = 58
 
@@ -512,12 +511,24 @@ final class NotchModel {
         return .collapsed
     }
 
+    var expandedWidth: CGFloat { prefs.notchSize.width }
+
+    var contentHeight: CGFloat { prefs.notchSize.contentHeight }
+
+    var reduceMotion: Bool { NSWorkspace.shared.accessibilityDisplayShouldReduceMotion }
+
     var shapeAnimation: Animation {
         switch farewell {
         case .goodbye: return .spring(response: 0.6, dampingFraction: 0.8)
         case .closing: return .easeInOut(duration: 0.6)
-        case nil: return .spring(response: 0.38, dampingFraction: 0.82)
+        case nil:
+            if reduceMotion { return .easeInOut(duration: 0.12) }
+            return .spring(response: 0.38 * prefs.animationSpeed.scale, dampingFraction: 0.82)
         }
+    }
+
+    var fadeAnimation: Animation {
+        .easeInOut(duration: reduceMotion ? 0.1 : 0.25 * prefs.animationSpeed.scale)
     }
 
     var isWide: Bool { mode == .expanded || mode == .approval || mode == .video }
@@ -587,8 +598,8 @@ final class NotchModel {
         case .approval:
             return CGSize(width: Self.approvalWidth, height: notchHeight + 8 + 20 + 6 + Self.approvalBoxHeight + 12 + 30 + 14)
         case .expanded:
-            let tabsArea = tabs.isEmpty ? 0 : 12 + Self.tabsHeight + 8 + Self.contentHeight
-            return CGSize(width: Self.expandedWidth, height: notchHeight + 8 + musicHeight + tabsArea + 14)
+            let tabsArea = tabs.isEmpty ? 0 : 12 + Self.tabsHeight + 8 + contentHeight
+            return CGSize(width: expandedWidth, height: notchHeight + 8 + musicHeight + tabsArea + 14)
         case .peek:
             return CGSize(width: notchWidth + earWidth * 2 + 120, height: notchHeight + 30)
         case .farewell:
