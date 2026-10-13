@@ -37,6 +37,8 @@ jobs:
           codesign --verify --verbose build/Notchy.app
           test -f build/Notchy.app/Contents/Resources/AppIcon.icns
           test -f build/Notchy.app/Contents/Resources/hooks/install.py
+          for language in pt-BR en es; do test -f "build/Notchy.app/Contents/Resources/$language.lproj/Localizable.strings"; done
+          plutil -lint Resources/*.lproj/*.strings
 
   scripts:
     name: Scripts

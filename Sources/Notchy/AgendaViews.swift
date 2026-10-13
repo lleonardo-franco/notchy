@@ -54,13 +54,6 @@ struct EventRow: View {
         return formatter
     }()
 
-    private static let weekday: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "pt_BR")
-        formatter.dateFormat = "EEEE"
-        return formatter
-    }()
-
     var body: some View {
         TimelineView(.periodic(from: .now, by: 30)) { context in
             let now = context.date
@@ -104,7 +97,7 @@ struct EventRow: View {
 
     static func subtitle(_ event: AgendaEvent, now: Date) -> String {
         if event.isOngoing(at: now) {
-            return "agora · termina às \(clock.string(from: event.end))"
+            return String(localized: "agora · termina às \(clock.string(from: event.end))")
         }
         let day = dayLabel(event.start, now: now).map { "\($0) " } ?? ""
         let range = "\(day)\(clock.string(from: event.start)) – \(clock.string(from: event.end))"
@@ -113,18 +106,22 @@ struct EventRow: View {
 
     static func relative(_ event: AgendaEvent, now: Date) -> String {
         let minutes = Int((event.start.timeIntervalSince(now) / 60).rounded(.up))
-        if minutes <= 0 { return "agora" }
-        if minutes < 60 { return "em \(minutes) min" }
+        if minutes <= 0 { return String(localized: "agora") }
+        if minutes < 60 { return String(localized: "em \(minutes) min") }
         if let day = dayLabel(event.start, now: now) { return day }
-        return "em \(minutes / 60) h"
+        return String(localized: "em \(minutes / 60) h")
     }
 
-    static func dayLabel(_ date: Date, now: Date) -> String? {
-        let calendar = Calendar.current
+    static func dayLabel(_ date: Date, now: Date, calendar: Calendar = .current, locale: Locale = .interface) -> String? {
         if calendar.isDate(date, inSameDayAs: now) { return nil }
         if let tomorrow = calendar.date(byAdding: .day, value: 1, to: now), calendar.isDate(date, inSameDayAs: tomorrow) {
-            return "amanhã"
+            return String(localized: "amanhã")
         }
-        return weekday.string(from: date).replacingOccurrences(of: "-feira", with: "")
+        let formatter = DateFormatter()
+        formatter.calendar = calendar
+        formatter.timeZone = calendar.timeZone
+        formatter.locale = locale
+        formatter.dateFormat = "EEEE"
+        return formatter.string(from: date).replacingOccurrences(of: "-feira", with: "")
     }
 }

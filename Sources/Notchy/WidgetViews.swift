@@ -84,7 +84,7 @@ struct TabPill: View {
 
 struct EmptyState: View {
     let symbol: String
-    let text: String
+    let text: LocalizedStringKey
 
     var body: some View {
         VStack(spacing: 8) {
@@ -173,7 +173,7 @@ struct WeatherPanel: View {
         HStack(spacing: 0) {
             ForEach(Array(snapshot.hours.enumerated()), id: \.element.id) { index, hour in
                 VStack(spacing: 5) {
-                    Text(index == 0 ? "Agora" : Self.hourLabel(hour.date, zone: snapshot.timeZone))
+                    Text(index == 0 ? String(localized: "Agora") : Self.hourLabel(hour.date, zone: snapshot.timeZone))
                         .font(.system(size: 10, weight: .medium))
                         .foregroundStyle(.white.opacity(0.5))
                     Image(systemName: WeatherCondition.symbol(hour.code, isDay: hour.isDay))
@@ -314,7 +314,7 @@ struct ClipRow: View {
 
     static func ago(_ date: Date, now: Date) -> String {
         let seconds = max(Int(now.timeIntervalSince(date)), 0)
-        if seconds < 60 { return "agora" }
+        if seconds < 60 { return String(localized: "agora") }
         if seconds < 3600 { return "\(seconds / 60) min" }
         if seconds < 86400 { return "\(seconds / 3600) h" }
         return "\(seconds / 86400) d"

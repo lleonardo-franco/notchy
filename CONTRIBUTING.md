@@ -144,7 +144,7 @@ Useful while debugging:
 - **New permission?** Add it to `PermissionCenter`, the welcome window, the usage string in `Info.plist` and the permissions table in every README.
 - **Hooks** use only the Python standard library and must run on the system `/usr/bin/python3`.
 - **Shell scripts** must work with the bash 3.2 that ships with macOS.
-- **Interface text** is in Brazilian Portuguese for now. Keep new strings consistent with it until the app is localized.
+- **Interface text** is written in Brazilian Portuguese in the code and translated through `i18n/translations.py`. Use `Text("…")` for literals and `String(localized: "…")` for strings built in code, then add the English and Spanish versions (see [Docs and translations](#docs-and-translations)).
 
 ## Commit messages
 
@@ -175,7 +175,8 @@ The README and this guide exist in English, Portuguese and Spanish.
 
 - If you change one of them, update the others too. If you can't, say so in the pull request and someone will help.
 - To add a language, create `README.<code>.md` and `CONTRIBUTING.<code>.md` (for example `README.fr.md`) and add it to the language links at the top of every version.
-- Localizing the app interface is a bigger change. Open an issue first so we can agree on the approach (String Catalogs).
+- The app interface is translated in `i18n/translations.py`, keyed by the Portuguese text with `%@` for text and `%lld` for whole numbers. After editing it, run `python3 i18n/generate.py` to rebuild the `.strings` files in `Resources/`, and `python3 i18n/check.py` to list strings in the code that have no translation yet.
+- To add a language to the app, add a column to `translations.py`, teach `generate.py` about it and add the language code to `CFBundleLocalizations` in `Resources/Info.plist`.
 
 Add a line describing your change under **Unreleased** in [CHANGELOG.md](CHANGELOG.md).
 

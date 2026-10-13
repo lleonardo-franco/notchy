@@ -144,7 +144,7 @@ struct YouTubeCard: View {
                     .foregroundStyle(.white)
                     .lineLimit(2)
                 HStack(spacing: 4) {
-                    Text(video.playing == true ? "Tocando no \(video.browserName)" : "Aberto no \(video.browserName)")
+                    video.playing == true ? Text("Tocando no \(video.browserName)") : Text("Aberto no \(video.browserName)")
                     if javascriptBlocked {
                         Image(systemName: "info.circle")
                             .help(video.javascriptHint)

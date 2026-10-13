@@ -24,10 +24,7 @@ Music, Claude Code, calendar, YouTube and notifications, right where the camera 
 
 ---
 
-Notchy turns the notch into a tiny control center. Collapsed, it shows only what matters on each side of the camera: album art, your Claude Code status, a countdown to the next meeting, unread badges. Hover it and it opens into a player with tabs and controls. Close it and it powers off like an old CRT.
-
-> [!NOTE]
-> The app interface is currently in Brazilian Portuguese. Translating it is one of the best first contributions you can make, see [Contributing](#contributing).
+Notchy turns the notch into a tiny control center. Collapsed, it shows only what matters on each side of the camera: album art, your Claude Code status, a countdown to the next meeting, unread badges. Hover it and it opens into a player with tabs and controls. Close it and it powers off like an old CRT. The interface speaks English, Portuguese and Spanish, following your Mac's language.
 
 ## Contents
 
@@ -204,7 +201,7 @@ Not yet. Notchy is built from source on your Mac. A signed and notarized build i
 
 ## Roadmap
 
-- [ ] Interface in English and Spanish ([#1](https://github.com/lleonardo-franco/notchy/issues/1), [#2](https://github.com/lleonardo-franco/notchy/issues/2))
+- [x] Interface in English, Portuguese and Spanish
 - [ ] Signed and notarized releases ([#9](https://github.com/lleonardo-franco/notchy/issues/9))
 - [ ] Homebrew ([#8](https://github.com/lleonardo-franco/notchy/issues/8))
 - [ ] More badge sources: Slack, Telegram, Discord ([#4](https://github.com/lleonardo-franco/notchy/issues/4), [#5](https://github.com/lleonardo-franco/notchy/issues/5))

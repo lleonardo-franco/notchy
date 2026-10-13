@@ -1,0 +1,4 @@
+"NSAppleEventsUsageDescription" = "Notchy controla Spotify, Music, Terminal, iTerm y el navegador para mostrar la música, llevarte a la sesión correcta de Claude Code y reproducir vídeos de YouTube en el notch.";
+"NSBluetoothAlwaysUsageDescription" = "Notchy muestra la batería de tus auriculares y otros dispositivos Bluetooth conectados.";
+"NSCalendarsFullAccessUsageDescription" = "Notchy muestra tus próximas reuniones en el notch y te avisa antes de que empiecen.";
+"NSCalendarsUsageDescription" = "Notchy muestra tus próximas reuniones en el notch y te avisa antes de que empiecen.";

@@ -13,7 +13,7 @@ final class SettingsWindow {
         if window == nil {
             let controller = NSHostingController(rootView: SettingsView(model: model))
             let window = NSWindow(contentViewController: controller)
-            window.title = "Ajustes do Notchy"
+            window.title = String(localized: "Ajustes do Notchy")
             window.styleMask = [.titled, .closable, .miniaturizable]
             window.isReleasedWhenClosed = false
             window.setContentSize(NSSize(width: 500, height: 720))
@@ -75,7 +75,7 @@ struct SettingsView: View {
                         HStack {
                             Slider(value: $prefs.hoverDelay, in: 0...0.8, step: 0.1)
                                 .frame(width: 160)
-                            Text(prefs.hoverDelay == 0 ? "na hora" : String(format: "%.1f s", prefs.hoverDelay))
+                            (prefs.hoverDelay == 0 ? Text("na hora") : Text(verbatim: String(format: "%.1f s", prefs.hoverDelay)))
                                 .monospacedDigit()
                                 .foregroundStyle(.secondary)
                                 .frame(width: 56, alignment: .trailing)
@@ -197,7 +197,7 @@ struct SettingsView: View {
                     Text("Status das sessões, aprovar pelo notch e uso da cota.")
                         .foregroundStyle(.secondary)
                     Spacer()
-                    Button(model.permissions.installingHooks ? "Instalando…" : (model.permissions.hooksInstalled ? "Reinstalar" : "Instalar")) {
+                    Button(hooksButtonTitle) {
                         model.permissions.installHooks(calendar: model.calendar)
                     }
                     .disabled(model.permissions.installingHooks || HooksInstaller.bundledInstaller == nil)
@@ -260,9 +260,14 @@ struct SettingsView: View {
 
     private var weatherSummary: String {
         guard let snapshot = model.weather.snapshot else {
-            return model.weather.isLoading ? "Carregando…" : "Sem dados ainda"
+            return model.weather.isLoading ? String(localized: "Carregando…") : String(localized: "Sem dados ainda")
         }
-        return "Agora: \(snapshot.city), \(Int(snapshot.temperature.rounded()))°"
+        return String(localized: "Agora: \(snapshot.city), \(Int(snapshot.temperature.rounded()))°")
+    }
+
+    private var hooksButtonTitle: LocalizedStringKey {
+        if model.permissions.installingHooks { return "Instalando…" }
+        return model.permissions.hooksInstalled ? "Reinstalar" : "Instalar"
     }
 
     private func applyCity() {

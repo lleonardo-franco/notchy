@@ -14,7 +14,7 @@ final class WelcomeWindow {
                 self?.close()
             })
             let window = NSWindow(contentViewController: controller)
-            window.title = "Bem-vindo ao Notchy"
+            window.title = String(localized: "Bem-vindo ao Notchy")
             window.styleMask = [.titled, .closable, .fullSizeContentView]
             window.titlebarAppearsTransparent = true
             window.titleVisibility = .hidden
@@ -177,7 +177,7 @@ struct WelcomeView: View {
         .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(.quaternary.opacity(0.5)))
     }
 
-    private func tip(_ symbol: String, _ text: String) -> some View {
+    private func tip(_ symbol: String, _ text: LocalizedStringKey) -> some View {
         HStack(alignment: .top, spacing: 10) {
             Image(systemName: symbol)
                 .frame(width: 18)
@@ -194,10 +194,10 @@ struct PermissionRow: View {
     let symbol: String
     let tint: Color
     var appBundleID: String? = nil
-    let title: String
-    let detail: String
+    let title: LocalizedStringKey
+    let detail: LocalizedStringKey
     let state: PermissionState
-    var actionTitle: String = "Permitir"
+    var actionTitle: LocalizedStringKey = "Permitir"
     let action: () -> Void
 
     var body: some View {

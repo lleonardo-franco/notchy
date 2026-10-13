@@ -45,29 +45,29 @@ enum WeatherCondition {
 
     static func text(_ code: Int) -> String {
         switch code {
-        case 0: return "Céu limpo"
-        case 1: return "Quase limpo"
-        case 2: return "Parcialmente nublado"
-        case 3: return "Nublado"
-        case 45, 48: return "Neblina"
-        case 51: return "Garoa fraca"
-        case 53: return "Garoa"
-        case 55: return "Garoa forte"
-        case 56, 57: return "Garoa congelante"
-        case 61: return "Chuva fraca"
-        case 63: return "Chuva"
-        case 65: return "Chuva forte"
-        case 66, 67: return "Chuva congelante"
-        case 71: return "Neve fraca"
-        case 73: return "Neve"
-        case 75: return "Neve forte"
-        case 77: return "Grãos de neve"
-        case 80: return "Pancadas fracas"
-        case 81: return "Pancadas de chuva"
-        case 82: return "Pancadas fortes"
-        case 85, 86: return "Pancadas de neve"
-        case 95: return "Trovoadas"
-        case 96, 99: return "Trovoadas com granizo"
+        case 0: return String(localized: "Céu limpo")
+        case 1: return String(localized: "Quase limpo")
+        case 2: return String(localized: "Parcialmente nublado")
+        case 3: return String(localized: "Nublado")
+        case 45, 48: return String(localized: "Neblina")
+        case 51: return String(localized: "Garoa fraca")
+        case 53: return String(localized: "Garoa")
+        case 55: return String(localized: "Garoa forte")
+        case 56, 57: return String(localized: "Garoa congelante")
+        case 61: return String(localized: "Chuva fraca")
+        case 63: return String(localized: "Chuva")
+        case 65: return String(localized: "Chuva forte")
+        case 66, 67: return String(localized: "Chuva congelante")
+        case 71: return String(localized: "Neve fraca")
+        case 73: return String(localized: "Neve")
+        case 75: return String(localized: "Neve forte")
+        case 77: return String(localized: "Grãos de neve")
+        case 80: return String(localized: "Pancadas fracas")
+        case 81: return String(localized: "Pancadas de chuva")
+        case 82: return String(localized: "Pancadas fortes")
+        case 85, 86: return String(localized: "Pancadas de neve")
+        case 95: return String(localized: "Trovoadas")
+        case 96, 99: return String(localized: "Trovoadas com granizo")
         default: return "—"
         }
     }
@@ -191,7 +191,7 @@ final class WeatherService {
         components.queryItems = [
             URLQueryItem(name: "name", value: name),
             URLQueryItem(name: "count", value: "1"),
-            URLQueryItem(name: "language", value: "pt"),
+            URLQueryItem(name: "language", value: Locale.interface.language.languageCode?.identifier ?? "en"),
             URLQueryItem(name: "format", value: "json")
         ]
         let json = try await fetchJSON(components.url!)
@@ -209,7 +209,7 @@ final class WeatherService {
             guard let url = URL(string: endpoint), let json = try? await fetchJSON(url) else { continue }
             if let success = json["success"] as? Bool, !success { continue }
             if let latitude = number(json["latitude"]), let longitude = number(json["longitude"]) {
-                return Place(name: json["city"] as? String ?? "Aqui", latitude: latitude, longitude: longitude, query: nil)
+                return Place(name: json["city"] as? String ?? String(localized: "Aqui"), latitude: latitude, longitude: longitude, query: nil)
             }
         }
         throw URLError(.cannotFindHost)

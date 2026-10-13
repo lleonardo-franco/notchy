@@ -45,11 +45,11 @@ struct BluetoothDevice: Identifiable, Equatable {
 
     var batteryText: String {
         var parts: [String] = []
-        if let left { parts.append("E \(left)%") }
-        if let right { parts.append("D \(right)%") }
-        if let caseLevel { parts.append("estojo \(caseLevel)%") }
+        if let left { parts.append(String(localized: "E \(left)%")) }
+        if let right { parts.append(String(localized: "D \(right)%")) }
+        if let caseLevel { parts.append(String(localized: "estojo \(caseLevel)%")) }
         if parts.isEmpty, let main { parts.append("\(main)%") }
-        return parts.isEmpty ? "conectado" : parts.joined(separator: " · ")
+        return parts.isEmpty ? String(localized: "conectado") : parts.joined(separator: " · ")
     }
 }
 

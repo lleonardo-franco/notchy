@@ -28,7 +28,7 @@ struct BrowserVideo: Equatable {
         if text.hasPrefix("("), let close = text.firstIndex(of: ")"), text[text.index(after: text.startIndex)..<close].allSatisfy(\.isNumber) {
             text = String(text[text.index(after: close)...]).trimmingCharacters(in: .whitespaces)
         }
-        return text.isEmpty ? "Vídeo do YouTube" : text
+        return text.isEmpty ? String(localized: "Vídeo do YouTube") : text
     }
 
     var browserName: String {
@@ -48,9 +48,9 @@ struct BrowserVideo: Equatable {
     var javascriptHint: String {
         switch engine {
         case .safari:
-            return "Para pausar a aba e continuar do mesmo segundo, ative no Safari: Ajustes → Avançado → Mostrar recursos para desenvolvedores da Web e depois Desenvolvedor → Permitir JavaScript de Eventos Apple."
+            return String(localized: "Para pausar a aba e continuar do mesmo segundo, ative no Safari: Ajustes → Avançado → Mostrar recursos para desenvolvedores da Web e depois Desenvolvedor → Permitir JavaScript de Eventos Apple.")
         case .chromium:
-            return "Para pausar a aba e continuar do mesmo segundo, ative no \(browserName): Visualizar → Desenvolvedor → Permitir JavaScript de Eventos Apple."
+            return String(localized: "Para pausar a aba e continuar do mesmo segundo, ative no \(browserName): Visualizar → Desenvolvedor → Permitir JavaScript de Eventos Apple.")
         }
     }
 }

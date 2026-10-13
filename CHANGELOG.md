@@ -4,6 +4,7 @@ All notable changes to Notchy are documented here. The format is based on [Keep 
 
 ## Unreleased
 
+- Interface in English and Spanish besides Portuguese, following the Mac's language, including permission prompts, dates and weather city names
 - README and contributing guide in English, Portuguese and Spanish
 - Issue templates for bugs, features and translations, and a pull request template
 - Code of Conduct and security policy

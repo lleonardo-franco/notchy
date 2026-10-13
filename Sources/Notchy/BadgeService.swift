@@ -54,14 +54,14 @@ enum BadgeApp: String, CaseIterable, Identifiable {
         let counted = label.contains(where: \.isNumber)
         switch self {
         case .whatsapp, .slack, .telegram:
-            guard counted else { return "mensagens novas" }
-            return one ? "1 mensagem" : "\(label) mensagens"
+            guard counted else { return String(localized: "mensagens novas") }
+            return one ? String(localized: "1 mensagem") : String(localized: "\(label) mensagens")
         case .discord:
-            guard counted else { return "menções novas" }
-            return one ? "1 menção" : "\(label) menções"
+            guard counted else { return String(localized: "menções novas") }
+            return one ? String(localized: "1 menção") : String(localized: "\(label) menções")
         case .clickup:
-            guard counted else { return "notificações novas" }
-            return one ? "1 notificação" : "\(label) notificações"
+            guard counted else { return String(localized: "notificações novas") }
+            return one ? String(localized: "1 notificação") : String(localized: "\(label) notificações")
         }
     }
 

@@ -203,7 +203,7 @@ struct IconButton: View {
     let symbol: String
     var size: CGFloat = 12
     var frame: CGFloat = 26
-    var help: String = ""
+    var help: LocalizedStringKey = ""
     let action: () -> Void
 
     @State var hovering = false
@@ -229,7 +229,7 @@ struct PillButton: View {
         case secondary
     }
 
-    let title: String
+    let title: LocalizedStringKey
     let style: Style
     let action: () -> Void
 

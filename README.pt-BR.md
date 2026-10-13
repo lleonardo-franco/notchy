@@ -24,7 +24,7 @@ Música, Claude Code, agenda, YouTube e notificações bem onde fica a câmera.
 
 ---
 
-O Notchy transforma o notch numa pequena central. Recolhido, ele mostra só o que importa dos lados da câmera: a capa da música, o status do Claude Code, a contagem para a próxima reunião, notificações. Passe o mouse e ele abre com o player, abas e controles. Feche e ele desliga como uma TV antiga.
+O Notchy transforma o notch numa pequena central. Recolhido, ele mostra só o que importa dos lados da câmera: a capa da música, o status do Claude Code, a contagem para a próxima reunião, notificações. Passe o mouse e ele abre com o player, abas e controles. Feche e ele desliga como uma TV antiga. A interface fala português, inglês e espanhol, seguindo o idioma do seu Mac.
 
 ## Sumário
 
@@ -201,7 +201,7 @@ Ainda não. O Notchy é compilado no seu Mac a partir do código. Uma versão as
 
 ## Roadmap
 
-- [ ] Interface em inglês e espanhol ([#1](https://github.com/lleonardo-franco/notchy/issues/1), [#2](https://github.com/lleonardo-franco/notchy/issues/2))
+- [x] Interface em inglês, português e espanhol
 - [ ] Versões assinadas e notarizadas ([#9](https://github.com/lleonardo-franco/notchy/issues/9))
 - [ ] Homebrew ([#8](https://github.com/lleonardo-franco/notchy/issues/8))
 - [ ] Mais fontes de notificação: Slack, Telegram, Discord ([#4](https://github.com/lleonardo-franco/notchy/issues/4), [#5](https://github.com/lleonardo-franco/notchy/issues/5))
