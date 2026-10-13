@@ -108,6 +108,16 @@ Como toda versão é assinada com o mesmo certificado, o macOS mantém as permis
 
 **Atualize** com `notchy update`. **Remova tudo** com `notchy uninstall`.
 
+### Com o Homebrew
+
+```bash
+brew tap lleonardo-franco/notchy https://github.com/lleonardo-franco/notchy
+brew install notchy
+notchy setup
+```
+
+O `notchy setup` compila o app e instala em `/Applications`, igual ao `./install.sh`. Depois de um `brew upgrade notchy`, rode `notchy setup` de novo (ou só `notchy update`, que faz os dois).
+
 ## Uso
 
 | Comando | O que faz |
@@ -196,15 +206,14 @@ Não. O instalador envolve a status line que você já tem e mantém ela. O <cod
 <details>
 <summary><b>Tem um download pronto?</b></summary>
 <br>
-Ainda não. O Notchy é compilado no seu Mac a partir do código. Uma versão assinada e notarizada está no roadmap.
+Não. O Notchy é compilado no seu Mac a partir do código, com o `./install.sh` ou com o Homebrew e o `notchy setup`. Assim ele fica assinado com o seu certificado local e o macOS mantém as permissões entre as atualizações.
 </details>
 
 ## Roadmap
 
 - [x] Interface em inglês, português e espanhol
-- [ ] Versões assinadas e notarizadas ([#9](https://github.com/lleonardo-franco/notchy/issues/9))
-- [ ] Homebrew ([#8](https://github.com/lleonardo-franco/notchy/issues/8))
-- [ ] Mais fontes de notificação: Slack, Telegram, Discord ([#4](https://github.com/lleonardo-franco/notchy/issues/4), [#5](https://github.com/lleonardo-franco/notchy/issues/5))
+- [x] Homebrew
+- [x] Mais fontes de notificação: Slack, Telegram, Discord
 - [ ] Capturas de tela e vídeo de demonstração neste README ([#3](https://github.com/lleonardo-franco/notchy/issues/3))
 
 Tem uma ideia? [Sugira uma funcionalidade](https://github.com/lleonardo-franco/notchy/issues/new/choose).
