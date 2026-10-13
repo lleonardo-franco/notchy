@@ -1,15 +1,50 @@
 import AppKit
 import Observation
 
-enum MusicSource: String {
+enum MusicSource: Equatable {
     case spotify
     case music
+    case system(String)
 
-    var bundleID: String { self == .spotify ? "com.spotify.client" : "com.apple.Music" }
-    var appName: String { self == .spotify ? "Spotify" : "Music" }
-    var isRunning: Bool { !NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).isEmpty }
+    static let scriptable: [MusicSource] = [.spotify, .music]
 
-    var stateScript: String {
+    var bundleID: String {
+        switch self {
+        case .spotify: return "com.spotify.client"
+        case .music: return "com.apple.Music"
+        case .system(let bundleID): return bundleID
+        }
+    }
+
+    var key: String {
+        switch self {
+        case .spotify: return "spotify"
+        case .music: return "music"
+        case .system(let bundleID): return "system:" + bundleID
+        }
+    }
+
+    var isScriptable: Bool {
+        if case .system = self { return false }
+        return true
+    }
+
+    var appName: String {
+        switch self {
+        case .spotify: return "Spotify"
+        case .music: return "Music"
+        case .system(let bundleID):
+            let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID)
+            return url?.deletingPathExtension().lastPathComponent ?? ""
+        }
+    }
+
+    var isRunning: Bool {
+        if case .system(let bundleID) = self, bundleID.isEmpty { return true }
+        return !NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).isEmpty
+    }
+
+    var stateScript: String? {
         switch self {
         case .spotify:
             return """
@@ -27,6 +62,8 @@ enum MusicSource: String {
                 return {persistent ID of t, name of t, artist of t, album of t, duration of t, player position, (player state is playing), ""}
             end tell
             """
+        case .system:
+            return nil
         }
     }
 }
@@ -85,6 +122,7 @@ final class MusicService {
     @ObservationIgnored private var observers: [DistributedObserver] = []
     @ObservationIgnored private var workspaceObserver: NSObjectProtocol?
     @ObservationIgnored private var timer: Timer?
+    @ObservationIgnored private let nowPlaying = NowPlayingBridge()
 
     func start() {
         observers = [
@@ -115,9 +153,28 @@ final class MusicService {
             }
         }
 
-        for source in [MusicSource.spotify, .music] where source.isRunning {
+        nowPlaying.onUpdate = { [weak self] info in
+            self?.applySystem(info)
+        }
+
+        for source in MusicSource.scriptable where source.isRunning {
             refresh(source)
         }
+    }
+
+    func setOtherPlayers(_ enabled: Bool) {
+        if enabled {
+            nowPlaying.start()
+        } else {
+            nowPlaying.stop()
+            if case .system = track?.source {
+                clear()
+            }
+        }
+    }
+
+    func resumeOtherPlayers() {
+        nowPlaying.refresh()
     }
 
     func position(at date: Date) -> Double {
@@ -130,15 +187,15 @@ final class MusicService {
         anchorPosition = position(at: Date())
         anchorDate = Date()
         isPlaying.toggle()
-        send("playpause")
+        control(script: "playpause", system: .toggle)
     }
 
     func next() {
-        send("next track")
+        control(script: "next track", system: .next)
     }
 
     func previous() {
-        send("previous track")
+        control(script: "previous track", system: .previous)
     }
 
     func seek(to seconds: Double) {
@@ -146,7 +203,7 @@ final class MusicService {
         let target = min(max(seconds, 0), max(track.duration - 0.5, 0))
         anchorPosition = target
         anchorDate = Date()
-        send("set player position to \(target)")
+        control(script: "set player position to \(target)", system: .seek(target))
     }
 
     func openPlayer() {
@@ -167,6 +224,10 @@ final class MusicService {
 
     private func resync() {
         guard let source = track?.source else { return }
+        guard source.isScriptable else {
+            nowPlaying.refresh()
+            return
+        }
         if source.isRunning {
             refresh(source)
         } else {
@@ -188,8 +249,13 @@ final class MusicService {
         artworkKey = nil
     }
 
-    private func send(_ command: String) {
-        guard let source = track?.source, source.isRunning else { return }
+    private func control(script command: String, system: NowPlayingBridge.Command) {
+        guard let source = track?.source else { return }
+        guard source.isScriptable else {
+            nowPlaying.send(system)
+            return
+        }
+        guard source.isRunning else { return }
         AppleScript.runAsync("tell application \"\(source.appName)\" to \(command)") { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                 MainActor.assumeIsolated { self?.refresh(source) }
@@ -198,8 +264,7 @@ final class MusicService {
     }
 
     private func refresh(_ source: MusicSource) {
-        guard source.isRunning else { return }
-        let script = source.stateScript
+        guard source.isRunning, let script = source.stateScript else { return }
         AppleScript.queue.async { [weak self] in
             let snapshot = Self.parse(AppleScript.run(script))
             DispatchQueue.main.async {
@@ -237,7 +302,7 @@ final class MusicService {
         anchorPosition = snapshot.position
         anchorDate = Date()
 
-        let key = "\(source.rawValue):\(snapshot.id)"
+        let key = "\(source.key):\(snapshot.id)"
         if artworkKey != key {
             artworkKey = key
             artwork = nil
@@ -263,6 +328,57 @@ final class MusicService {
                     MainActor.assumeIsolated { self?.setArtwork(data, key: key) }
                 }
             }
+        case .system:
+            break
+        }
+    }
+
+    private func applySystem(_ info: NowPlayingInfo?) {
+        guard let info, info.pid != ProcessInfo.processInfo.processIdentifier else {
+            if case .system = track?.source {
+                clear()
+            }
+            return
+        }
+        let bundleID = info.bundleID ?? ""
+        if let native = MusicSource.scriptable.first(where: { $0.bundleID == bundleID }) {
+            if case .system = track?.source {
+                clear()
+            }
+            refresh(native)
+            return
+        }
+
+        let source = MusicSource.system(bundleID)
+        if let current = track, current.source != source, isPlaying, !info.playing {
+            return
+        }
+
+        let next = Track(
+            id: [bundleID, info.title, info.artist, info.album].joined(separator: "|"),
+            title: info.title,
+            artist: info.artist,
+            album: info.album,
+            duration: info.duration,
+            source: source
+        )
+        if track != next {
+            track = next
+        }
+        if isPlaying != info.playing {
+            isPlaying = info.playing
+        }
+        anchorPosition = info.position(at: Date())
+        anchorDate = Date()
+
+        let key = "\(source.key):\(next.id)"
+        if artworkKey != key {
+            artworkKey = key
+            artwork = nil
+            accent = nil
+        }
+        if artwork == nil, let data = info.artwork {
+            setArtwork(data, key: key)
         }
     }
 

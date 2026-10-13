@@ -143,6 +143,18 @@ struct SettingsView: View {
             }
 
             Section {
+                Toggle("Mostrar o que toca em qualquer app", isOn: Binding {
+                    model.prefs.otherPlayers
+                } set: { enabled in
+                    model.setOtherPlayers(enabled)
+                })
+            } header: {
+                Text("Música")
+            } footer: {
+                Text("Spotify e Music sempre aparecem. Com esta opção, o notch também mostra e controla o que toca no navegador, Podcasts, VLC e outros apps, nas versões do macOS que liberam o \"Tocando agora\" para outros apps.")
+            }
+
+            Section {
                 Toggle("Oferecer vídeos do YouTube abertos no navegador", isOn: $prefs.youtubeEnabled)
                 Toggle("Avisar quando fones conectarem e quando a bateria estiver baixa", isOn: $prefs.bluetoothAlerts)
             } header: {

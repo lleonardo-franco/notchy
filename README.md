@@ -48,7 +48,7 @@ Notchy turns the notch into a tiny control center. Collapsed, it shows only what
   <tr>
     <td width="50%" valign="top">
       <h3>🎵 Music</h3>
-      Spotify and Apple Music with artwork, title and controls. Drag the progress bar to seek. The notch picks up a tint from the album cover.
+      Spotify and Apple Music with artwork, title and controls, plus other apps (browsers, Podcasts, VLC…) on macOS versions that let third-party apps read Now Playing. Drag the progress bar to seek. The notch picks up a tint from the album cover.
     </td>
     <td width="50%" valign="top">
       <h3>🤖 Claude Code</h3>

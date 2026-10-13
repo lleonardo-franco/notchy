@@ -46,7 +46,7 @@ jobs:
 
       - name: Shell syntax
         run: |
-          for file in install.sh build.sh bin/notchy; do
+          for file in install.sh build.sh bin/notchy scripts/*.sh; do
             /bin/bash -n "$file"
           done
 
