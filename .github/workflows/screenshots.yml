@@ -32,17 +32,29 @@ jobs:
           for pair in en:en_US pt-BR:pt_BR es:es_ES; do
             language="${pair%%:*}"
             locale="${pair##*:}"
-            NOTCHY_SHOWCASE="$PWD/docs/screenshots/raw/$language" \
-              build/Showcase.app/Contents/MacOS/Notchy -AppleLanguages "($language)" -AppleLocale "$locale" 2>&1 | tee -a render.log
+            NOTCHY_SHOWCASE="$PWD/build/showcase/$language" \
+              build/Showcase.app/Contents/MacOS/Notchy -AppleLanguages "($language)" -AppleLocale "$locale"
           done
-          grep "showcase" render.log | sed 's/^/::notice::/'
-          ls -la docs/screenshots/raw/*
+
+      - name: Compose
+        run: |
+          python3 -m venv build/venv
+          build/venv/bin/pip install --quiet pillow
+          build/venv/bin/python scripts/screenshots.py build/showcase docs/screenshots
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: |
+            docs/screenshots
+            build/showcase
 
       - name: Commit
+        if: startsWith(github.ref, 'refs/heads/shots/')
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/screenshots/raw
+          git add docs/screenshots
           if git diff --cached --quiet; then
             echo "No changes"
           else
