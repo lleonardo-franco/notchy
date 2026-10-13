@@ -102,6 +102,7 @@ git push --force-with-lease
 
 ```bash
 swift build              # quick compile check
+swift test               # unit tests (needs Xcode 16)
 ./build.sh               # builds build/Notchy.app
 ./install.sh             # installs to /Applications, only rebuilding what changed
 ./install.sh --force     # full reinstall
@@ -161,7 +162,9 @@ Keep each commit focused on one change. A short body explaining *why* is always 
 
 ## Testing
 
-There are no automated UI tests yet, so manual testing matters:
+Unit tests live in `Tests/NotchyTests` and use [Swift Testing](https://developer.apple.com/xcode/swift-testing/). Run them with `swift test`; they need Xcode 16, as the Command Line Tools alone may not ship the testing frameworks. Pure logic (date labels, gestures, parsing) should come with tests.
+
+There are no automated UI tests, so manual testing still matters:
 
 1. Run `./install.sh` and try what you changed.
 2. Go through the related sections of the [test plan](TESTING.md).

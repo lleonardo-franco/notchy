@@ -22,7 +22,7 @@ Closes #
 ## Checklist
 
 - [ ] My branch is up to date with `upstream/main`
-- [ ] `swift build` passes and I installed it with `./install.sh`
+- [ ] `swift build` and `swift test` pass, and I installed it with `./install.sh`
 - [ ] The code follows the [code style](https://github.com/lleonardo-franco/notchy/blob/main/CONTRIBUTING.md#code-style)
 - [ ] I updated the docs in every language, or noted below which translations are missing
 - [ ] I added a line under **Unreleased** in `CHANGELOG.md`
