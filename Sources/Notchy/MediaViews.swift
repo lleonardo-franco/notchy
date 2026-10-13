@@ -187,19 +187,54 @@ struct BatteryGlyph: View {
 
 struct BluetoothPanel: View {
     let bluetooth: BluetoothService
+    let power: PowerService
 
     var body: some View {
-        if bluetooth.devices.isEmpty {
+        if bluetooth.devices.isEmpty && power.state == nil {
             EmptyState(symbol: "headphones", text: "Nenhum dispositivo Bluetooth conectado")
         } else {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 0) {
+                    if let state = power.state {
+                        MacBatteryRow(state: state)
+                            .frame(height: NotchModel.rowHeight)
+                    }
                     ForEach(bluetooth.devices) { device in
                         DeviceRow(device: device)
                             .frame(height: NotchModel.rowHeight)
                     }
                 }
             }
+        }
+    }
+}
+
+struct MacBatteryRow: View {
+    let state: PowerState
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "laptopcomputer")
+                .font(.system(size: 16))
+                .foregroundStyle(.white.opacity(0.85))
+                .frame(width: 26)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Este Mac")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .lineLimit(1)
+                Text(state.summary)
+                    .font(.system(size: 11).monospacedDigit())
+                    .foregroundStyle(.white.opacity(0.55))
+                    .lineLimit(1)
+            }
+            Spacer(minLength: 8)
+            if state.pluggedIn {
+                Image(systemName: "bolt.fill")
+                    .font(.system(size: 10))
+                    .foregroundStyle(.green)
+            }
+            BatteryGlyph(level: state.level)
         }
     }
 }

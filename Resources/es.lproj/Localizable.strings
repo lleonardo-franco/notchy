@@ -1,6 +1,7 @@
 "%@ mensagens" = "%@ mensajes";
 "%@ menções" = "%@ menciones";
 "%@ notificações" = "%@ notificaciones";
+"%@ restantes" = "quedan %@";
 "%lld%% usado" = "%lld%% usado";
 "1 mensagem" = "1 mensaje";
 "1 menção" = "1 mención";
@@ -45,10 +46,13 @@
 "Avançar 10 s" = "Adelantar 10 s";
 "Avisar antes da reunião" = "Avisar antes de la reunión";
 "Avisar quando fones conectarem e quando a bateria estiver baixa" = "Avisar cuando se conecten los auriculares y cuando la batería esté baja";
+"Avisar quando o carregador do Mac for conectado e quando a bateria estiver baixa" = "Avisar cuando se conecte el cargador del Mac y cuando la batería esté baja";
 "Bandeja" = "Bandeja";
 "Bateria dos fones e de outros dispositivos." = "Batería de los auriculares y otros dispositivos.";
+"Bateria em %lld%%" = "Batería al %lld%%";
 "Bem-vindo ao Notchy" = "Bienvenido a Notchy";
 "Calendário" = "Calendario";
+"Carregando" = "Cargando";
 "Carregando o clima…" = "Cargando el clima…";
 "Carregando…" = "Cargando…";
 "Chuva" = "Lluvia";
@@ -60,6 +64,7 @@
 "Clique para copiar de novo" = "Haz clic para copiar de nuevo";
 "Com um vídeo do YouTube aberto, use \"Assistir no notch\"." = "Con un vídeo de YouTube abierto, usa \"Ver en el notch\".";
 "Começar" = "Empezar";
+"Conectado ao carregador" = "Conectado al cargador";
 "Contadores do WhatsApp, Slack, Telegram, Discord e ClickUp." = "Contadores de WhatsApp, Slack, Telegram, Discord y ClickUp.";
 "Contagem regressiva no notch recolhido" = "Cuenta atrás en el notch recogido";
 "Controlar o %@" = "Controlar %@";
@@ -83,6 +88,7 @@
 "Esconder quando um app estiver em tela cheia" = "Ocultar cuando una app esté en pantalla completa";
 "Espera antes de abrir" = "Espera antes de abrir";
 "Esperando você" = "Esperándote";
+"Este Mac" = "Este Mac";
 "Fechar o vídeo" = "Cerrar el vídeo";
 "Fecharia o notch" = "Cerraría el notch";
 "Forte" = "Fuerte";
@@ -110,6 +116,7 @@
 "Médio" = "Media";
 "Música" = "Música";
 "Música anterior" = "Canción anterior";
+"Na bateria" = "Con batería";
 "Nada" = "Nada";
 "Nada na agenda pelas próximas horas" = "Nada en la agenda en las próximas horas";
 "Nada tocando" = "No suena nada";
@@ -200,9 +207,13 @@
 "agora · termina às %@" = "ahora · termina a las %@";
 "amanhã" = "mañana";
 "bateria em %lld%%" = "batería al %lld%%";
+"carregada" = "cargada";
+"carregando" = "cargando";
+"cheio em %@" = "llena en %@";
 "clique no notch" = "haz clic en el notch";
 "começando agora" = "empieza ahora";
 "conectado" = "conectado";
+"conecte o carregador" = "conecta el cargador";
 "de 5h" = "de 5 h";
 "desligando o Notchy" = "apagando Notchy";
 "em %lld h" = "en %lld h";

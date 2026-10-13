@@ -235,6 +235,17 @@ T = {
 "Enviar tudo por AirDrop": ("Send everything with AirDrop", "Enviar todo por AirDrop"),
 "Mostrar volume e brilho no notch": ("Show volume and brightness in the notch", "Mostrar volumen y brillo en el notch"),
 "Substitui o aviso do macOS quando você usa as teclas de volume e brilho. Precisa da permissão de Acessibilidade.": ("Replaces the macOS on-screen display when you use the volume and brightness keys. Needs the Accessibility permission.", "Sustituye el aviso de macOS cuando usas las teclas de volumen y brillo. Necesita el permiso de Accesibilidad."),
+"carregada": ("charged", "cargada"),
+"cheio em %@": ("full in %@", "llena en %@"),
+"carregando": ("charging", "cargando"),
+"%@ restantes": ("%@ left", "quedan %@"),
+"Carregando": ("Charging", "Cargando"),
+"Conectado ao carregador": ("Plugged in", "Conectado al cargador"),
+"Na bateria": ("On battery", "Con batería"),
+"Bateria em %lld%%": ("Battery at %lld%%", "Batería al %lld%%"),
+"conecte o carregador": ("plug in the charger", "conecta el cargador"),
+"Este Mac": ("This Mac", "Este Mac"),
+"Avisar quando o carregador do Mac for conectado e quando a bateria estiver baixa": ("Alert when the Mac's charger is connected and when its battery is low", "Avisar cuando se conecte el cargador del Mac y cuando la batería esté baja"),
 }
 
 INFO = {

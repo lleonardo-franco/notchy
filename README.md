@@ -77,6 +77,10 @@ Notchy turns the notch into a tiny control center. Collapsed, it shows only what
       <h3>🎧 Bluetooth</h3>
       Battery for headphones and other devices, AirPods left, right and case included, with low‑battery alerts.
     </td>
+    <td valign="top">
+      <h3>🔋 Mac battery</h3>
+      An alert when you plug in or unplug the charger, with the level, charger wattage and time to full or time left, plus low‑battery warnings.
+    </td>
   </tr>
   <tr>
     <td valign="top">

@@ -35,7 +35,7 @@ struct ExpandedContent: View {
                     case .clipboard:
                         ClipboardPanel(clipboard: model.clipboard)
                     case .bluetooth:
-                        BluetoothPanel(bluetooth: model.bluetooth)
+                        BluetoothPanel(bluetooth: model.bluetooth, power: model.power)
                     case .shelf:
                         ShelfPanel(model: model)
                     }

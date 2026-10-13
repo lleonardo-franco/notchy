@@ -163,6 +163,7 @@ struct SettingsView: View {
             Section {
                 Toggle("Oferecer vídeos do YouTube abertos no navegador", isOn: $prefs.youtubeEnabled)
                 Toggle("Avisar quando fones conectarem e quando a bateria estiver baixa", isOn: $prefs.bluetoothAlerts)
+                Toggle("Avisar quando o carregador do Mac for conectado e quando a bateria estiver baixa", isOn: $prefs.batteryAlerts)
             } header: {
                 Text("Vídeo e Bluetooth")
             } footer: {

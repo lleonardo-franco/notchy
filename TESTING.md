@@ -55,6 +55,13 @@ A full pass before each release, and the relevant sections for every pull reques
 - [ ] With the setting off, the macOS display comes back
 - [ ] In a full-screen app with the notch hidden, the macOS display shows instead
 
+## Mac battery
+
+- [ ] Plugging in the charger shows "Charging" with the level and wattage
+- [ ] Unplugging shows "On battery" with the time left once macOS has estimated it
+- [ ] Below 20% and 10% on battery, the low battery alert shows once each
+- [ ] The Bluetooth tab lists "This Mac" first
+
 ## Shelf
 
 - [ ] Dragging a file from Finder over the collapsed notch opens it with the two drop zones

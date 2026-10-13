@@ -77,6 +77,10 @@ O Notchy transforma o notch numa pequena central. Recolhido, ele mostra só o qu
       <h3>🎧 Bluetooth</h3>
       Bateria dos fones e de outros dispositivos, incluindo AirPods esquerdo, direito e estojo, com aviso de bateria baixa.
     </td>
+    <td valign="top">
+      <h3>🔋 Bateria do Mac</h3>
+      Aviso ao conectar ou tirar o carregador, com o nível, a potência do carregador e o tempo até encher ou o tempo restante, além de alerta de bateria baixa.
+    </td>
   </tr>
   <tr>
     <td valign="top">
