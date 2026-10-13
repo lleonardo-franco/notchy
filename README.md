@@ -108,6 +108,16 @@ Because every build is signed with the same certificate, macOS keeps your permis
 
 **Update** with `notchy update`. **Remove everything** with `notchy uninstall`.
 
+### With Homebrew
+
+```bash
+brew tap lleonardo-franco/notchy https://github.com/lleonardo-franco/notchy
+brew install notchy
+notchy setup
+```
+
+`notchy setup` builds the app and installs it in `/Applications`, just like `./install.sh`. After `brew upgrade notchy`, run `notchy setup` again (or simply `notchy update`, which does both).
+
 ## Usage
 
 | Command | What it does |
@@ -196,15 +206,14 @@ No. The installer wraps your existing status line and keeps it. <code>notchy uni
 <details>
 <summary><b>Is there a prebuilt download?</b></summary>
 <br>
-Not yet. Notchy is built from source on your Mac. A signed and notarized build is on the roadmap.
+No. Notchy is built from source on your Mac, either with `./install.sh` or with Homebrew and `notchy setup`. That way it is signed with your own local certificate and macOS keeps its permissions between updates.
 </details>
 
 ## Roadmap
 
 - [x] Interface in English, Portuguese and Spanish
-- [ ] Signed and notarized releases ([#9](https://github.com/lleonardo-franco/notchy/issues/9))
-- [ ] Homebrew ([#8](https://github.com/lleonardo-franco/notchy/issues/8))
-- [ ] More badge sources: Slack, Telegram, Discord ([#4](https://github.com/lleonardo-franco/notchy/issues/4), [#5](https://github.com/lleonardo-franco/notchy/issues/5))
+- [x] Homebrew
+- [x] More badge sources: Slack, Telegram, Discord
 - [ ] Screenshots and a demo video in this README ([#3](https://github.com/lleonardo-franco/notchy/issues/3))
 
 Have an idea? [Open a feature request](https://github.com/lleonardo-franco/notchy/issues/new/choose).
