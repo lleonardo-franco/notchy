@@ -68,7 +68,7 @@ Notchy turns the notch into a tiny control center. Collapsed, it shows only what
   <tr>
     <td valign="top">
       <h3>🔔 Notifications</h3>
-      Animated unread counters for WhatsApp and ClickUp, read from their Dock badges.
+      Animated unread counters for WhatsApp, Slack, Telegram, Discord and ClickUp, shown with each app's own icon.
     </td>
     <td valign="top">
       <h3>🎧 Bluetooth</h3>
@@ -136,7 +136,7 @@ Everything is opt‑in. Notchy works with any subset of these.
 
 | Permission | Used for |
 |---|---|
-| Accessibility | Reading WhatsApp and ClickUp badge counts from the Dock |
+| Accessibility | Reading unread counts (WhatsApp, Slack, Telegram, Discord, ClickUp) from the Dock |
 | Automation: Safari, Chrome | Finding YouTube videos, pausing the tab and resuming at the same spot |
 | Automation: Spotify, Music | Showing and controlling playback |
 | Automation: Terminal, iTerm | Jumping to the right Claude Code session |

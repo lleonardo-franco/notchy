@@ -41,16 +41,88 @@ struct NotificationBadge: View {
     }
 }
 
+@MainActor
+enum AppIcons {
+    private static var cache: [String: NSImage] = [:]
+    private static var missing: [String: Date] = [:]
+
+    static func icon(for bundleIDs: [String]) -> NSImage? {
+        for id in bundleIDs {
+            if let image = cache[id] { return image }
+            if let checked = missing[id], Date().timeIntervalSince(checked) < 60 { continue }
+            let running = NSRunningApplication.runningApplications(withBundleIdentifier: id).first?.bundleURL
+            if let url = running ?? NSWorkspace.shared.urlForApplication(withBundleIdentifier: id) {
+                let image = NSWorkspace.shared.icon(forFile: url.path)
+                cache[id] = image
+                missing[id] = nil
+                return image
+            }
+            missing[id] = Date()
+        }
+        return nil
+    }
+}
+
+struct AppIcon: View {
+    let bundleIDs: [String]
+    var size: CGFloat = 16
+    var fallback: String = "app.fill"
+
+    var body: some View {
+        if let image = AppIcons.icon(for: bundleIDs) {
+            Image(nsImage: image)
+                .resizable()
+                .interpolation(.high)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: size, height: size)
+        } else {
+            Image(systemName: fallback)
+                .font(.system(size: size * 0.7, weight: .semibold))
+                .frame(width: size, height: size)
+        }
+    }
+}
+
 struct AppGlyph: View {
     let app: BadgeApp
     let trigger: String
-    var size: CGFloat = 12
+    var size: CGFloat = 18
+
+    @State var bump = false
 
     var body: some View {
-        Image(systemName: app.symbol)
-            .font(.system(size: size, weight: .semibold))
+        AppIcon(bundleIDs: app.bundleIDs, size: size, fallback: app.symbol)
             .foregroundStyle(LinearGradient(colors: app.colors, startPoint: .top, endPoint: .bottom))
-            .symbolEffect(.bounce, value: trigger)
+            .scaleEffect(bump ? 1.25 : 1)
+            .onChange(of: trigger) { old, new in
+                guard BadgeService.value(new) > BadgeService.value(old) else { return }
+                withAnimation(.spring(response: 0.22, dampingFraction: 0.45)) {
+                    bump = true
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                    withAnimation(.spring(response: 0.4, dampingFraction: 0.6)) {
+                        bump = false
+                    }
+                }
+            }
+    }
+}
+
+struct EarBadge: View {
+    let item: BadgeItem
+
+    static let iconSize: CGFloat = 16
+
+    static func width(for label: String) -> CGFloat {
+        iconSize + 2 + max(18, CGFloat(label.count) * 6.5 + 10)
+    }
+
+    var body: some View {
+        HStack(spacing: 2) {
+            AppGlyph(app: item.app, trigger: item.label, size: Self.iconSize)
+            NotificationBadge(text: item.label, colors: item.app.colors)
+        }
+        .help(item.app.describe(item.label))
     }
 }
 

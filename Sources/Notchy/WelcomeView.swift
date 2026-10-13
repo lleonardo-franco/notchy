@@ -63,7 +63,7 @@ struct WelcomeView: View {
                         symbol: "hand.raised.fill",
                         tint: .blue,
                         title: "Acessibilidade",
-                        detail: "Contador de notificações do WhatsApp e do ClickUp.",
+                        detail: "Contadores do WhatsApp, Slack, Telegram, Discord e ClickUp.",
                         state: permissions.accessibility ? .granted : .notDetermined
                     ) {
                         permissions.requestAccessibility()
@@ -73,6 +73,7 @@ struct WelcomeView: View {
                         PermissionRow(
                             symbol: symbol(for: target),
                             tint: .orange,
+                            appBundleID: target.bundleID,
                             title: "Controlar o \(target.name)",
                             detail: "Usado para \(target.purpose).",
                             state: permissions.automation[target.bundleID] ?? .notDetermined
@@ -84,6 +85,7 @@ struct WelcomeView: View {
                     PermissionRow(
                         symbol: "calendar",
                         tint: .red,
+                        appBundleID: "com.apple.iCal",
                         title: "Calendário",
                         detail: "Próximas reuniões, botão Entrar e contagem regressiva.",
                         state: calendarState
@@ -191,6 +193,7 @@ struct WelcomeView: View {
 struct PermissionRow: View {
     let symbol: String
     let tint: Color
+    var appBundleID: String? = nil
     let title: String
     let detail: String
     let state: PermissionState
@@ -199,11 +202,16 @@ struct PermissionRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Image(systemName: symbol)
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundStyle(.white)
-                .frame(width: 32, height: 32)
-                .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(tint.gradient))
+            if let appBundleID, AppIcons.icon(for: [appBundleID]) != nil {
+                AppIcon(bundleIDs: [appBundleID], size: 36)
+                    .frame(width: 32, height: 32)
+            } else {
+                Image(systemName: symbol)
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .frame(width: 32, height: 32)
+                    .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(tint.gradient))
+            }
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(.system(size: 13, weight: .semibold))

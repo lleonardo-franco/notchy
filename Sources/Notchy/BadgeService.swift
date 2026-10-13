@@ -5,13 +5,36 @@ import SwiftUI
 
 enum BadgeApp: String, CaseIterable, Identifiable {
     case whatsapp = "WhatsApp"
+    case slack = "Slack"
+    case telegram = "Telegram"
+    case discord = "Discord"
     case clickup = "ClickUp"
 
     var id: String { rawValue }
 
+    var bundleIDs: [String] {
+        switch self {
+        case .whatsapp: return ["net.whatsapp.WhatsApp", "desktop.WhatsApp"]
+        case .slack: return ["com.tinyspeck.slackmacgap"]
+        case .telegram: return ["ru.keepcoder.Telegram", "org.telegram.desktop"]
+        case .discord: return ["com.hnc.Discord"]
+        case .clickup: return ["com.clickup.desktop-app"]
+        }
+    }
+
+    var dockTitles: [String] {
+        switch self {
+        case .telegram: return ["Telegram", "Telegram Desktop"]
+        default: return [rawValue]
+        }
+    }
+
     var colors: [Color] {
         switch self {
         case .whatsapp: return [Color(red: 0.16, green: 0.84, blue: 0.42), Color(red: 0.05, green: 0.6, blue: 0.5)]
+        case .slack: return [Color(red: 0.88, green: 0.12, blue: 0.35), Color(red: 0.38, green: 0.12, blue: 0.41)]
+        case .telegram: return [Color(red: 0.18, green: 0.69, blue: 0.94), Color(red: 0.11, green: 0.53, blue: 0.84)]
+        case .discord: return [Color(red: 0.42, green: 0.47, blue: 0.98), Color(red: 0.29, green: 0.33, blue: 0.86)]
         case .clickup: return [.clickup, .clickupPink]
         }
     }
@@ -19,19 +42,31 @@ enum BadgeApp: String, CaseIterable, Identifiable {
     var symbol: String {
         switch self {
         case .whatsapp: return "message.fill"
+        case .slack: return "number"
+        case .telegram: return "paperplane.fill"
+        case .discord: return "bubble.left.and.bubble.right.fill"
         case .clickup: return "bell.fill"
         }
     }
 
     func describe(_ label: String) -> String {
-        guard label.contains(where: \.isNumber) else {
-            return self == .whatsapp ? "mensagens novas" : "notificações novas"
-        }
         let one = BadgeService.value(label) == 1
+        let counted = label.contains(where: \.isNumber)
         switch self {
-        case .whatsapp: return one ? "1 mensagem" : "\(label) mensagens"
-        case .clickup: return one ? "1 notificação" : "\(label) notificações"
+        case .whatsapp, .slack, .telegram:
+            guard counted else { return "mensagens novas" }
+            return one ? "1 mensagem" : "\(label) mensagens"
+        case .discord:
+            guard counted else { return "menções novas" }
+            return one ? "1 menção" : "\(label) menções"
+        case .clickup:
+            guard counted else { return "notificações novas" }
+            return one ? "1 notificação" : "\(label) notificações"
         }
+    }
+
+    static func matching(dockTitle: String) -> BadgeApp? {
+        allCases.first { $0.dockTitles.contains(dockTitle) }
     }
 }
 
@@ -75,8 +110,11 @@ final class BadgeService {
     }
 
     func open(_ app: BadgeApp) {
-        let running = NSWorkspace.shared.runningApplications.first { $0.localizedName == app.rawValue }
-        let url = running?.bundleURL ?? URL(fileURLWithPath: "/Applications/\(app.rawValue).app")
+        let running = NSWorkspace.shared.runningApplications.first { candidate in
+            app.bundleIDs.contains(candidate.bundleIdentifier ?? "") || app.dockTitles.contains(candidate.localizedName ?? "")
+        }
+        let installed = app.bundleIDs.lazy.compactMap { NSWorkspace.shared.urlForApplication(withBundleIdentifier: $0) }.first
+        guard let url = running?.bundleURL ?? installed else { return }
         let configuration = NSWorkspace.OpenConfiguration()
         configuration.activates = true
         NSWorkspace.shared.openApplication(at: url, configuration: configuration)
@@ -90,16 +128,15 @@ final class BadgeService {
         guard isTrusted,
               let dock = NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.dock").first else { return }
 
-        let watched = Set(BadgeApp.allCases.map(\.rawValue))
         let root = AXUIElementCreateApplication(dock.processIdentifier)
         var next: [String: String] = [:]
         for list in Self.children(of: root) {
             for item in Self.children(of: list) {
                 guard let title = Self.attribute(item, kAXTitleAttribute as String) as? String,
-                      watched.contains(title),
+                      let app = BadgeApp.matching(dockTitle: title),
                       let label = Self.attribute(item, "AXStatusLabel") as? String,
                       !label.isEmpty else { continue }
-                next[title] = label
+                next[app.rawValue] = label
             }
         }
 

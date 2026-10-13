@@ -157,7 +157,7 @@ struct SettingsView: View {
                         Label {
                             Text(app.rawValue)
                         } icon: {
-                            Image(systemName: app.symbol)
+                            AppIcon(bundleIDs: app.bundleIDs, size: 20, fallback: app.symbol)
                                 .foregroundStyle(app.colors.first ?? .accentColor)
                         }
                     }
@@ -287,10 +287,7 @@ struct SettingsView: View {
         Binding {
             model.prefs.isEnabled(app)
         } set: { enabled in
-            switch app {
-            case .whatsapp: model.prefs.whatsappEnabled = enabled
-            case .clickup: model.prefs.clickupEnabled = enabled
-            }
+            model.prefs.setEnabled(app, enabled)
         }
     }
 }
