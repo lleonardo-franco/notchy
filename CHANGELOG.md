@@ -4,6 +4,8 @@ All notable changes to Notchy are documented here. The format is based on [Keep 
 
 ## Unreleased
 
+- Checks GitHub for new versions on launch and once a day, with an alert in the notch and an Update in Terminal button in settings
+
 - Appearance settings: size of the open notch, accent color and animation speed, respecting Reduce Motion
 
 ## 1.2.0

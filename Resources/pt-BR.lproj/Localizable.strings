@@ -41,6 +41,8 @@
 "Ativada" = "Ativada";
 "Ativar" = "Ativar";
 "Atualizar" = "Atualizar";
+"Atualizar no Terminal" = "Atualizar no Terminal";
+"Atualizações" = "Atualizações";
 "Até logo" = "Até logo";
 "Aumentar" = "Aumentar";
 "Automática, pela sua conexão" = "Automática, pela sua conexão";
@@ -139,11 +141,14 @@
 "No terminal" = "No terminal";
 "No terminal: notchy, notchy stop, notchy settings, notchy doctor." = "No terminal: notchy, notchy stop, notchy settings, notchy doctor.";
 "Normal" = "Normal";
+"Notchy %@ disponível" = "Notchy %@ disponível";
 "Notchy ligado" = "Notchy ligado";
 "Notificações" = "Notificações";
+"Novidades" = "Novidades";
 "Nublado" = "Nublado";
 "Não avisar" = "Não avisar";
 "Não consegui carregar o clima" = "Não consegui carregar o clima";
+"Não consegui procurar atualizações" = "Não consegui procurar atualizações";
 "Não deu para tocar este vídeo" = "Não deu para tocar este vídeo";
 "Não instalado" = "Não instalado";
 "Não instalados" = "Não instalados";
@@ -167,6 +172,9 @@
 "Permitido" = "Permitido";
 "Permitir" = "Permitir";
 "Permitir acesso ao Calendário" = "Permitir acesso ao Calendário";
+"Procurando atualizações…" = "Procurando atualizações…";
+"Procurar agora" = "Procurar agora";
+"Procurar atualizações automaticamente" = "Procurar atualizações automaticamente";
 "Pronto" = "Pronto";
 "Pronto · %@" = "Pronto · %@";
 "Próxima música" = "Próxima música";
@@ -209,8 +217,10 @@
 "Ver no GitHub" = "Ver no GitHub";
 "Verde" = "Verde";
 "Versão" = "Versão";
+"Versão %@ disponível" = "Versão %@ disponível";
 "Vibração atual: %@. Clique, deslize com dois dedos para os lados ou para cima e para baixo." = "Vibração atual: %@. Clique, deslize com dois dedos para os lados ou para cima e para baixo.";
 "Vibração do trackpad" = "Vibração do trackpad";
+"Você está na versão mais nova" = "Você está na versão mais nova";
 "Voltar 10 s" = "Voltar 10 s";
 "Voltar para o navegador" = "Voltar para o navegador";
 "Voltar para o navegador no mesmo ponto" = "Voltar para o navegador no mesmo ponto";
@@ -222,6 +232,7 @@
 "agora" = "agora";
 "agora · termina às %@" = "agora · termina às %@";
 "amanhã" = "amanhã";
+"atualize nos ajustes" = "atualize nos ajustes";
 "bateria em %lld%%" = "bateria em %lld%%";
 "carregada" = "carregada";
 "carregando" = "carregando";

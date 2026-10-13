@@ -116,7 +116,7 @@ The installer builds the app, copies it to `/Applications`, wires up the Claude 
 
 Because every build is signed with the same certificate, macOS keeps your permissions across updates, and later runs only rebuild what changed.
 
-**Update** with `notchy update`. **Remove everything** with `notchy uninstall`.
+**Update** with `notchy update`, or from Settings → About when Notchy tells you a new version is out. **Remove everything** with `notchy uninstall`.
 
 ### With Homebrew
 
@@ -204,7 +204,7 @@ To trust the local signing certificate and let <code>codesign</code> use it with
 <details>
 <summary><b>Does it send my data anywhere?</b></summary>
 <br>
-No. The only network calls are to Open‑Meteo and an IP geolocation service for the weather, and to YouTube when you play a video in the notch. The clipboard history lives in memory and disappears when the app quits.
+No. The only network calls are to Open‑Meteo and an IP geolocation service for the weather, to YouTube when you play a video in the notch, and to GitHub to check for new versions (can be turned off). The clipboard history lives in memory and disappears when the app quits.
 </details>
 
 <details>

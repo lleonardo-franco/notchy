@@ -41,6 +41,8 @@
 "Ativada" = "Activada";
 "Ativar" = "Activar";
 "Atualizar" = "Actualizar";
+"Atualizar no Terminal" = "Actualizar en Terminal";
+"Atualizações" = "Actualizaciones";
 "Até logo" = "Hasta luego";
 "Aumentar" = "Ampliar";
 "Automática, pela sua conexão" = "Automática, según tu conexión";
@@ -139,11 +141,14 @@
 "No terminal" = "En la terminal";
 "No terminal: notchy, notchy stop, notchy settings, notchy doctor." = "En la terminal: notchy, notchy stop, notchy settings, notchy doctor.";
 "Normal" = "Normal";
+"Notchy %@ disponível" = "Notchy %@ disponible";
 "Notchy ligado" = "Notchy encendido";
 "Notificações" = "Notificaciones";
+"Novidades" = "Novedades";
 "Nublado" = "Nublado";
 "Não avisar" = "No avisar";
 "Não consegui carregar o clima" = "No se pudo cargar el clima";
+"Não consegui procurar atualizações" = "No se pudieron buscar actualizaciones";
 "Não deu para tocar este vídeo" = "No se pudo reproducir este vídeo";
 "Não instalado" = "No instalado";
 "Não instalados" = "No instalados";
@@ -167,6 +172,9 @@
 "Permitido" = "Permitido";
 "Permitir" = "Permitir";
 "Permitir acesso ao Calendário" = "Permitir acceso al Calendario";
+"Procurando atualizações…" = "Buscando actualizaciones…";
+"Procurar agora" = "Buscar ahora";
+"Procurar atualizações automaticamente" = "Buscar actualizaciones automáticamente";
 "Pronto" = "Listo";
 "Pronto · %@" = "Listo · %@";
 "Próxima música" = "Siguiente canción";
@@ -209,8 +217,10 @@
 "Ver no GitHub" = "Ver en GitHub";
 "Verde" = "Verde";
 "Versão" = "Versión";
+"Versão %@ disponível" = "Versión %@ disponible";
 "Vibração atual: %@. Clique, deslize com dois dedos para os lados ou para cima e para baixo." = "Vibración actual: %@. Haz clic o desliza con dos dedos hacia los lados o hacia arriba y abajo.";
 "Vibração do trackpad" = "Vibración del trackpad";
+"Você está na versão mais nova" = "Tienes la versión más reciente";
 "Voltar 10 s" = "Atrás 10 s";
 "Voltar para o navegador" = "Volver al navegador";
 "Voltar para o navegador no mesmo ponto" = "Volver al navegador en el mismo punto";
@@ -222,6 +232,7 @@
 "agora" = "ahora";
 "agora · termina às %@" = "ahora · termina a las %@";
 "amanhã" = "mañana";
+"atualize nos ajustes" = "actualiza desde los ajustes";
 "bateria em %lld%%" = "batería al %lld%%";
 "carregada" = "cargada";
 "carregando" = "cargando";

@@ -90,6 +90,12 @@ A full pass before each release, and the relevant sections for every pull reques
 - [ ] Two fingers sideways on the video skip forward and back 10 s
 - [ ] Closing the video goes back to the normal notch
 
+## Updates
+
+- [ ] With an older build installed, the notch shows "Notchy x.y.z is available" once
+- [ ] Settings → About shows the new version; "Update in Terminal" opens Terminal running `notchy update`
+- [ ] "Check now" says you're on the latest version when you are
+
 ## Quit and uninstall
 
 - [ ] The power button and `notchy stop` play the power‑off animation

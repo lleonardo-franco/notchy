@@ -116,7 +116,7 @@ El instalador compila la app, la copia a `/Applications`, conecta los hooks de C
 
 Como cada versión se firma con el mismo certificado, macOS conserva los permisos entre actualizaciones, y las siguientes instalaciones solo rehacen lo que cambió.
 
-**Actualiza** con `notchy update`. **Elimina todo** con `notchy uninstall`.
+**Actualiza** con `notchy update`, o desde Ajustes → Acerca de cuando Notchy avise de una versión nueva. **Elimina todo** con `notchy uninstall`.
 
 ### Con Homebrew
 
@@ -204,7 +204,7 @@ Para confiar en el certificado local de firma y que <code>codesign</code> lo use
 <details>
 <summary><b>¿Envía mis datos a algún sitio?</b></summary>
 <br>
-No. Las únicas llamadas de red son a Open‑Meteo y a un servicio de geolocalización por IP, para el clima, y a YouTube cuando reproduces un vídeo en el notch. El historial del portapapeles vive en memoria y desaparece al cerrar la app.
+No. Las únicas llamadas de red son a Open‑Meteo y a un servicio de geolocalización por IP, para el clima, a YouTube cuando reproduces un vídeo en el notch, y a GitHub para buscar versiones nuevas (se puede desactivar). El historial del portapapeles vive en memoria y desaparece al cerrar la app.
 </details>
 
 <details>

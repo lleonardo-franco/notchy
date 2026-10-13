@@ -233,6 +233,10 @@ final class Preferences {
         didSet { defaults.set(animationSpeed.rawValue, forKey: "animationSpeed") }
     }
 
+    var checkUpdates: Bool {
+        didSet { defaults.set(checkUpdates, forKey: "checkUpdates") }
+    }
+
     var batteryAlerts: Bool {
         didSet { defaults.set(batteryAlerts, forKey: "batteryAlerts") }
     }
@@ -283,6 +287,7 @@ final class Preferences {
         otherPlayers = stored.object(forKey: "otherPlayers") as? Bool ?? true
         levelHUD = stored.object(forKey: "levelHUD") as? Bool ?? true
         batteryAlerts = stored.object(forKey: "batteryAlerts") as? Bool ?? true
+        checkUpdates = stored.object(forKey: "checkUpdates") as? Bool ?? true
         notchSize = NotchSize(rawValue: stored.string(forKey: "notchSize") ?? "") ?? .regular
         highlight = Highlight(rawValue: stored.string(forKey: "highlight") ?? "") ?? .orange
         animationSpeed = AnimationSpeed(rawValue: stored.string(forKey: "animationSpeed") ?? "") ?? .regular
