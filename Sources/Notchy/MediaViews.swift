@@ -106,12 +106,10 @@ struct YouTubeCard: View {
             }
             .frame(width: 96, height: 54)
             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-            .overlay(alignment: .bottomLeading) {
-                Image(systemName: "play.rectangle.fill")
-                    .font(.system(size: 12))
-                    .symbolRenderingMode(.palette)
-                    .foregroundStyle(.white, .red)
-                    .padding(4)
+            .overlay(alignment: .bottomTrailing) {
+                AppIcon(bundleIDs: [video.browserBundleID], size: 22, fallback: "safari")
+                    .shadow(color: .black.opacity(0.5), radius: 3, y: 1)
+                    .offset(x: 6, y: 6)
             }
 
             VStack(alignment: .leading, spacing: 3) {

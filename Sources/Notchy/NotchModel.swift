@@ -442,7 +442,7 @@ final class NotchModel {
 
     var earWidth: CGFloat {
         let base = notchHeight + 6
-        let pills = visibleBadges.map { max(18, CGFloat($0.label.count) * 6.5 + 10) }
+        let pills = visibleBadges.map { EarBadge.width(for: $0.label) }
         guard !pills.isEmpty else { return base }
         let content = (hasPrimaryEar ? 32 : 0) + pills.reduce(0, +) + CGFloat(pills.count - 1) * 4 + 12
         return max(base, content)

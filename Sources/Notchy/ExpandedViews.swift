@@ -97,7 +97,7 @@ struct ExpandedContent: View {
                         model.open(item.app)
                     } label: {
                         HStack(spacing: 4) {
-                            AppGlyph(app: item.app, trigger: item.label, size: 10)
+                            AppGlyph(app: item.app, trigger: item.label, size: 15)
                             Text(item.label)
                                 .font(.system(size: 12, weight: .semibold).monospacedDigit())
                                 .foregroundStyle(.white.opacity(0.7))
@@ -132,6 +132,11 @@ struct MusicSection: View {
                 } label: {
                     Artwork(image: music.artwork, size: 64, radius: 10)
                         .shadow(color: .black.opacity(0.35), radius: 6, y: 3)
+                        .overlay(alignment: .bottomTrailing) {
+                            AppIcon(bundleIDs: [track.source.bundleID], size: 22, fallback: "music.note")
+                                .shadow(color: .black.opacity(0.5), radius: 3, y: 1)
+                                .offset(x: 6, y: 6)
+                        }
                 }
                 .buttonStyle(.plain)
 

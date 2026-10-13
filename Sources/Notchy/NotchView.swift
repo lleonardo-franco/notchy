@@ -166,7 +166,7 @@ struct CollapsedContent: View {
         } else if let top = model.activeSessions.first {
             StatusIcon(status: top.effectiveStatus, size: 12)
         } else if let first = model.visibleBadges.first {
-            AppGlyph(app: first.app, trigger: first.label)
+            AppGlyph(app: first.app, trigger: first.label, size: model.notchHeight * 0.58)
                 .transition(.scale.combined(with: .opacity))
         }
     }
@@ -176,7 +176,7 @@ struct CollapsedContent: View {
         HStack(spacing: 4) {
             primaryRight
             ForEach(model.visibleBadges) { item in
-                NotificationBadge(text: item.label, colors: item.app.colors)
+                EarBadge(item: item)
                     .transition(.scale(scale: 0.4).combined(with: .opacity))
             }
         }
@@ -265,7 +265,7 @@ struct PeekIcon: View {
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundStyle(Color.claude)
         case .app(let app):
-            AppGlyph(app: app, trigger: "", size: 11)
+            AppGlyph(app: app, trigger: "", size: 16)
         case .device(let symbol):
             Image(systemName: symbol)
                 .font(.system(size: 12))

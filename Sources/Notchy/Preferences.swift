@@ -127,8 +127,8 @@ final class Preferences {
         didSet { defaults.set(meetingCountdown, forKey: "meetingCountdown") }
     }
 
-    var clickupEnabled: Bool {
-        didSet { defaults.set(clickupEnabled, forKey: "clickupEnabled") }
+    var disabledBadges: Set<String> {
+        didSet { defaults.set(BadgeApp.allCases.map(\.rawValue).filter(disabledBadges.contains), forKey: "disabledBadges") }
     }
 
     var youtubeEnabled: Bool {
@@ -137,10 +137,6 @@ final class Preferences {
 
     var bluetoothAlerts: Bool {
         didSet { defaults.set(bluetoothAlerts, forKey: "bluetoothAlerts") }
-    }
-
-    var whatsappEnabled: Bool {
-        didSet { defaults.set(whatsappEnabled, forKey: "whatsappEnabled") }
     }
 
     var weatherCity: String {
@@ -173,15 +169,26 @@ final class Preferences {
         bluetoothAlerts = stored.object(forKey: "bluetoothAlerts") as? Bool ?? true
         meetingLead = stored.object(forKey: "meetingLead") as? Int ?? 5
         meetingCountdown = stored.object(forKey: "meetingCountdown") as? Bool ?? true
-        clickupEnabled = stored.object(forKey: "clickupEnabled") as? Bool ?? true
-        whatsappEnabled = stored.object(forKey: "whatsappEnabled") as? Bool ?? true
+        if let saved = stored.stringArray(forKey: "disabledBadges") {
+            disabledBadges = Set(saved)
+        } else {
+            var legacy: Set<String> = []
+            if stored.object(forKey: "whatsappEnabled") as? Bool == false { legacy.insert(BadgeApp.whatsapp.rawValue) }
+            if stored.object(forKey: "clickupEnabled") as? Bool == false { legacy.insert(BadgeApp.clickup.rawValue) }
+            disabledBadges = legacy
+        }
         weatherCity = stored.string(forKey: WeatherService.cityKey) ?? ""
     }
 
     func isEnabled(_ app: BadgeApp) -> Bool {
-        switch app {
-        case .whatsapp: return whatsappEnabled
-        case .clickup: return clickupEnabled
+        !disabledBadges.contains(app.rawValue)
+    }
+
+    func setEnabled(_ app: BadgeApp, _ enabled: Bool) {
+        if enabled {
+            disabledBadges.remove(app.rawValue)
+        } else {
+            disabledBadges.insert(app.rawValue)
         }
     }
 }

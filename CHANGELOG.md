@@ -8,6 +8,8 @@ All notable changes to Notchy are documented here. The format is based on [Keep 
 - Issue templates for bugs, features and translations, and a pull request template
 - Code of Conduct and security policy
 - Build check on GitHub Actions for every pull request
+- Real app icons for notification badges, the music player, the browser of a YouTube video and the permission list
+- Unread badges for Slack, Telegram and Discord
 
 ## 1.0.0
 

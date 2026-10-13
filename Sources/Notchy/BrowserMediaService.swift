@@ -34,6 +34,16 @@ struct BrowserVideo: Equatable {
         browser == "Google Chrome" ? "Chrome" : browser
     }
 
+    var browserBundleID: String {
+        switch browser {
+        case "Safari": return "com.apple.Safari"
+        case "Google Chrome": return "com.google.Chrome"
+        case "Brave Browser": return "com.brave.Browser"
+        case "Microsoft Edge": return "com.microsoft.edgemac"
+        default: return "org.chromium.Chromium"
+        }
+    }
+
     var javascriptHint: String {
         switch engine {
         case .safari:

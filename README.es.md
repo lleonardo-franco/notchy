@@ -68,7 +68,7 @@ Notchy convierte el notch en un pequeño centro de control. Recogido, muestra so
   <tr>
     <td valign="top">
       <h3>🔔 Notificaciones</h3>
-      Contadores animados de WhatsApp y ClickUp, leídos de sus iconos en el Dock.
+      Contadores animados de WhatsApp, Slack, Telegram, Discord y ClickUp, con el icono de cada app.
     </td>
     <td valign="top">
       <h3>🎧 Bluetooth</h3>
@@ -136,7 +136,7 @@ Todo es opcional. Notchy funciona con cualquier combinación de ellos.
 
 | Permiso | Para qué |
 |---|---|
-| Accesibilidad | Leer los contadores de WhatsApp y ClickUp en el Dock |
+| Accesibilidad | Leer los contadores (WhatsApp, Slack, Telegram, Discord, ClickUp) en el Dock |
 | Automatización: Safari, Chrome | Encontrar vídeos de YouTube, pausar la pestaña y seguir en el mismo punto |
 | Automatización: Spotify, Music | Mostrar y controlar la música |
 | Automatización: Terminal, iTerm | Ir a la sesión correcta de Claude Code |
