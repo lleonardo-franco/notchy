@@ -16,6 +16,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var tracker = SwipeTracker()
     private var currentScreen: NSScreen?
     private var hidden = false
+    private var dragBaseline = NSPasteboard(name: .drag).changeCount
+    private var ownDrag = false
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         let host = FirstMouseHostingView(rootView: NotchView(model: model))
@@ -27,7 +29,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         addGlobal([.mouseMoved, .leftMouseDragged]) { [weak self] _ in self?.trackMouse() }
         addLocal([.mouseMoved, .leftMouseDragged]) { [weak self] _ in self?.trackMouse() }
-        addGlobal([.leftMouseDown]) { [weak self] _ in self?.handleClick() }
+        addGlobal([.leftMouseDown]) { [weak self] _ in
+            self?.ownDrag = false
+            self?.handleClick()
+        }
+        addLocal([.leftMouseDown]) { [weak self] _ in self?.ownDrag = true }
         addGlobal([.scrollWheel]) { [weak self] event in self?.handleScroll(event) }
         addLocal([.scrollWheel]) { [weak self] event in self?.handleScroll(event) }
 
@@ -192,9 +198,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         model.mode == .collapsed || model.mode == .peek
     }
 
+    private func fileDragActive() -> Bool {
+        let pasteboard = NSPasteboard(name: .drag)
+        guard NSEvent.pressedMouseButtons & 1 == 1 else {
+            dragBaseline = pasteboard.changeCount
+            ownDrag = false
+            return false
+        }
+        guard !ownDrag, pasteboard.changeCount != dragBaseline else { return false }
+        return pasteboard.types?.contains(.fileURL) == true
+    }
+
     private func trackMouse() {
         guard !hidden else { return }
         let point = NSEvent.mouseLocation
+        let dragging = fileDragActive()
+        if !dragging, model.fileDrag {
+            model.endFileDrag()
+        }
         switch model.mode {
         case .approval:
             cancelCollapse()
@@ -204,6 +225,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             panel.ignoresMouseEvents = !inside
             if inside {
                 cancelCollapse()
+                if dragging, !model.fileDrag {
+                    model.beginFileDrag()
+                }
             } else if collapseWork == nil {
                 scheduleCollapse()
             }
@@ -215,6 +239,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             panel.ignoresMouseEvents = true
         case .collapsed, .peek:
             panel.ignoresMouseEvents = true
+            if dragging, model.acceptsFileDrops, model.hoverRect.insetBy(dx: -24, dy: -12).contains(point) {
+                expand()
+                model.beginFileDrag()
+                return
+            }
             if suppressHover {
                 if !model.hoverRect.insetBy(dx: -10, dy: -10).contains(point) {
                     suppressHover = false

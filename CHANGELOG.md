@@ -4,6 +4,8 @@ All notable changes to Notchy are documented here. The format is based on [Keep 
 
 ## Unreleased
 
+- Shelf: drag files onto the notch to keep them, drag them out again, or drop them on AirDrop
+
 ## 1.1.0
 
 ### New

@@ -43,6 +43,22 @@ struct TabBar: View {
                     model.weather.refresh()
                 }
             }
+        case .shelf?:
+            if !model.shelf.items.isEmpty, !model.fileDrag {
+                HStack(spacing: 6) {
+                    IconButton(symbol: "dot.radiowaves.left.and.right", size: 10, frame: 22, help: "Enviar tudo por AirDrop") {
+                        model.shelf.airDrop(model.shelf.items.map(\.url))
+                    }
+                    Button {
+                        model.shelf.clear()
+                    } label: {
+                        Text("Limpar")
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundStyle(.white.opacity(0.5))
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
         case .clipboard?:
             if !model.clipboard.items.isEmpty {
                 Button {

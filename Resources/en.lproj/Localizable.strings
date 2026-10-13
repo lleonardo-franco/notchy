@@ -12,6 +12,7 @@
 "Abas" = "Tabs";
 "Aberto no %@" = "Open in %@";
 "Abra o app para pedir" = "Open the app to request";
+"Abrir" = "Open";
 "Abrir Ajustes" = "Open Settings";
 "Abrir Ajustes do Sistema" = "Open System Settings";
 "Abrir ajustes" = "Open settings";
@@ -33,6 +34,7 @@
 "Ao passar o mouse" = "On hover";
 "Aplicar" = "Apply";
 "Aqui" = "Here";
+"Arraste arquivos para o notch para guardar aqui" = "Drag files onto the notch to keep them here";
 "Assistir no notch" = "Watch in the notch";
 "Ativada" = "On";
 "Ativar" = "Turn on";
@@ -43,6 +45,7 @@
 "Avançar 10 s" = "Forward 10 s";
 "Avisar antes da reunião" = "Alert before meetings";
 "Avisar quando fones conectarem e quando a bateria estiver baixa" = "Alert when headphones connect and when the battery is low";
+"Bandeja" = "Shelf";
 "Bateria dos fones e de outros dispositivos." = "Battery for headphones and other devices.";
 "Bem-vindo ao Notchy" = "Welcome to Notchy";
 "Calendário" = "Calendar";
@@ -75,6 +78,8 @@
 "Dois dedos para os lados trocam de música; para cima e para baixo mudam o volume." = "Two fingers sideways change tracks; up and down change the volume.";
 "E %lld%%" = "L %lld%%";
 "Entrar" = "Join";
+"Enviar por AirDrop" = "Send with AirDrop";
+"Enviar tudo por AirDrop" = "Send everything with AirDrop";
 "Esconder quando um app estiver em tela cheia" = "Hide when an app is in full screen";
 "Espera antes de abrir" = "Delay before opening";
 "Esperando você" = "Waiting for you";
@@ -89,6 +94,7 @@
 "Gesto vertical desligado" = "Vertical gesture off";
 "Gestos no trackpad" = "Trackpad gestures";
 "Grãos de neve" = "Snow grains";
+"Guardar na bandeja" = "Keep in the shelf";
 "Hooks do Claude Code" = "Claude Code hooks";
 "Imagem %lld×%lld" = "Image %lld×%lld";
 "Instalados" = "Installed";
@@ -98,6 +104,7 @@
 "Limite %@" = "%@ limit";
 "Limpar" = "Clear";
 "Mostrar boas-vindas e permissões" = "Show welcome and permissions";
+"Mostrar no Finder" = "Show in Finder";
 "Mostrar o que toca em qualquer app" = "Show what's playing in any app";
 "Médio" = "Medium";
 "Música" = "Music";

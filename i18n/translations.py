@@ -226,6 +226,13 @@ T = {
 "Clique para copiar de novo": ("Click to copy again", "Haz clic para copiar de nuevo"),
 "Copiado": ("Copied", "Copiado"),
 "Remover": ("Remove", "Quitar"),
+"Bandeja": ("Shelf", "Bandeja"),
+"Guardar na bandeja": ("Keep in the shelf", "Guardar en la bandeja"),
+"Arraste arquivos para o notch para guardar aqui": ("Drag files onto the notch to keep them here", "Arrastra archivos al notch para guardarlos aquí"),
+"Abrir": ("Open", "Abrir"),
+"Mostrar no Finder": ("Show in Finder", "Mostrar en el Finder"),
+"Enviar por AirDrop": ("Send with AirDrop", "Enviar por AirDrop"),
+"Enviar tudo por AirDrop": ("Send everything with AirDrop", "Enviar todo por AirDrop"),
 }
 
 INFO = {

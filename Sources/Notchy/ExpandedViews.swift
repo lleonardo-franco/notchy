@@ -36,6 +36,8 @@ struct ExpandedContent: View {
                         ClipboardPanel(clipboard: model.clipboard)
                     case .bluetooth:
                         BluetoothPanel(bluetooth: model.bluetooth)
+                    case .shelf:
+                        ShelfPanel(model: model)
                     }
                 }
                 .frame(height: NotchModel.contentHeight, alignment: .top)

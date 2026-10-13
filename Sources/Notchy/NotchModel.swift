@@ -41,6 +41,7 @@ final class NotchModel {
         case weather
         case clipboard
         case bluetooth
+        case shelf
 
         var title: String {
             switch self {
@@ -49,6 +50,7 @@ final class NotchModel {
             case .weather: return String(localized: "Clima")
             case .clipboard: return String(localized: "Copiados")
             case .bluetooth: return "Bluetooth"
+            case .shelf: return String(localized: "Bandeja")
             }
         }
 
@@ -71,7 +73,7 @@ final class NotchModel {
     static let rowHeight: CGFloat = 40
     static let tabsHeight: CGFloat = 26
     static let contentHeight: CGFloat = 164
-    static let expandedWidth: CGFloat = 500
+    static let expandedWidth: CGFloat = 540
     static let approvalWidth: CGFloat = 470
     static let approvalBoxHeight: CGFloat = 58
 
@@ -85,6 +87,7 @@ final class NotchModel {
     private(set) var glowWidth: CGFloat = 0
     private(set) var glowOpacity: Double = 0
     private(set) var volumeLevel: Double?
+    private(set) var fileDrag = false
 
     @ObservationIgnored private var volumeToken = UUID()
 
@@ -99,6 +102,7 @@ final class NotchModel {
     let video = VideoPlayer()
     let bluetooth = BluetoothService()
     let permissions = PermissionCenter()
+    let shelf = ShelfService()
 
     func start() {
         claude.onEvent = { [weak self] event in
@@ -180,6 +184,7 @@ final class NotchModel {
     func expand() {
         peek = nil
         tab = preferredTab()
+        shelf.prune()
         weather.refreshIfStale()
         calendar.refresh()
         browser.refresh()
@@ -188,6 +193,22 @@ final class NotchModel {
 
     func collapse() {
         state = .collapsed
+        fileDrag = false
+    }
+
+    var acceptsFileDrops: Bool { tabs.contains(.shelf) && video.video == nil && pendingApproval == nil && farewell == nil }
+
+    func beginFileDrag() {
+        guard acceptsFileDrops else { return }
+        if state != .expanded {
+            expand()
+        }
+        tab = .shelf
+        fileDrag = true
+    }
+
+    func endFileDrag() {
+        fileDrag = false
     }
 
     func select(_ next: Tab) {

@@ -12,6 +12,7 @@
 "Abas" = "Pestañas";
 "Aberto no %@" = "Abierto en %@";
 "Abra o app para pedir" = "Abre la app para solicitarlo";
+"Abrir" = "Abrir";
 "Abrir Ajustes" = "Abrir Ajustes";
 "Abrir Ajustes do Sistema" = "Abrir Ajustes del Sistema";
 "Abrir ajustes" = "Abrir ajustes";
@@ -33,6 +34,7 @@
 "Ao passar o mouse" = "Al pasar el ratón";
 "Aplicar" = "Aplicar";
 "Aqui" = "Aquí";
+"Arraste arquivos para o notch para guardar aqui" = "Arrastra archivos al notch para guardarlos aquí";
 "Assistir no notch" = "Ver en el notch";
 "Ativada" = "Activada";
 "Ativar" = "Activar";
@@ -43,6 +45,7 @@
 "Avançar 10 s" = "Adelantar 10 s";
 "Avisar antes da reunião" = "Avisar antes de la reunión";
 "Avisar quando fones conectarem e quando a bateria estiver baixa" = "Avisar cuando se conecten los auriculares y cuando la batería esté baja";
+"Bandeja" = "Bandeja";
 "Bateria dos fones e de outros dispositivos." = "Batería de los auriculares y otros dispositivos.";
 "Bem-vindo ao Notchy" = "Bienvenido a Notchy";
 "Calendário" = "Calendario";
@@ -75,6 +78,8 @@
 "Dois dedos para os lados trocam de música; para cima e para baixo mudam o volume." = "Dos dedos hacia los lados cambian de canción; arriba y abajo cambian el volumen.";
 "E %lld%%" = "I %lld%%";
 "Entrar" = "Unirse";
+"Enviar por AirDrop" = "Enviar por AirDrop";
+"Enviar tudo por AirDrop" = "Enviar todo por AirDrop";
 "Esconder quando um app estiver em tela cheia" = "Ocultar cuando una app esté en pantalla completa";
 "Espera antes de abrir" = "Espera antes de abrir";
 "Esperando você" = "Esperándote";
@@ -89,6 +94,7 @@
 "Gesto vertical desligado" = "Gesto vertical desactivado";
 "Gestos no trackpad" = "Gestos en el trackpad";
 "Grãos de neve" = "Granos de nieve";
+"Guardar na bandeja" = "Guardar en la bandeja";
 "Hooks do Claude Code" = "Hooks de Claude Code";
 "Imagem %lld×%lld" = "Imagen %lld×%lld";
 "Instalados" = "Instalados";
@@ -98,6 +104,7 @@
 "Limite %@" = "Límite %@";
 "Limpar" = "Borrar";
 "Mostrar boas-vindas e permissões" = "Mostrar bienvenida y permisos";
+"Mostrar no Finder" = "Mostrar en el Finder";
 "Mostrar o que toca em qualquer app" = "Mostrar lo que suena en cualquier app";
 "Médio" = "Media";
 "Música" = "Música";
