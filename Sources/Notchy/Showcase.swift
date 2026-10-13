@@ -127,7 +127,7 @@ enum Showcase {
         return model
     }
 
-    static func artwork() -> NSImage {
+    nonisolated static func artwork() -> NSImage {
         NSImage(size: NSSize(width: 400, height: 400), flipped: false) { rect in
             NSGradient(colors: [
                 NSColor(red: 0.98, green: 0.42, blue: 0.36, alpha: 1),
