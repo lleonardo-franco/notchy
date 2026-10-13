@@ -6,13 +6,23 @@ struct TabBar: View {
 
     var body: some View {
         HStack(spacing: 4) {
-            ForEach(model.tabs, id: \.self) { tab in
-                TabPill(title: tab.title, selected: model.currentTab == tab) {
-                    model.select(tab)
-                }
+            ViewThatFits(in: .horizontal) {
+                pills(compact: false)
+                pills(compact: true)
             }
             Spacer(minLength: 8)
             accessory
+        }
+    }
+
+    private func pills(compact: Bool) -> some View {
+        HStack(spacing: 4) {
+            ForEach(model.tabs, id: \.self) { tab in
+                let selected = model.currentTab == tab
+                TabPill(title: tab.title, symbol: compact && !selected ? tab.symbol : nil, selected: selected) {
+                    model.select(tab)
+                }
+            }
         }
     }
 
@@ -76,6 +86,7 @@ struct TabBar: View {
 
 struct TabPill: View {
     let title: String
+    var symbol: String?
     let selected: Bool
     let action: () -> Void
 
@@ -85,10 +96,10 @@ struct TabPill: View {
 
     var body: some View {
         Button(action: action) {
-            Text(title)
+            label
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundStyle(.white.opacity(selected ? 1 : (hovering ? 0.75 : 0.45)))
-                .padding(.horizontal, 10)
+                .padding(.horizontal, symbol == nil ? 10 : 8)
                 .frame(height: 22)
                 .background(
                     Capsule().fill(selected ? highlight.opacity(0.3) : .white.opacity(hovering ? 0.06 : 0))
@@ -97,7 +108,20 @@ struct TabPill: View {
         }
         .buttonStyle(.plain)
         .onHover { hovering = $0 }
+        .help(symbol == nil ? "" : title)
+        .accessibilityLabel(title)
         .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+
+    @ViewBuilder
+    private var label: some View {
+        if let symbol {
+            Image(systemName: symbol)
+        } else {
+            Text(title)
+                .lineLimit(1)
+                .fixedSize()
+        }
     }
 }
 

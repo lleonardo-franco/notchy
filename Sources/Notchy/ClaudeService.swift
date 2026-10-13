@@ -323,3 +323,14 @@ final class ClaudeService {
         }
     }
 }
+
+#if DEBUG
+extension ClaudeService {
+    func demo(sessions: [ClaudeSession], approvals: [ApprovalRequest] = [], usage: Usage = Usage(), contexts: [String: Double] = [:]) {
+        self.sessions = sessions
+        self.approvals = approvals
+        self.usage = usage
+        self.contexts = contexts
+    }
+}
+#endif

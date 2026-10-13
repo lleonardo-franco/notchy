@@ -295,3 +295,13 @@ final class WeatherService {
         return json
     }
 }
+
+#if DEBUG
+extension WeatherService {
+    func demo(_ snapshot: WeatherSnapshot) {
+        self.snapshot = snapshot
+        isLoading = false
+        failed = false
+    }
+}
+#endif

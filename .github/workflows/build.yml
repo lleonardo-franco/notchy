@@ -56,7 +56,7 @@ jobs:
           done
 
       - name: Python hooks
-        run: /usr/bin/python3 -m py_compile hooks/*.py
+        run: /usr/bin/python3 -m py_compile hooks/*.py scripts/*.py
 
       - name: Homebrew formula
         env:

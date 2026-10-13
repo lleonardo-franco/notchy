@@ -207,3 +207,11 @@ final class BluetoothService {
         )
     }
 }
+
+#if DEBUG
+extension BluetoothService {
+    func demo(_ devices: [BluetoothDevice]) {
+        self.devices = devices
+    }
+}
+#endif

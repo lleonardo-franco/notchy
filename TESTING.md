@@ -16,6 +16,7 @@ A full pass before each release, and the relevant sections for every pull reques
 - [ ] Each row turns into **Pronto** once granted
 - [ ] `notchy settings`, the gear in the notch and opening the app from Spotlight all open settings
 - [ ] Turning a tab off in settings removes it from the notch
+- [ ] With every tab on and the Claude tab open, the other tabs turn into icons instead of being cut off; hovering an icon shows its name
 
 ## Appearance
 

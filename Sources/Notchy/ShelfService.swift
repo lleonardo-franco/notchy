@@ -78,3 +78,11 @@ final class ShelfService {
         FileManager.default.fileExists(atPath: item.url.path)
     }
 }
+
+#if DEBUG
+extension ShelfService {
+    func demo(_ urls: [URL]) {
+        items = urls.map { ShelfItem(url: $0) }
+    }
+}
+#endif
