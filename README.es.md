@@ -141,6 +141,8 @@ notchy setup
 | `notchy update` | Descarga la última versión y reinstala |
 | `notchy uninstall` | Elimina la app, los hooks, los ajustes y el comando |
 
+El instalador y el comando siguen el idioma de tu Mac. Usa `NOTCHY_LANG=es`, `en` o `pt` para elegir uno.
+
 | Gesto con el notch abierto | Acción |
 |---|---|
 | Dos dedos a la derecha / izquierda | Siguiente / anterior (configurable) |
