@@ -201,11 +201,11 @@ Ainda não. O Notchy é compilado no seu Mac a partir do código. Uma versão as
 
 ## Roadmap
 
-- [ ] Interface em inglês e espanhol
-- [ ] Versões assinadas e notarizadas
-- [ ] Homebrew cask
-- [ ] Mais fontes de notificação (Slack, Mail, Telegram)
-- [ ] Capturas de tela e vídeo de demonstração neste README
+- [ ] Interface em inglês e espanhol ([#1](https://github.com/lleonardo-franco/notchy/issues/1), [#2](https://github.com/lleonardo-franco/notchy/issues/2))
+- [ ] Versões assinadas e notarizadas ([#9](https://github.com/lleonardo-franco/notchy/issues/9))
+- [ ] Homebrew ([#8](https://github.com/lleonardo-franco/notchy/issues/8))
+- [ ] Mais fontes de notificação: Slack, Telegram, Discord ([#4](https://github.com/lleonardo-franco/notchy/issues/4), [#5](https://github.com/lleonardo-franco/notchy/issues/5))
+- [ ] Capturas de tela e vídeo de demonstração neste README ([#3](https://github.com/lleonardo-franco/notchy/issues/3))
 
 Tem uma ideia? [Sugira uma funcionalidade](https://github.com/lleonardo-franco/notchy/issues/new/choose).
 

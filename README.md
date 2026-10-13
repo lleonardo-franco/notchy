@@ -204,11 +204,11 @@ Not yet. Notchy is built from source on your Mac. A signed and notarized build i
 
 ## Roadmap
 
-- [ ] Interface in English and Spanish
-- [ ] Signed and notarized releases
-- [ ] Homebrew cask
-- [ ] More badge sources (Slack, Mail, Telegram)
-- [ ] Screenshots and a demo video in this README
+- [ ] Interface in English and Spanish ([#1](https://github.com/lleonardo-franco/notchy/issues/1), [#2](https://github.com/lleonardo-franco/notchy/issues/2))
+- [ ] Signed and notarized releases ([#9](https://github.com/lleonardo-franco/notchy/issues/9))
+- [ ] Homebrew ([#8](https://github.com/lleonardo-franco/notchy/issues/8))
+- [ ] More badge sources: Slack, Telegram, Discord ([#4](https://github.com/lleonardo-franco/notchy/issues/4), [#5](https://github.com/lleonardo-franco/notchy/issues/5))
+- [ ] Screenshots and a demo video in this README ([#3](https://github.com/lleonardo-franco/notchy/issues/3))
 
 Have an idea? [Open a feature request](https://github.com/lleonardo-franco/notchy/issues/new/choose).
 

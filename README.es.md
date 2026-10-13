@@ -204,11 +204,11 @@ Todavía no. Notchy se compila en tu Mac desde el código. Una versión firmada 
 
 ## Hoja de ruta
 
-- [ ] Interfaz en inglés y español
-- [ ] Versiones firmadas y notarizadas
-- [ ] Homebrew cask
-- [ ] Más fuentes de notificaciones (Slack, Mail, Telegram)
-- [ ] Capturas y un vídeo de demostración en este README
+- [ ] Interfaz en inglés y español ([#1](https://github.com/lleonardo-franco/notchy/issues/1), [#2](https://github.com/lleonardo-franco/notchy/issues/2))
+- [ ] Versiones firmadas y notarizadas ([#9](https://github.com/lleonardo-franco/notchy/issues/9))
+- [ ] Homebrew ([#8](https://github.com/lleonardo-franco/notchy/issues/8))
+- [ ] Más fuentes de notificaciones: Slack, Telegram, Discord ([#4](https://github.com/lleonardo-franco/notchy/issues/4), [#5](https://github.com/lleonardo-franco/notchy/issues/5))
+- [ ] Capturas y un vídeo de demostración en este README ([#3](https://github.com/lleonardo-franco/notchy/issues/3))
 
 ¿Tienes una idea? [Propón una función](https://github.com/lleonardo-franco/notchy/issues/new/choose).
 
