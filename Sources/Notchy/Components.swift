@@ -1,6 +1,17 @@
 import AppKit
 import SwiftUI
 
+private struct NotchHighlightKey: EnvironmentKey {
+    static let defaultValue = Color.claude
+}
+
+extension EnvironmentValues {
+    var notchHighlight: Color {
+        get { self[NotchHighlightKey.self] }
+        set { self[NotchHighlightKey.self] = newValue }
+    }
+}
+
 extension Color {
     static let claude = Color(red: 0.85, green: 0.47, blue: 0.34)
     static let clickup = Color(red: 0.48, green: 0.41, blue: 0.93)
@@ -259,6 +270,8 @@ struct VolumeIndicator: View {
     let barWidth: CGFloat
     var kind: NotchModel.LevelKind = .volume
 
+    @Environment(\.notchHighlight) private var highlight
+
     private var symbol: String {
         if kind == .brightness { return level < 0.5 ? "sun.min.fill" : "sun.max.fill" }
         if level <= 0 { return "speaker.slash.fill" }
@@ -277,7 +290,7 @@ struct VolumeIndicator: View {
             ZStack(alignment: .leading) {
                 Capsule().fill(.white.opacity(0.15))
                 Capsule()
-                    .fill(.white)
+                    .fill(highlight)
                     .frame(width: barWidth * level)
             }
             .frame(width: barWidth, height: 5)

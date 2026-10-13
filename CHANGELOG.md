@@ -4,6 +4,8 @@ All notable changes to Notchy are documented here. The format is based on [Keep 
 
 ## Unreleased
 
+- Appearance settings: size of the open notch, accent color and animation speed, respecting Reduce Motion
+
 ## 1.2.0
 
 - Shelf: drag files onto the notch to keep them, drag them out again, or drop them on AirDrop

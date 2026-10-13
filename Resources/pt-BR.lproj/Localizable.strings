@@ -33,6 +33,7 @@
 "Ajustes do Notchy" = "Ajustes do Notchy";
 "Ao clicar" = "Ao clicar";
 "Ao passar o mouse" = "Ao passar o mouse";
+"Aparência" = "Aparência";
 "Aplicar" = "Aplicar";
 "Aqui" = "Aqui";
 "Arraste arquivos para o notch para guardar aqui" = "Arraste arquivos para o notch para guardar aqui";
@@ -47,6 +48,7 @@
 "Avisar antes da reunião" = "Avisar antes da reunião";
 "Avisar quando fones conectarem e quando a bateria estiver baixa" = "Avisar quando fones conectarem e quando a bateria estiver baixa";
 "Avisar quando o carregador do Mac for conectado e quando a bateria estiver baixa" = "Avisar quando o carregador do Mac for conectado e quando a bateria estiver baixa";
+"Azul" = "Azul";
 "Bandeja" = "Bandeja";
 "Bateria dos fones e de outros dispositivos." = "Bateria dos fones e de outros dispositivos.";
 "Bateria em %lld%%" = "Bateria em %lld%%";
@@ -62,8 +64,10 @@
 "Cidade" = "Cidade";
 "Clima" = "Clima";
 "Clique para copiar de novo" = "Clique para copiar de novo";
+"Com \"Reduzir movimento\" ligado nos Ajustes do Sistema, as animações ficam mínimas." = "Com \"Reduzir movimento\" ligado nos Ajustes do Sistema, as animações ficam mínimas.";
 "Com um vídeo do YouTube aberto, use \"Assistir no notch\"." = "Com um vídeo do YouTube aberto, use \"Assistir no notch\".";
 "Começar" = "Começar";
+"Compacto" = "Compacto";
 "Conectado ao carregador" = "Conectado ao carregador";
 "Contadores do WhatsApp, Slack, Telegram, Discord e ClickUp." = "Contadores do WhatsApp, Slack, Telegram, Discord e ClickUp.";
 "Contagem regressiva no notch recolhido" = "Contagem regressiva no notch recolhido";
@@ -71,6 +75,7 @@
 "Copiado" = "Copiado";
 "Copiados" = "Copiados";
 "Copie algo e ele aparece aqui" = "Copie algo e ele aparece aqui";
+"Cor de destaque" = "Cor de destaque";
 "Céu limpo" = "Céu limpo";
 "D %lld%%" = "D %lld%%";
 "Deixe vazio para descobrir a cidade pela sua conexão." = "Deixe vazio para descobrir a cidade pela sua conexão.";
@@ -99,6 +104,8 @@
 "Geral" = "Geral";
 "Gesto vertical desligado" = "Gesto vertical desligado";
 "Gestos no trackpad" = "Gestos no trackpad";
+"Grafite" = "Grafite";
+"Grande" = "Grande";
 "Grãos de neve" = "Grãos de neve";
 "Guardar na bandeja" = "Guardar na bandeja";
 "Hooks do Claude Code" = "Hooks do Claude Code";
@@ -106,6 +113,7 @@
 "Instalados" = "Instalados";
 "Instalando…" = "Instalando…";
 "Instalar" = "Instalar";
+"Laranja" = "Laranja";
 "Leve" = "Leve";
 "Limite %@" = "Limite %@";
 "Limpar" = "Limpar";
@@ -130,6 +138,7 @@
 "Neve fraca" = "Neve fraca";
 "No terminal" = "No terminal";
 "No terminal: notchy, notchy stop, notchy settings, notchy doctor." = "No terminal: notchy, notchy stop, notchy settings, notchy doctor.";
+"Normal" = "Normal";
 "Notchy ligado" = "Notchy ligado";
 "Notificações" = "Notificações";
 "Nublado" = "Nublado";
@@ -166,6 +175,9 @@
 "Reinstalar" = "Reinstalar";
 "Remover" = "Remover";
 "Responder no terminal" = "Responder no terminal";
+"Rosa" = "Rosa";
+"Roxo" = "Roxo";
+"Rápida" = "Rápida";
 "Sair do Notchy" = "Sair do Notchy";
 "Sem dados ainda" = "Sem dados ainda";
 "Sem título" = "Sem título";
@@ -175,8 +187,10 @@
 "Som nos avisos" = "Som nos avisos";
 "Spotify e Music sempre aparecem. Com esta opção, o notch também mostra e controla o que toca no navegador, Podcasts, VLC e outros apps, nas versões do macOS que liberam o \"Tocando agora\" para outros apps." = "Spotify e Music sempre aparecem. Com esta opção, o notch também mostra e controla o que toca no navegador, Podcasts, VLC e outros apps, nas versões do macOS que liberam o \"Tocando agora\" para outros apps.";
 "Status das sessões, aprovar pelo notch e uso da cota." = "Status das sessões, aprovar pelo notch e uso da cota.";
+"Suave" = "Suave";
 "Substitui o aviso do macOS quando você usa as teclas de volume e brilho. Precisa da permissão de Acessibilidade." = "Substitui o aviso do macOS quando você usa as teclas de volume e brilho. Precisa da permissão de Acessibilidade.";
 "Só em telas com notch" = "Só em telas com notch";
+"Tamanho do notch aberto" = "Tamanho do notch aberto";
 "Tela com notch ou a principal" = "Tela com notch ou a principal";
 "Tentar de novo" = "Tentar de novo";
 "Teste o trackpad" = "Teste o trackpad";
@@ -191,7 +205,9 @@
 "Use dois dedos com o cursor em cima do notch. No notch aberto, o volume responde em cima do player; nas listas, deslizar continua rolando." = "Use dois dedos com o cursor em cima do notch. No notch aberto, o volume responde em cima do player; nas listas, deslizar continua rolando.";
 "Veja suas próximas reuniões aqui" = "Veja suas próximas reuniões aqui";
 "Velocidade" = "Velocidade";
+"Velocidade das animações" = "Velocidade das animações";
 "Ver no GitHub" = "Ver no GitHub";
+"Verde" = "Verde";
 "Versão" = "Versão";
 "Vibração atual: %@. Clique, deslize com dois dedos para os lados ou para cima e para baixo." = "Vibração atual: %@. Clique, deslize com dois dedos para os lados ou para cima e para baixo.";
 "Vibração do trackpad" = "Vibração do trackpad";

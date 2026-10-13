@@ -97,13 +97,15 @@ struct RateButton: View {
     let rate: Double
     let action: () -> Void
 
+    @Environment(\.notchHighlight) private var highlight
+
     @State var hovering = false
 
     var body: some View {
         Button(action: action) {
             Text(VideoPlayer.rateLabel(rate))
                 .font(.system(size: 11, weight: .bold, design: .rounded).monospacedDigit())
-                .foregroundStyle(rate == 1 ? Color.white.opacity(hovering ? 1 : 0.8) : Color.claude)
+                .foregroundStyle(rate == 1 ? Color.white.opacity(hovering ? 1 : 0.8) : highlight)
                 .contentTransition(.numericText())
                 .frame(minWidth: 34, minHeight: 26)
                 .background(Capsule().fill(.white.opacity(hovering ? 0.12 : 0)))

@@ -59,6 +59,8 @@ struct DropZone: View {
     let title: LocalizedStringKey
     let targeted: Bool
 
+    @Environment(\.notchHighlight) private var highlight
+
     var body: some View {
         VStack(spacing: 10) {
             if let image {
@@ -80,11 +82,11 @@ struct DropZone: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(.white.opacity(targeted ? 0.14 : 0.05))
+                .fill(targeted ? highlight.opacity(0.2) : .white.opacity(0.05))
         )
         .overlay(
             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .strokeBorder(.white.opacity(targeted ? 0.6 : 0.2), style: StrokeStyle(lineWidth: 1.5, dash: [6, 5]))
+                .strokeBorder(targeted ? highlight : .white.opacity(0.2), style: StrokeStyle(lineWidth: 1.5, dash: [6, 5]))
         )
         .scaleEffect(targeted ? 1.02 : 1)
         .animation(.spring(response: 0.25, dampingFraction: 0.7), value: targeted)

@@ -17,6 +17,12 @@ A full pass before each release, and the relevant sections for every pull reques
 - [ ] `notchy settings`, the gear in the notch and opening the app from Spotlight all open settings
 - [ ] Turning a tab off in settings removes it from the notch
 
+## Appearance
+
+- [ ] Compact, Regular and Large change the width and height of the open notch
+- [ ] The accent color shows on the selected tab, volume bar, drop zones and power-off glow
+- [ ] Fast and Relaxed change how quickly the notch opens; with Reduce Motion on, it barely animates
+
 ## Notch
 
 - [ ] Hovering opens it; moving the mouse away closes it

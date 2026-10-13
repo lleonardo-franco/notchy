@@ -91,6 +91,49 @@ struct SettingsView: View {
             }
 
             Section {
+                Picker("Tamanho do notch aberto", selection: $prefs.notchSize) {
+                    ForEach(Preferences.NotchSize.allCases) { size in
+                        Text(size.title).tag(size)
+                    }
+                }
+                .pickerStyle(.segmented)
+                LabeledContent("Cor de destaque") {
+                    HStack(spacing: 8) {
+                        ForEach(Preferences.Highlight.allCases) { option in
+                            Button {
+                                prefs.highlight = option
+                            } label: {
+                                Circle()
+                                    .fill(option.color)
+                                    .frame(width: 18, height: 18)
+                                    .overlay(
+                                        Circle()
+                                            .strokeBorder(.primary.opacity(prefs.highlight == option ? 0.9 : 0), lineWidth: 2)
+                                            .padding(-4)
+                                    )
+                                    .padding(4)
+                                    .contentShape(Circle())
+                            }
+                            .buttonStyle(.plain)
+                            .help(option.title)
+                            .accessibilityLabel(option.title)
+                            .accessibilityAddTraits(prefs.highlight == option ? .isSelected : [])
+                        }
+                    }
+                }
+                Picker("Velocidade das animações", selection: $prefs.animationSpeed) {
+                    ForEach(Preferences.AnimationSpeed.allCases) { speed in
+                        Text(speed.title).tag(speed)
+                    }
+                }
+                .pickerStyle(.segmented)
+            } header: {
+                Text("Aparência")
+            } footer: {
+                Text("Com \"Reduzir movimento\" ligado nos Ajustes do Sistema, as animações ficam mínimas.")
+            }
+
+            Section {
                 Toggle("Deslizar para os lados troca de música", isOn: $prefs.swipeTracks)
                 Picker("Deslizar para a direita", selection: $prefs.swipeRightNext) {
                     Text("Próxima música").tag(true)

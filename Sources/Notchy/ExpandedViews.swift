@@ -40,7 +40,7 @@ struct ExpandedContent: View {
                         ShelfPanel(model: model)
                     }
                 }
-                .frame(height: NotchModel.contentHeight, alignment: .top)
+                .frame(height: model.contentHeight, alignment: .top)
                 .animation(.easeInOut(duration: 0.15), value: tab)
             }
             Color.clear.frame(height: 14)
