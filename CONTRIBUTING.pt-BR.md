@@ -102,6 +102,7 @@ git push --force-with-lease
 
 ```bash
 swift build              # checagem rápida de compilação
+swift test               # testes unitários (precisa do Xcode 16)
 ./build.sh               # gera build/Notchy.app
 ./install.sh             # instala em /Applications, refazendo só o que mudou
 ./install.sh --force     # reinstalação completa
@@ -161,7 +162,9 @@ Mantenha cada commit focado em uma mudança. Um corpo curto explicando o *porqu�
 
 ## Testes
 
-Ainda não há testes automatizados de interface, então o teste manual importa:
+Os testes unitários ficam em `Tests/NotchyTests` e usam [Swift Testing](https://developer.apple.com/xcode/swift-testing/). Rode com `swift test`; eles precisam do Xcode 16, porque só as ferramentas de linha de comando podem não trazer os frameworks de teste. Lógica pura (rótulos de data, gestos, parsing) deve vir com testes.
+
+Não há testes automatizados de interface, então o teste manual continua importando:
 
 1. Rode o `./install.sh` e experimente o que você mudou.
 2. Passe pelas seções relacionadas do [roteiro de teste](TESTING.md).

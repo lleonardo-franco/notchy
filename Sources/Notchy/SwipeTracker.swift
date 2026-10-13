@@ -7,7 +7,7 @@ struct SwipeTracker {
         case vertical
     }
 
-    enum Output {
+    enum Output: Equatable {
         case horizontal(right: Bool)
         case volume(steps: Int)
         case vertical(down: Bool)
@@ -32,17 +32,25 @@ struct SwipeTracker {
 
     mutating func feed(_ event: NSEvent, continuousVertical: Bool) -> Output? {
         guard event.hasPreciseScrollingDeltas, event.momentumPhase.isEmpty else { return nil }
-        if event.phase.contains(.began) {
+        let sign: CGFloat = event.isDirectionInvertedFromDevice ? 1 : -1
+        return feed(
+            dx: event.scrollingDeltaX * sign,
+            dy: event.scrollingDeltaY * sign,
+            began: event.phase.contains(.began),
+            ended: event.phase.contains(.ended) || event.phase.contains(.cancelled),
+            continuousVertical: continuousVertical
+        )
+    }
+
+    mutating func feed(dx: CGFloat, dy: CGFloat, began: Bool = false, ended: Bool = false, continuousVertical: Bool) -> Output? {
+        if began {
             reset()
         }
-        if event.phase.contains(.ended) || event.phase.contains(.cancelled) {
+        if ended {
             reset()
             return nil
         }
 
-        let sign: CGFloat = event.isDirectionInvertedFromDevice ? 1 : -1
-        let dx = event.scrollingDeltaX * sign
-        let dy = event.scrollingDeltaY * sign
         total.dx += dx
         total.dy += dy
 

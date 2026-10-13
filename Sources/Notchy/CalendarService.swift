@@ -41,7 +41,7 @@ final class CalendarService {
     @ObservationIgnored private var observer: NSObjectProtocol?
     @ObservationIgnored private var reminded: Set<String> = []
 
-    private static let linkPattern = try! NSRegularExpression(
+    nonisolated(unsafe) private static let linkPattern = try! NSRegularExpression(
         pattern: #"https?://[^\s<>"']*(zoom\.us/(j|my|w|s)/|meet\.google\.com/|teams\.microsoft\.com/l/meetup-join|teams\.live\.com/meet|whereby\.com/|webex\.com/)[^\s<>"']*"#,
         options: [.caseInsensitive]
     )
@@ -153,7 +153,10 @@ final class CalendarService {
     }
 
     private static func meetingLink(_ event: EKEvent) -> URL? {
-        let sources = [event.url?.absoluteString, event.location, event.notes].compactMap { $0 }
+        meetingLink(in: [event.url?.absoluteString, event.location, event.notes].compactMap { $0 })
+    }
+
+    nonisolated static func meetingLink(in sources: [String]) -> URL? {
         for text in sources {
             let range = NSRange(text.startIndex..., in: text)
             if let match = linkPattern.firstMatch(in: text, range: range),

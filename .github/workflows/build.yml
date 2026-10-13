@@ -28,6 +28,9 @@ jobs:
       - name: Compile
         run: swift build -c release
 
+      - name: Tests
+        run: swift test
+
       - name: App bundle
         run: ./build.sh
 
