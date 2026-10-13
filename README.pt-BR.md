@@ -116,7 +116,7 @@ O instalador compila o app, copia para `/Applications`, conecta os hooks do Clau
 
 Como toda versão é assinada com o mesmo certificado, o macOS mantém as permissões entre as atualizações, e as próximas instalações só refazem o que mudou.
 
-**Atualize** com `notchy update`. **Remova tudo** com `notchy uninstall`.
+**Atualize** com `notchy update`, ou em Ajustes → Sobre quando o Notchy avisar que saiu uma versão nova. **Remova tudo** com `notchy uninstall`.
 
 ### Com o Homebrew
 
@@ -204,7 +204,7 @@ Para confiar no certificado local de assinatura e deixar o <code>codesign</code>
 <details>
 <summary><b>Ele manda meus dados para algum lugar?</b></summary>
 <br>
-Não. As únicas chamadas de rede são para o Open‑Meteo e um serviço de localização por IP, para o clima, e para o YouTube quando você assiste um vídeo no notch. O histórico de copiados fica na memória e some quando o app fecha.
+Não. As únicas chamadas de rede são para o Open‑Meteo e um serviço de localização por IP, para o clima, para o YouTube quando você assiste um vídeo no notch, e para o GitHub para procurar versões novas (dá para desligar). O histórico de copiados fica na memória e some quando o app fecha.
 </details>
 
 <details>

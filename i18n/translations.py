@@ -262,6 +262,17 @@ T = {
 "Velocidade das animações": ("Animation speed", "Velocidad de las animaciones"),
 "Aparência": ("Appearance", "Apariencia"),
 "Com \"Reduzir movimento\" ligado nos Ajustes do Sistema, as animações ficam mínimas.": ("With \"Reduce motion\" on in System Settings, animations are kept to a minimum.", "Con \"Reducir movimiento\" activado en los Ajustes del Sistema, las animaciones son mínimas."),
+"Notchy %@ disponível": ("Notchy %@ is available", "Notchy %@ disponible"),
+"atualize nos ajustes": ("update from settings", "actualiza desde los ajustes"),
+"Novidades": ("What's new", "Novedades"),
+"Atualizar no Terminal": ("Update in Terminal", "Actualizar en Terminal"),
+"Versão %@ disponível": ("Version %@ available", "Versión %@ disponible"),
+"Procurar agora": ("Check now", "Buscar ahora"),
+"Procurar atualizações automaticamente": ("Check for updates automatically", "Buscar actualizaciones automáticamente"),
+"Procurando atualizações…": ("Checking for updates…", "Buscando actualizaciones…"),
+"Não consegui procurar atualizações": ("Couldn't check for updates", "No se pudieron buscar actualizaciones"),
+"Você está na versão mais nova": ("You're on the latest version", "Tienes la versión más reciente"),
+"Atualizações": ("Updates", "Actualizaciones"),
 }
 
 INFO = {

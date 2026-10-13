@@ -116,6 +116,7 @@ final class NotchModel {
     let permissions = PermissionCenter()
     let shelf = ShelfService()
     let power = PowerService()
+    let updates = UpdateService()
 
     func start() {
         claude.onEvent = { [weak self] event in
@@ -163,6 +164,17 @@ final class NotchModel {
         browser.start()
         bluetooth.start()
         power.start()
+        updates.onFound = { [weak self] release in
+            self?.flash(.info, title: String(localized: "Notchy \(release.version) disponível"), subtitle: String(localized: "atualize nos ajustes"))
+        }
+        if prefs.checkUpdates {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 8) { [weak self] in
+                MainActor.assumeIsolated {
+                    guard let self, self.prefs.checkUpdates else { return }
+                    self.updates.start()
+                }
+            }
+        }
         permissions.start(calendar: calendar)
         mediaKeys.handler = { [weak self] key, isRepeat, modifiers in
             self?.handleMediaKey(key, fine: modifiers.contains(.shift) && modifiers.contains(.option)) ?? false
@@ -185,6 +197,15 @@ final class NotchModel {
         claude.stop()
         mediaKeys.stop()
         music.setOtherPlayers(false)
+    }
+
+    func setCheckUpdates(_ enabled: Bool) {
+        prefs.checkUpdates = enabled
+        if enabled {
+            updates.start()
+        } else {
+            updates.stop()
+        }
     }
 
     func setLevelHUD(_ enabled: Bool) {

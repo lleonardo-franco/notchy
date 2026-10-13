@@ -41,6 +41,8 @@
 "Ativada" = "On";
 "Ativar" = "Turn on";
 "Atualizar" = "Refresh";
+"Atualizar no Terminal" = "Update in Terminal";
+"Atualizações" = "Updates";
 "Até logo" = "See you";
 "Aumentar" = "Larger";
 "Automática, pela sua conexão" = "Automatic, from your connection";
@@ -139,11 +141,14 @@
 "No terminal" = "In the terminal";
 "No terminal: notchy, notchy stop, notchy settings, notchy doctor." = "In the terminal: notchy, notchy stop, notchy settings, notchy doctor.";
 "Normal" = "Regular";
+"Notchy %@ disponível" = "Notchy %@ is available";
 "Notchy ligado" = "Notchy is on";
 "Notificações" = "Notifications";
+"Novidades" = "What's new";
 "Nublado" = "Cloudy";
 "Não avisar" = "Don't alert";
 "Não consegui carregar o clima" = "Couldn't load the weather";
+"Não consegui procurar atualizações" = "Couldn't check for updates";
 "Não deu para tocar este vídeo" = "Couldn't play this video";
 "Não instalado" = "Not installed";
 "Não instalados" = "Not installed";
@@ -167,6 +172,9 @@
 "Permitido" = "Allowed";
 "Permitir" = "Allow";
 "Permitir acesso ao Calendário" = "Allow Calendar access";
+"Procurando atualizações…" = "Checking for updates…";
+"Procurar agora" = "Check now";
+"Procurar atualizações automaticamente" = "Check for updates automatically";
 "Pronto" = "Done";
 "Pronto · %@" = "Done · %@";
 "Próxima música" = "Next track";
@@ -209,8 +217,10 @@
 "Ver no GitHub" = "View on GitHub";
 "Verde" = "Green";
 "Versão" = "Version";
+"Versão %@ disponível" = "Version %@ available";
 "Vibração atual: %@. Clique, deslize com dois dedos para os lados ou para cima e para baixo." = "Current haptics: %@. Click, or swipe with two fingers sideways or up and down.";
 "Vibração do trackpad" = "Trackpad haptics";
+"Você está na versão mais nova" = "You're on the latest version";
 "Voltar 10 s" = "Back 10 s";
 "Voltar para o navegador" = "Back to the browser";
 "Voltar para o navegador no mesmo ponto" = "Back to the browser at the same spot";
@@ -222,6 +232,7 @@
 "agora" = "now";
 "agora · termina às %@" = "now · ends at %@";
 "amanhã" = "tomorrow";
+"atualize nos ajustes" = "update from settings";
 "bateria em %lld%%" = "battery at %lld%%";
 "carregada" = "charged";
 "carregando" = "charging";

@@ -260,6 +260,36 @@ struct SettingsView: View {
 
             Section("Sobre") {
                 LabeledContent("Versão", value: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "—")
+                if let release = model.updates.available {
+                    LabeledContent {
+                        HStack {
+                            Button("Novidades") {
+                                model.updates.openNotes()
+                            }
+                            Button("Atualizar no Terminal") {
+                                model.updates.updateInTerminal()
+                            }
+                            .keyboardShortcut(.defaultAction)
+                        }
+                    } label: {
+                        Label("Versão \(release.version) disponível", systemImage: "arrow.down.circle.fill")
+                            .foregroundStyle(.blue)
+                    }
+                } else {
+                    LabeledContent {
+                        Button("Procurar agora") {
+                            model.updates.check()
+                        }
+                        .disabled(model.updates.checking)
+                    } label: {
+                        Text(updateStatus)
+                    }
+                }
+                Toggle("Procurar atualizações automaticamente", isOn: Binding {
+                    model.prefs.checkUpdates
+                } set: { enabled in
+                    model.setCheckUpdates(enabled)
+                })
                 LabeledContent("No terminal", value: "notchy · stop · settings · doctor · update")
                 HStack {
                     Button("Mostrar boas-vindas e permissões") {
@@ -313,6 +343,13 @@ struct SettingsView: View {
             return model.weather.isLoading ? String(localized: "Carregando…") : String(localized: "Sem dados ainda")
         }
         return String(localized: "Agora: \(snapshot.city), \(Int(snapshot.temperature.rounded()))°")
+    }
+
+    private var updateStatus: LocalizedStringKey {
+        if model.updates.checking { return "Procurando atualizações…" }
+        if model.updates.failed { return "Não consegui procurar atualizações" }
+        if model.updates.lastChecked != nil { return "Você está na versão mais nova" }
+        return "Atualizações"
     }
 
     private var hooksButtonTitle: LocalizedStringKey {
