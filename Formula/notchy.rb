@@ -1,8 +1,8 @@
 class Notchy < Formula
   desc "Music, Claude Code, calendar and notifications in the MacBook notch"
   homepage "https://github.com/lleonardo-franco/notchy"
-  url "https://github.com/lleonardo-franco/notchy/archive/refs/tags/v1.2.0.tar.gz"
-  sha256 "e8afc92af83191309f4a1c31dea8e8073f8ae3385bcc32d664fdb80c92d55b1e"
+  url "https://github.com/lleonardo-franco/notchy/archive/refs/tags/v1.3.0.tar.gz"
+  sha256 "c4369ff77df0697d2881f9e752267c94bf7c9c9856a385f1a1a224c3f204aa9b"
   license "MIT"
   head "https://github.com/lleonardo-franco/notchy.git", branch: "main"
 
