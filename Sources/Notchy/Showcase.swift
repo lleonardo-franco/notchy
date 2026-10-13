@@ -61,7 +61,7 @@ enum Showcase {
                         createdAt: Date().timeIntervalSince1970
                     )],
                     usage: copy.usage,
-                    contexts: ["notchy": 0.37]
+                    contexts: ["notchy": 37, "api": 61]
                 )
                 model.demo(expanded: false)
             },
@@ -116,7 +116,7 @@ enum Showcase {
             playing: true,
             position: 75
         )
-        model.claude.demo(sessions: copy.sessions(), usage: copy.usage, contexts: ["notchy": 0.37, "api": 0.61])
+        model.claude.demo(sessions: copy.sessions(), usage: copy.usage, contexts: ["notchy": 37, "api": 61])
         model.calendar.demo(copy.events())
         model.weather.demo(copy.weather())
         model.bluetooth.demo(copy.devices)
@@ -278,7 +278,7 @@ struct DemoDesktop: View {
             NotchView(model: model)
             if case .dragging(let url) = overlay {
                 DraggedFile(url: url)
-                    .offset(x: -70, y: 215)
+                    .offset(x: 40, y: 228)
             }
         }
         .frame(width: Showcase.scene.width, height: Showcase.scene.height)
@@ -386,7 +386,7 @@ struct ShowcaseCopy {
         switch language {
         case "en":
             return ShowcaseCopy(
-                menus: ["File", "Edit", "View", "Go", "Window", "Help"],
+                menus: ["File", "Edit", "View", "Go"],
                 meeting: "Design review",
                 lunch: "Lunch with the team",
                 planning: "Sprint planning",
@@ -397,7 +397,7 @@ struct ShowcaseCopy {
             )
         case "es":
             return ShowcaseCopy(
-                menus: ["Archivo", "Edición", "Visualización", "Ir", "Ventana", "Ayuda"],
+                menus: ["Archivo", "Edición", "Ver", "Ir"],
                 meeting: "Revisión de diseño",
                 lunch: "Comida con el equipo",
                 planning: "Planificación del sprint",
@@ -408,7 +408,7 @@ struct ShowcaseCopy {
             )
         default:
             return ShowcaseCopy(
-                menus: ["Arquivo", "Editar", "Visualizar", "Ir", "Janela", "Ajuda"],
+                menus: ["Arquivo", "Editar", "Visualizar", "Ir"],
                 meeting: "Revisão de design",
                 lunch: "Almoço com o time",
                 planning: "Planejamento da sprint",
@@ -423,9 +423,9 @@ struct ShowcaseCopy {
     func sessions() -> [ClaudeSession] {
         let now = Date().timeIntervalSince1970
         return [
-            ClaudeSession(id: "notchy", cwd: "/Users/demo/code/notchy", status: .working, detail: "$ swift test", prompt: nil, promptAt: now - 154, tty: nil, claudePid: nil, app: nil, termProgram: nil, updatedAt: now),
-            ClaudeSession(id: "api", cwd: "/Users/demo/code/api-gateway", status: .waiting, detail: nil, prompt: nil, promptAt: now - 610, tty: nil, claudePid: nil, app: nil, termProgram: nil, updatedAt: now),
-            ClaudeSession(id: "landing", cwd: "/Users/demo/code/landing-page", status: .done, detail: nil, prompt: doneprompt, promptAt: now - 900, tty: nil, claudePid: nil, app: nil, termProgram: nil, updatedAt: now - 30)
+            ClaudeSession(id: "notchy", cwd: "/Users/demo/code/notchy", status: .working, detail: "$ swift test", prompt: nil, promptAt: now - 154, tty: nil, claudePid: nil, app: nil, termProgram: nil, updatedAt: now - 8),
+            ClaudeSession(id: "api", cwd: "/Users/demo/code/api-gateway", status: .waiting, detail: nil, prompt: nil, promptAt: now - 610, tty: nil, claudePid: nil, app: nil, termProgram: nil, updatedAt: now - 74),
+            ClaudeSession(id: "landing", cwd: "/Users/demo/code/landing-page", status: .done, detail: nil, prompt: doneprompt, promptAt: now - 900, tty: nil, claudePid: nil, app: nil, termProgram: nil, updatedAt: now - 240)
         ]
     }
 

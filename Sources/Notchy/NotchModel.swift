@@ -55,6 +55,17 @@ final class NotchModel {
             }
         }
 
+        var symbol: String {
+            switch self {
+            case .claude: return "asterisk"
+            case .agenda: return "calendar"
+            case .weather: return "cloud.sun.fill"
+            case .clipboard: return "doc.on.clipboard"
+            case .bluetooth: return "headphones"
+            case .shelf: return "tray.fill"
+            }
+        }
+
         var settingsTitle: String {
             switch self {
             case .claude: return "Claude Code"
