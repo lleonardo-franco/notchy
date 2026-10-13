@@ -57,3 +57,12 @@ jobs:
 
       - name: Python hooks
         run: /usr/bin/python3 -m py_compile hooks/*.py
+
+      - name: Homebrew formula
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+        run: |
+          ruby -c Formula/notchy.rb
+          brew tap-new --no-git local/notchy
+          cp Formula/notchy.rb "$(brew --repository local/notchy)/Formula/notchy.rb"
+          brew audit --formula local/notchy/notchy
