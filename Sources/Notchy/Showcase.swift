@@ -111,7 +111,7 @@ enum Showcase {
         let model = NotchModel()
         model.demoScreen(NSRect(origin: .zero, size: scene), notchWidth: 186, notchHeight: 32)
         model.music.demo(
-            Track(id: "demo", title: "Late Night Drive", artist: "Aurora Fields", album: "Neon Coast", duration: 245, source: .music),
+            Track(id: "demo", title: "Money Trees", artist: "Kendrick Lamar", album: "good kid, m.A.A.d city", duration: 386, source: .music),
             artwork: artwork(),
             playing: true,
             position: 75
