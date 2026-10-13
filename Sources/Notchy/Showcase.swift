@@ -320,7 +320,6 @@ struct MenuBar: View {
             .padding(.leading, 18)
             Spacer(minLength: notchWidth + 40)
             HStack(spacing: 18) {
-                Image(systemName: "battery.75percent")
                 Image(systemName: "wifi")
                 Image(systemName: "magnifyingglass")
                 Image(systemName: "switch.2")
@@ -386,7 +385,7 @@ struct ShowcaseCopy {
         switch language {
         case "en":
             return ShowcaseCopy(
-                menus: ["File", "Edit", "View", "Go"],
+                menus: ["File", "Edit", "View"],
                 meeting: "Design review",
                 lunch: "Lunch with the team",
                 planning: "Sprint planning",
@@ -397,7 +396,7 @@ struct ShowcaseCopy {
             )
         case "es":
             return ShowcaseCopy(
-                menus: ["Archivo", "Edición", "Ver", "Ir"],
+                menus: ["Archivo", "Edición"],
                 meeting: "Revisión de diseño",
                 lunch: "Comida con el equipo",
                 planning: "Planificación del sprint",
@@ -408,7 +407,7 @@ struct ShowcaseCopy {
             )
         default:
             return ShowcaseCopy(
-                menus: ["Arquivo", "Editar", "Visualizar", "Ir"],
+                menus: ["Arquivo", "Editar"],
                 meeting: "Revisão de design",
                 lunch: "Almoço com o time",
                 planning: "Planejamento da sprint",
