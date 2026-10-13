@@ -273,6 +273,8 @@ T = {
 "Não consegui procurar atualizações": ("Couldn't check for updates", "No se pudieron buscar actualizaciones"),
 "Você está na versão mais nova": ("You're on the latest version", "Tienes la versión más reciente"),
 "Atualizações": ("Updates", "Actualizaciones"),
+"Relatar problema…": ("Report a problem…", "Informar de un problema…"),
+"Copiar diagnóstico": ("Copy diagnostics", "Copiar diagnóstico"),
 }
 
 INFO = {

@@ -22,7 +22,7 @@ Thanks for wanting to help! Notchy is a small project and every contribution cou
 
 | | How |
 |---|---|
-| 🐞 Report a bug | [Open a bug report](https://github.com/lleonardo-franco/notchy/issues/new?template=bug_report.yml) with the output of `notchy doctor` |
+| 🐞 Report a bug | Use **Settings → About → Report a problem…**, which fills in a bug report with diagnostics, or [open one](https://github.com/lleonardo-franco/notchy/issues/new?template=bug_report.yml) with the output of `notchy doctor` |
 | 💡 Suggest a feature | [Open a feature request](https://github.com/lleonardo-franco/notchy/issues/new?template=feature_request.yml) describing the problem it solves |
 | 🌍 Translate | Translate the docs or help bring the interface to more languages |
 | 📝 Improve the docs | Fix anything unclear, outdated or missing |

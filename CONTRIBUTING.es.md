@@ -22,7 +22,7 @@
 
 | | Cómo |
 |---|---|
-| 🐞 Reportar un error | [Abre un reporte de error](https://github.com/lleonardo-franco/notchy/issues/new?template=bug_report.yml) con la salida de `notchy doctor` |
+| 🐞 Reportar un error | Usa **Ajustes → Acerca de → Informar de un problema…**, que rellena el reporte con el diagnóstico, o [abre uno](https://github.com/lleonardo-franco/notchy/issues/new?template=bug_report.yml) con la salida de `notchy doctor` |
 | 💡 Proponer una función | [Abre una propuesta](https://github.com/lleonardo-franco/notchy/issues/new?template=feature_request.yml) describiendo el problema que resuelve |
 | 🌍 Traducir | Traduce la documentación o ayuda a llevar la interfaz a más idiomas |
 | 📝 Mejorar la documentación | Corrige lo que esté confuso, desactualizado o falte |
