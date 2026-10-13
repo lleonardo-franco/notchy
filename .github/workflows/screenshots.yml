@@ -21,7 +21,8 @@ jobs:
 
       - name: Build showcase
         run: |
-          swift build
+          set -o pipefail
+          swift build 2>&1 | tee build.log || { grep -E "error:" build.log | sort -u | head -30 | sed 's/^/::error::/'; exit 1; }
           NOTCHY_CONFIGURATION=debug scripts/bundle.sh build/Showcase.app
 
       - name: Render
@@ -32,8 +33,9 @@ jobs:
             language="${pair%%:*}"
             locale="${pair##*:}"
             NOTCHY_SHOWCASE="$PWD/docs/screenshots/raw/$language" \
-              build/Showcase.app/Contents/MacOS/Notchy -AppleLanguages "($language)" -AppleLocale "$locale"
+              build/Showcase.app/Contents/MacOS/Notchy -AppleLanguages "($language)" -AppleLocale "$locale" 2>&1 | tee -a render.log
           done
+          grep "showcase" render.log | sed 's/^/::notice::/'
           ls -la docs/screenshots/raw/*
 
       - name: Commit
