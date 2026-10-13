@@ -74,7 +74,8 @@ body:
   - type: textarea
     id: doctor
     attributes:
-      label: Output of `notchy doctor`
+      label: Diagnostics
+      description: Filled in automatically by Settings → About → Report a problem, or paste the output of `notchy doctor`
       render: shell
 
   - type: textarea

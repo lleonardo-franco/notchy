@@ -28,6 +28,8 @@ final class SettingsWindow {
 struct SettingsView: View {
     let model: NotchModel
 
+    @State var copiedReport = false
+
     @State var launchAtLogin = SMAppService.mainApp.status == .enabled
     @State var city = UserDefaults.standard.string(forKey: WeatherService.cityKey) ?? ""
     @State var accessibility = AXIsProcessTrusted()
@@ -297,6 +299,19 @@ struct SettingsView: View {
                     }
                     Spacer()
                     Link("Ver no GitHub", destination: URL(string: "https://github.com/lleonardo-franco/notchy")!)
+                }
+                HStack {
+                    Button("Relatar problema…") {
+                        Diagnostics.reportProblem(model)
+                    }
+                    Button(copiedReport ? LocalizedStringKey("Copiado") : LocalizedStringKey("Copiar diagnóstico")) {
+                        Diagnostics.copyReport(model)
+                        copiedReport = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            copiedReport = false
+                        }
+                    }
+                    Spacer()
                 }
             }
         }

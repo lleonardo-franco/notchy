@@ -76,6 +76,7 @@
 "Controlar o %@" = "Control %@";
 "Copiado" = "Copied";
 "Copiados" = "Clipboard";
+"Copiar diagnóstico" = "Copy diagnostics";
 "Copie algo e ele aparece aqui" = "Copy something and it shows up here";
 "Cor de destaque" = "Accent color";
 "Céu limpo" = "Clear sky";
@@ -181,6 +182,7 @@
 "Próximas reuniões, botão Entrar e contagem regressiva." = "Upcoming meetings, Join button and countdown.";
 "Quase limpo" = "Mostly clear";
 "Reinstalar" = "Reinstall";
+"Relatar problema…" = "Report a problem…";
 "Remover" = "Remove";
 "Responder no terminal" = "Answer in terminal";
 "Rosa" = "Pink";
