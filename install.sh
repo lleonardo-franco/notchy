@@ -413,7 +413,7 @@ elif [ -d /usr/local/bin ] && [ -w /usr/local/bin ]; then
     BIN_DIR="/usr/local/bin"
 fi
 NEED_PATH=0
-if [[ ":$PATH:" != *":$BIN_DIR:"* ]] && ! grep -qs "$BIN_DIR" "$HOME/.zshrc"; then
+if [ "${NOTCHY_HOMEBREW:-0}" != "1" ] && [[ ":$PATH:" != *":$BIN_DIR:"* ]] && ! grep -qs "$BIN_DIR" "$HOME/.zshrc"; then
     NEED_PATH=1
 fi
 
@@ -437,7 +437,7 @@ else
 fi
 
 mkdir -p "$STATE_DIR"
-pwd > "$STATE_DIR/source"
+echo "${NOTCHY_SOURCE:-$(pwd)}" > "$STATE_DIR/source"
 
 STARTED=$(date +%s)
 CHANGED=0
@@ -472,7 +472,9 @@ else
     run 4 step_hooks
 fi
 
-if [ $FORCE -eq 0 ] && cmp -s bin/notchy "$BIN_DIR/notchy"; then
+if [ "${NOTCHY_HOMEBREW:-0}" = "1" ]; then
+    skip 5 "gerenciado pelo Homebrew"
+elif [ $FORCE -eq 0 ] && cmp -s bin/notchy "$BIN_DIR/notchy"; then
     skip 5 "já instalado"
 else
     CHANGED=1

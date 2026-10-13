@@ -4,6 +4,7 @@ BUNDLE="io.github.lleonardo-franco.notchy"
 IDENTITY="Notchy Local Signing"
 STATE="$HOME/Library/Application Support/Notchy"
 REPO_URL="https://github.com/lleonardo-franco/notchy.git"
+HOMEBREW="${NOTCHY_HOMEBREW:-0}"
 
 running() {
     pgrep -x Notchy >/dev/null
@@ -27,6 +28,7 @@ usage() {
 uso: notchy [comando]
 
   (nada) / start     abre o Notchy
+  setup              compila e instala o app (use depois de instalar ou atualizar pelo Homebrew)
   stop               fecha
   restart            reinicia
   status             rodando ou parado
@@ -93,7 +95,29 @@ PY
     fi
 }
 
+source_dir() {
+    if [ -n "${NOTCHY_SOURCE:-}" ] && [ -f "$NOTCHY_SOURCE/install.sh" ]; then
+        echo "$NOTCHY_SOURCE"
+    elif [ -f "$STATE/source" ] && [ -f "$(cat "$STATE/source")/install.sh" ]; then
+        cat "$STATE/source"
+    fi
+}
+
+setup() {
+    local source
+    source="$(source_dir)"
+    if [ -z "$source" ]; then
+        echo "Não achei o código-fonte do Notchy. Rode notchy update ou instale pelo Homebrew."
+        exit 1
+    fi
+    exec "$source/install.sh" "$@"
+}
+
 update() {
+    if [ "$HOMEBREW" = "1" ]; then
+        brew upgrade notchy || brew upgrade --fetch-HEAD notchy || true
+        exec "$(source_dir)/install.sh"
+    fi
     local source=""
     [ -f "$STATE/source" ] && source="$(cat "$STATE/source")"
     if [ -z "$source" ] || [ ! -d "$source/.git" ]; then
@@ -153,7 +177,11 @@ uninstall() {
         esac
     fi
 
-    rm -f "$0" 2>/dev/null && echo "Comando notchy removido."
+    if [ "$HOMEBREW" = "1" ]; then
+        echo "Para remover o comando: brew uninstall notchy"
+    else
+        rm -f "$0" 2>/dev/null && echo "Comando notchy removido."
+    fi
     echo "Pronto. Obrigado por usar o Notchy."
 }
 
@@ -189,6 +217,10 @@ case "${1:-start}" in
         ;;
     doctor|diagnostico)
         doctor
+        ;;
+    setup|install|instalar)
+        shift
+        setup "$@"
         ;;
     update|atualizar)
         update
