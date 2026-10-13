@@ -58,7 +58,7 @@ Notchy convierte el notch en un pequeño centro de control. Recogido, muestra so
   <tr>
     <td valign="top">
       <h3>▶️ YouTube en el notch</h3>
-      ¿Tienes un vídeo en Safari, Chrome, Brave, Edge o Chromium? Envíalo a un mini reproductor bajo el notch. Sigue en el mismo segundo y vuelve a la pestaña cuando termines.
+      ¿Tienes un vídeo en Safari, Chrome, Brave, Edge o Chromium? Envíalo a un mini reproductor bajo el notch. Sigue en el mismo segundo y a la misma velocidad, y vuelve a la pestaña cuando termines.
     </td>
     <td valign="top">
       <h3>📅 Calendario</h3>

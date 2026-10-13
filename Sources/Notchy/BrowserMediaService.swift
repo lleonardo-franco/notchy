@@ -18,6 +18,7 @@ struct BrowserVideo: Equatable {
     let isActive: Bool
     let playing: Bool?
     let time: Double?
+    let rate: Double?
 
     var cleanTitle: String {
         var text = title
@@ -112,7 +113,7 @@ final class BrowserMediaService {
     ]
 
     nonisolated private static let pauseScript = "(function(){var v=document.querySelector('video');if(v)v.pause()})()"
-    nonisolated private static let stateScript = "(function(){var v=document.querySelector('video');return v?(v.paused?'0':'1')+'|'+v.currentTime:''})()"
+    nonisolated private static let stateScript = "(function(){var v=document.querySelector('video');return v?(v.paused?'0':'1')+'|'+v.currentTime+'|'+v.playbackRate:''})()"
     nonisolated private static let urlTest = #"u contains "youtube.com/watch" or u contains "youtu.be/" or u contains "youtube.com/shorts/" or u contains "youtube.com/live/""#
 
     private(set) var current: BrowserVideo?
@@ -182,9 +183,10 @@ final class BrowserMediaService {
         Self.perform(video, javascript: Self.pauseScript, activate: false)
     }
 
-    func resume(_ video: BrowserVideo, at time: Double) {
+    func resume(_ video: BrowserVideo, at time: Double, rate: Double) {
         let seconds = String(format: "%.2f", max(time, 0))
-        Self.perform(video, javascript: "(function(){var v=document.querySelector('video');if(v){v.currentTime=\(seconds);v.play()}})()", activate: true)
+        let speed = String(format: "%.2f", min(max(rate, 0.25), 4))
+        Self.perform(video, javascript: "(function(){var v=document.querySelector('video');if(v){v.currentTime=\(seconds);v.playbackRate=\(speed);v.play()}})()", activate: true)
     }
 
     private func apply(_ videos: [BrowserVideo], blocked: Set<String>) {
@@ -323,7 +325,8 @@ final class BrowserMediaService {
                 videoID: videoID,
                 isActive: item.atIndex(4)?.booleanValue ?? false,
                 playing: state.playing,
-                time: state.time
+                time: state.time,
+                rate: state.rate
             ))
         }
         return (videos, blocked)
@@ -382,18 +385,20 @@ final class BrowserMediaService {
                 videoID: videoID,
                 isActive: item.atIndex(5)?.booleanValue ?? false,
                 playing: state.playing,
-                time: state.time
+                time: state.time,
+                rate: state.rate
             ))
         }
         return (videos, blocked)
     }
 
-    nonisolated private static func parseState(_ info: String) -> (playing: Bool?, time: Double?, blocked: Bool) {
+    nonisolated static func parseState(_ info: String) -> (playing: Bool?, time: Double?, rate: Double?, blocked: Bool) {
         if info == "nojs" {
-            return (nil, nil, true)
+            return (nil, nil, nil, true)
         }
         let parts = info.split(separator: "|")
-        guard parts.count == 2 else { return (nil, nil, false) }
-        return (parts[0] == "1", Double(parts[1]), false)
+        guard parts.count >= 2 else { return (nil, nil, nil, false) }
+        let rate = parts.count >= 3 ? Double(parts[2]) : nil
+        return (parts[0] == "1", Double(parts[1]), rate, false)
     }
 }

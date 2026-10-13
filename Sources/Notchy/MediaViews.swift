@@ -68,6 +68,9 @@ struct VideoContent: View {
                     .truncationMode(.tail)
             }
             Spacer(minLength: 6)
+            RateButton(rate: player.rate) {
+                player.cycleRate()
+            }
             IconButton(symbol: "gobackward.10", size: 12, help: "Voltar 10 s") {
                 player.seek(by: -10)
             }
@@ -87,6 +90,29 @@ struct VideoContent: View {
                 model.closeVideo()
             }
         }
+    }
+}
+
+struct RateButton: View {
+    let rate: Double
+    let action: () -> Void
+
+    @State var hovering = false
+
+    var body: some View {
+        Button(action: action) {
+            Text(VideoPlayer.rateLabel(rate))
+                .font(.system(size: 11, weight: .bold, design: .rounded).monospacedDigit())
+                .foregroundStyle(rate == 1 ? Color.white.opacity(hovering ? 1 : 0.8) : Color.claude)
+                .contentTransition(.numericText())
+                .frame(minWidth: 34, minHeight: 26)
+                .background(Capsule().fill(.white.opacity(hovering ? 0.12 : 0)))
+                .contentShape(Capsule())
+        }
+        .buttonStyle(.plain)
+        .onHover { hovering = $0 }
+        .animation(.snappy, value: rate)
+        .help("Velocidade")
     }
 }
 

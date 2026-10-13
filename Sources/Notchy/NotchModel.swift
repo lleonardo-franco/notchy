@@ -275,7 +275,7 @@ final class NotchModel {
         browser.pause(source)
         peek = nil
         state = .collapsed
-        video.play(id: source.videoID, start: start, title: source.cleanTitle, source: source)
+        video.play(id: source.videoID, start: start, title: source.cleanTitle, source: source, rate: source.rate ?? 1)
     }
 
     func closeVideo() {
@@ -291,7 +291,7 @@ final class NotchModel {
         }
         Task {
             let time = await video.currentTime()
-            browser.resume(source, at: time)
+            browser.resume(source, at: time, rate: video.rate)
             video.stop()
             NotificationCenter.default.post(name: Preferences.layoutChanged, object: nil)
         }
