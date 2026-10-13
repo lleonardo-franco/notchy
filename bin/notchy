@@ -1,0 +1,228 @@
+#!/bin/bash
+APP="/Applications/Notchy.app"
+BUNDLE="io.github.lleonardo-franco.notchy"
+IDENTITY="Notchy Local Signing"
+STATE="$HOME/Library/Application Support/Notchy"
+REPO_URL="https://github.com/lleonardo-franco/notchy.git"
+
+running() {
+    pgrep -x Notchy >/dev/null
+}
+
+stop() {
+    osascript -e "tell application id \"$BUNDLE\" to quit" >/dev/null 2>&1 || pkill -x Notchy
+    for _ in $(seq 1 30); do
+        running || return 0
+        sleep 0.2
+    done
+    pkill -x Notchy
+}
+
+installed_version() {
+    defaults read "$APP/Contents/Info" CFBundleShortVersionString 2>/dev/null
+}
+
+usage() {
+    cat <<USAGE
+uso: notchy [comando]
+
+  (nada) / start     abre o Notchy
+  stop               fecha
+  restart            reinicia
+  status             rodando ou parado
+  settings           abre os ajustes
+  welcome            abre as boas-vindas e as permissões
+  city "Cidade"      define a cidade do clima (city auto volta ao automático)
+  doctor             diagnóstico de assinatura, certificado e permissões
+  update             baixa a versão mais nova do GitHub e instala
+  uninstall          remove o Notchy, os hooks do Claude Code e o comando
+  version            versão instalada
+USAGE
+}
+
+doctor() {
+    echo "Notchy · diagnóstico"
+    echo
+    if [ -d "$APP" ]; then
+        echo "App:          $APP (v$(installed_version))"
+        info=$(codesign -dvv "$APP" 2>&1)
+        if grep -q "Authority=$IDENTITY" <<<"$info"; then
+            echo "Assinatura:   $IDENTITY (estável)"
+        elif grep -q "Signature=adhoc" <<<"$info"; then
+            echo "Assinatura:   ad-hoc (instável: o macOS pede as permissões a cada atualização)"
+        else
+            echo "Assinatura:   $(grep -m1 Authority <<<"$info" || echo desconhecida)"
+        fi
+        echo "Requisito:    $(codesign -dr - "$APP" 2>&1 | sed -n 's/^designated => //p')"
+    else
+        echo "App:          não instalado"
+    fi
+    if security find-identity -v -p codesigning 2>/dev/null | grep -q "\"$IDENTITY\""; then
+        echo "Certificado:  válido para assinar"
+    elif security find-certificate -c "$IDENTITY" >/dev/null 2>&1; then
+        echo "Certificado:  existe, mas o macOS não confia nele para assinar"
+    else
+        echo "Certificado:  não existe"
+    fi
+    if [ -f "$STATE/keychain-ready" ]; then
+        echo "Keychain:     liberado para o codesign"
+    else
+        echo "Keychain:     ainda não liberado"
+    fi
+    if running; then echo "Rodando:      sim"; else echo "Rodando:      não"; fi
+    if [ -f "$STATE/source" ]; then
+        echo "Código-fonte: $(cat "$STATE/source")"
+    fi
+    if [ -f "$STATE/status.json" ]; then
+        echo
+        echo "Permissões (informadas pelo app):"
+        /usr/bin/python3 - "$STATE/status.json" <<'PY'
+import json, sys
+labels = {"granted": "permitido", "denied": "negado", "notDetermined": "não pedido", "notRunning": "app fechado", "notInstalled": "não instalado"}
+data = json.load(open(sys.argv[1]))
+def show(name, value):
+    print(f"  {name:<16}{labels.get(value, value)}")
+show("Acessibilidade", data.get("accessibility", ""))
+show("Calendário", data.get("calendar", ""))
+show("Bluetooth", data.get("bluetooth", ""))
+for app, value in sorted(data.get("automation", {}).items()):
+    show(app, value)
+print(f"  {'Claude Code':<16}{'hooks instalados' if data.get('hooks') else 'hooks não instalados'}")
+print(f"\n  atualizado em {data.get('updatedAt', '?')}")
+PY
+    fi
+}
+
+update() {
+    local source=""
+    [ -f "$STATE/source" ] && source="$(cat "$STATE/source")"
+    if [ -z "$source" ] || [ ! -d "$source/.git" ]; then
+        source="$HOME/Projects/notchy"
+    fi
+    if [ -d "$source/.git" ]; then
+        echo "Atualizando $source"
+        git -C "$source" pull --ff-only || {
+            echo "Não consegui atualizar com git pull. Confira as mudanças locais em $source e tente de novo."
+            exit 1
+        }
+    elif [ -e "$source" ]; then
+        echo "$source existe, mas não é um clone do GitHub."
+        echo "Renomeie a pasta e rode de novo: mv \"$source\" \"$source-antigo\" && notchy update"
+        exit 1
+    else
+        mkdir -p "$(dirname "$source")"
+        git clone "$REPO_URL" "$source" || exit 1
+    fi
+    exec "$source/install.sh"
+}
+
+uninstall() {
+    echo "Isto remove:"
+    echo "  • /Applications/Notchy.app"
+    echo "  • os hooks e a status line do Claude Code (a sua status line antiga volta)"
+    echo "  • o comando notchy, as preferências e as permissões do Notchy"
+    printf "Continuar? [s/N] "
+    read -r answer
+    case "$answer" in
+        s|S|sim|Sim) ;;
+        *) echo "Nada foi removido."; exit 0 ;;
+    esac
+
+    running && stop
+    if [ -f "$APP/Contents/Resources/hooks/install.py" ]; then
+        /usr/bin/python3 "$APP/Contents/Resources/hooks/install.py" --uninstall
+    elif [ -f "$HOME/.notchy/notchy-hook.py" ]; then
+        echo "Não achei o desinstalador dos hooks no app; rode python3 hooks/install.py --uninstall na pasta do projeto."
+    fi
+    for service in Accessibility AppleEvents Calendar BluetoothAlways; do
+        tccutil reset "$service" "$BUNDLE" >/dev/null 2>&1
+    done
+    defaults delete "$BUNDLE" >/dev/null 2>&1
+    rm -rf "$APP" "$STATE"
+    echo "App, hooks, preferências e permissões removidos."
+
+    if security find-certificate -c "$IDENTITY" >/dev/null 2>&1; then
+        printf "Remover também o certificado \"%s\" do Keychain? [s/N] " "$IDENTITY"
+        read -r answer
+        case "$answer" in
+            s|S|sim|Sim)
+                security delete-identity -c "$IDENTITY" >/dev/null 2>&1 \
+                    || security delete-certificate -c "$IDENTITY" >/dev/null 2>&1
+                echo "Certificado removido."
+                ;;
+        esac
+    fi
+
+    rm -f "$0" 2>/dev/null && echo "Comando notchy removido."
+    echo "Pronto. Obrigado por usar o Notchy."
+}
+
+case "${1:-start}" in
+    start|open)
+        if [ ! -d "$APP" ]; then
+            echo "Notchy não está em /Applications. Rode o install.sh do projeto ou notchy update."
+            exit 1
+        fi
+        open "$APP"
+        ;;
+    stop|quit)
+        if running; then
+            stop
+            echo "Notchy fechado"
+        else
+            echo "Notchy não estava rodando"
+        fi
+        ;;
+    restart)
+        running && stop
+        open "$APP"
+        echo "Notchy reiniciado"
+        ;;
+    status)
+        if running; then echo "Notchy rodando"; else echo "Notchy parado"; fi
+        ;;
+    settings|ajustes)
+        open "notchy://settings"
+        ;;
+    welcome|boas-vindas)
+        open "notchy://welcome"
+        ;;
+    doctor|diagnostico)
+        doctor
+        ;;
+    update|atualizar)
+        update
+        ;;
+    uninstall|desinstalar)
+        uninstall
+        ;;
+    version|versao|-v|--version)
+        echo "Notchy $(installed_version)"
+        ;;
+    city|cidade)
+        shift
+        if [ $# -eq 0 ]; then
+            current=$(defaults read "$BUNDLE" weatherCity 2>/dev/null)
+            echo "Cidade do clima: ${current:-automática (pela sua conexão)}"
+            exit 0
+        fi
+        if [ "$1" = "auto" ]; then
+            defaults delete "$BUNDLE" weatherCity >/dev/null 2>&1
+            echo "Clima voltou para a localização automática"
+        else
+            defaults write "$BUNDLE" weatherCity "$*"
+            echo "Clima agora usa: $*"
+        fi
+        if running; then
+            stop
+            open "$APP"
+        fi
+        ;;
+    help|ajuda|-h|--help)
+        usage
+        ;;
+    *)
+        usage
+        exit 1
+        ;;
+esac

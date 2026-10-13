@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key>
+    <string>Notchy</string>
+    <key>CFBundleIdentifier</key>
+    <string>io.github.lleonardo-franco.notchy</string>
+    <key>CFBundleName</key>
+    <string>Notchy</string>
+    <key>CFBundleDisplayName</key>
+    <string>Notchy</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.0</string>
+    <key>CFBundleVersion</key>
+    <string>16</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>14.0</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
+    <key>LSUIElement</key>
+    <true/>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSAppleEventsUsageDescription</key>
+    <string>O Notchy controla o Spotify, o Music, o Terminal, o iTerm e o navegador para mostrar a música, levar você até a sessão certa do Claude Code e tocar vídeos do YouTube no notch.</string>
+    <key>NSCalendarsFullAccessUsageDescription</key>
+    <string>O Notchy mostra suas próximas reuniões no notch e avisa antes de começarem.</string>
+    <key>NSCalendarsUsageDescription</key>
+    <string>O Notchy mostra suas próximas reuniões no notch e avisa antes de começarem.</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>O Notchy mostra a bateria dos seus fones e outros dispositivos Bluetooth conectados.</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>io.github.lleonardo-franco.notchy</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>notchy</string>
+            </array>
+        </dict>
+    </array>
+</dict>
+</plist>
