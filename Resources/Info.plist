@@ -4,6 +4,14 @@
 <dict>
     <key>CFBundleExecutable</key>
     <string>Notchy</string>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>pt-BR</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+        <string>pt-BR</string>
+        <string>en</string>
+        <string>es</string>
+    </array>
     <key>CFBundleIdentifier</key>
     <string>io.github.lleonardo-franco.notchy</string>
     <key>CFBundleName</key>

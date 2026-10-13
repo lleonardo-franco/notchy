@@ -12,8 +12,8 @@ final class Preferences {
 
         var title: String {
             switch self {
-            case .hover: return "Ao passar o mouse"
-            case .click: return "Ao clicar"
+            case .hover: return String(localized: "Ao passar o mouse")
+            case .click: return String(localized: "Ao clicar")
             }
         }
     }
@@ -27,9 +27,9 @@ final class Preferences {
 
         var title: String {
             switch self {
-            case .volume: return "Volume"
-            case .openClose: return "Abrir e fechar o notch"
-            case .off: return "Nada"
+            case .volume: return String(localized: "Volume")
+            case .openClose: return String(localized: "Abrir e fechar o notch")
+            case .off: return String(localized: "Nada")
             }
         }
     }
@@ -44,10 +44,10 @@ final class Preferences {
 
         var title: String {
             switch self {
-            case .off: return "Desligado"
-            case .light: return "Leve"
-            case .medium: return "Médio"
-            case .strong: return "Forte"
+            case .off: return String(localized: "Desligado")
+            case .light: return String(localized: "Leve")
+            case .medium: return String(localized: "Médio")
+            case .strong: return String(localized: "Forte")
             }
         }
     }
@@ -61,9 +61,9 @@ final class Preferences {
 
         var title: String {
             switch self {
-            case .automatic: return "Tela com notch ou a principal"
-            case .main: return "Sempre na tela principal"
-            case .notchOnly: return "Só em telas com notch"
+            case .automatic: return String(localized: "Tela com notch ou a principal")
+            case .main: return String(localized: "Sempre na tela principal")
+            case .notchOnly: return String(localized: "Só em telas com notch")
             }
         }
     }

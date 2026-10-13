@@ -112,10 +112,10 @@ final class VideoPlayer {
         if let code = message["error"] as? Int {
             isPlaying = false
             switch code {
-            case 100: errorMessage = "Vídeo não encontrado ou privado"
-            case 101, 150: errorMessage = "O dono do vídeo não deixa assistir fora do YouTube"
-            case 152, 153: errorMessage = "O YouTube recusou o player incorporado"
-            default: errorMessage = "Não deu para tocar este vídeo"
+            case 100: errorMessage = String(localized: "Vídeo não encontrado ou privado")
+            case 101, 150: errorMessage = String(localized: "O dono do vídeo não deixa assistir fora do YouTube")
+            case 152, 153: errorMessage = String(localized: "O YouTube recusou o player incorporado")
+            default: errorMessage = String(localized: "Não deu para tocar este vídeo")
             }
         }
     }

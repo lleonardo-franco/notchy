@@ -31,7 +31,7 @@ struct ClipItem: Identifiable, Equatable {
         case .text(let value):
             return String(value.prefix(400)).split(whereSeparator: \.isWhitespace).joined(separator: " ")
         case .image(let image):
-            return "Imagem \(Int(image.size.width))×\(Int(image.size.height))"
+            return String(localized: "Imagem \(Int(image.size.width))×\(Int(image.size.height))")
         case .file(let url):
             return url.lastPathComponent
         }

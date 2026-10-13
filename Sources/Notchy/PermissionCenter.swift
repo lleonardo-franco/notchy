@@ -13,11 +13,11 @@ enum PermissionState: String {
 
     var label: String {
         switch self {
-        case .granted: return "Permitido"
-        case .denied: return "Negado"
-        case .notDetermined: return "Não pedido ainda"
-        case .notRunning: return "Abra o app para pedir"
-        case .notInstalled: return "Não instalado"
+        case .granted: return String(localized: "Permitido")
+        case .denied: return String(localized: "Negado")
+        case .notDetermined: return String(localized: "Não pedido ainda")
+        case .notRunning: return String(localized: "Abra o app para pedir")
+        case .notInstalled: return String(localized: "Não instalado")
         }
     }
 }
@@ -42,12 +42,12 @@ struct AutomationTarget: Identifiable, Hashable {
 @Observable
 final class PermissionCenter {
     static let targets = [
-        AutomationTarget(name: "Safari", bundleID: "com.apple.Safari", purpose: "vídeos do YouTube"),
-        AutomationTarget(name: "Google Chrome", bundleID: "com.google.Chrome", purpose: "vídeos do YouTube"),
-        AutomationTarget(name: "Spotify", bundleID: "com.spotify.client", purpose: "música"),
-        AutomationTarget(name: "Music", bundleID: "com.apple.Music", purpose: "música"),
-        AutomationTarget(name: "Terminal", bundleID: "com.apple.Terminal", purpose: "ir para a sessão do Claude"),
-        AutomationTarget(name: "iTerm", bundleID: "com.googlecode.iterm2", purpose: "ir para a sessão do Claude")
+        AutomationTarget(name: "Safari", bundleID: "com.apple.Safari", purpose: String(localized: "vídeos do YouTube")),
+        AutomationTarget(name: "Google Chrome", bundleID: "com.google.Chrome", purpose: String(localized: "vídeos do YouTube")),
+        AutomationTarget(name: "Spotify", bundleID: "com.spotify.client", purpose: String(localized: "música")),
+        AutomationTarget(name: "Music", bundleID: "com.apple.Music", purpose: String(localized: "música")),
+        AutomationTarget(name: "Terminal", bundleID: "com.apple.Terminal", purpose: String(localized: "ir para a sessão do Claude")),
+        AutomationTarget(name: "iTerm", bundleID: "com.googlecode.iterm2", purpose: String(localized: "ir para a sessão do Claude"))
     ]
 
     static let accessibilityURL = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!

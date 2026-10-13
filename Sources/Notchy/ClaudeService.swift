@@ -36,10 +36,10 @@ struct ClaudeSession: Identifiable, Decodable, Equatable {
 
     var subtitle: String {
         switch effectiveStatus {
-        case .working: return detail ?? "Trabalhando…"
-        case .waiting: return detail ?? "Esperando você"
-        case .done: return prompt.map { "Pronto · \($0)" } ?? "Pronto"
-        case .idle: return prompt ?? "Ocioso"
+        case .working: return detail ?? String(localized: "Trabalhando…")
+        case .waiting: return detail ?? String(localized: "Esperando você")
+        case .done: return prompt.map { String(localized: "Pronto · \($0)") } ?? String(localized: "Pronto")
+        case .idle: return prompt ?? String(localized: "Ocioso")
         }
     }
 
@@ -305,8 +305,8 @@ final class ClaudeService {
             }
         }
 
-        checkLimit("de 5h", usage.fiveHour)
-        checkLimit("semanal", usage.sevenDay)
+        checkLimit(String(localized: "de 5h"), usage.fiveHour)
+        checkLimit(String(localized: "semanal"), usage.sevenDay)
 
         knownApprovals = Set(approvals.map(\.id))
         lastStatus = Dictionary(uniqueKeysWithValues: sessions.map { ($0.id, $0.status) })

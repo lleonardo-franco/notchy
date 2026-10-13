@@ -250,13 +250,13 @@ struct HapticTestPad: View {
         switch output {
         case .horizontal(let right):
             guard prefs.swipeTracks else {
-                flashNote("Troca de música está desligada")
+                flashNote(String(localized: "Troca de música está desligada"))
                 return
             }
             Haptics.shared.perform(.normal)
             let next = right == prefs.swipeRightNext
             withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
-                swipe = Swipe(right: right, label: next ? "Próxima música" : "Música anterior")
+                swipe = Swipe(right: right, label: next ? String(localized: "Próxima música") : String(localized: "Música anterior"))
                 note = nil
             }
             let current = swipe
@@ -289,9 +289,9 @@ struct HapticTestPad: View {
         case .vertical(let down):
             switch prefs.verticalGesture {
             case .openClose:
-                flashNote(down ? "Abriria o notch" : "Fecharia o notch")
+                flashNote(down ? String(localized: "Abriria o notch") : String(localized: "Fecharia o notch"))
             case .off, .volume:
-                flashNote("Gesto vertical desligado")
+                flashNote(String(localized: "Gesto vertical desligado"))
             }
         }
     }

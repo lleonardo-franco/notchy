@@ -141,7 +141,7 @@ final class CalendarService {
         let start: Date = event.startDate
         return AgendaEvent(
             id: "\(event.eventIdentifier ?? UUID().uuidString)-\(start.timeIntervalSince1970)",
-            title: event.title ?? "Sem título",
+            title: event.title ?? String(localized: "Sem título"),
             start: start,
             end: event.endDate,
             calendarName: event.calendar?.title ?? "",

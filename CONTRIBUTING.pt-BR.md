@@ -144,7 +144,7 @@ Use o `./install.sh` para testar suas mudanças. Ele assina o app com o seu cert
 - **Permissão nova?** Adicione no `PermissionCenter`, na janela de boas-vindas, no texto de uso do `Info.plist` e na tabela de permissões de todos os READMEs.
 - **Hooks** usam só a biblioteca padrão do Python e precisam rodar no `/usr/bin/python3` do sistema.
 - **Scripts de shell** precisam funcionar com o bash 3.2 que vem no macOS.
-- **Textos da interface** estão em português do Brasil por enquanto. Mantenha os novos textos consistentes até o app ser localizado.
+- **Textos da interface** são escritos em português do Brasil no código e traduzidos pelo `i18n/translations.py`. Use `Text("…")` para textos fixos e `String(localized: "…")` para textos montados no código, e depois adicione as versões em inglês e espanhol (veja [Documentação e traduções](#documentação-e-traduções)).
 
 ## Mensagens de commit
 
@@ -175,7 +175,8 @@ O README e este guia existem em inglês, português e espanhol.
 
 - Se mudar um deles, atualize os outros também. Se não conseguir, avise no pull request que alguém ajuda.
 - Para adicionar um idioma, crie `README.<código>.md` e `CONTRIBUTING.<código>.md` (por exemplo `README.fr.md`) e adicione o link no topo de todas as versões.
-- Localizar a interface do app é uma mudança maior. Abra uma issue antes para combinarmos o caminho (String Catalogs).
+- A interface do app é traduzida no `i18n/translations.py`, com o texto em português como chave, `%@` para texto e `%lld` para números inteiros. Depois de editar, rode `python3 i18n/generate.py` para gerar os arquivos `.strings` em `Resources/`, e `python3 i18n/check.py` para listar textos do código que ainda não têm tradução.
+- Para adicionar um idioma ao app, adicione uma coluna no `translations.py`, ensine o `generate.py` sobre ela e coloque o código do idioma em `CFBundleLocalizations` no `Resources/Info.plist`.
 
 Adicione uma linha descrevendo sua mudança em **Unreleased** no [CHANGELOG.md](CHANGELOG.md).
 

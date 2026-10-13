@@ -45,9 +45,9 @@ final class NotchModel {
         var title: String {
             switch self {
             case .claude: return "Claude"
-            case .agenda: return "Agenda"
-            case .weather: return "Clima"
-            case .clipboard: return "Copiados"
+            case .agenda: return String(localized: "Agenda")
+            case .weather: return String(localized: "Clima")
+            case .clipboard: return String(localized: "Copiados")
             case .bluetooth: return "Bluetooth"
             }
         }
@@ -55,10 +55,7 @@ final class NotchModel {
         var settingsTitle: String {
             switch self {
             case .claude: return "Claude Code"
-            case .agenda: return "Agenda"
-            case .weather: return "Clima"
-            case .clipboard: return "Copiados"
-            case .bluetooth: return "Bluetooth"
+            default: return title
             }
         }
     }
@@ -153,7 +150,7 @@ final class NotchModel {
                 }
             }
         }
-        flash(.info, title: "Notchy ligado", subtitle: prefs.openMode == .hover ? "passe o mouse no notch" : "clique no notch")
+        flash(.info, title: String(localized: "Notchy ligado"), subtitle: prefs.openMode == .hover ? String(localized: "passe o mouse no notch") : String(localized: "clique no notch"))
     }
 
     func stop() {
@@ -313,7 +310,7 @@ final class NotchModel {
 
     private func deviceLow(_ device: BluetoothDevice, _ level: Int) {
         guard prefs.bluetoothAlerts else { return }
-        flash(.warning, title: device.name, subtitle: "bateria em \(level)%")
+        flash(.warning, title: device.name, subtitle: String(localized: "bateria em \(level)%"))
         alert("Funk")
     }
 
@@ -363,13 +360,13 @@ final class NotchModel {
         case .approval:
             alert("Glass")
         case .needsYou(let session):
-            flash(.waiting, title: session.project, subtitle: "precisa de você")
+            flash(.waiting, title: session.project, subtitle: String(localized: "precisa de você"))
             alert("Glass")
         case .finished(let session):
-            flash(.done, title: session.project, subtitle: "terminou")
+            flash(.done, title: session.project, subtitle: String(localized: "terminou"))
             alert("Tink")
         case .limit(let label, let percent):
-            flash(.warning, title: "Limite \(label)", subtitle: "\(percent)% usado")
+            flash(.warning, title: String(localized: "Limite \(label)"), subtitle: String(localized: "\(percent)% usado"))
             alert("Funk")
         }
     }
@@ -382,7 +379,7 @@ final class NotchModel {
 
     private func remind(_ event: AgendaEvent, _ minutes: Int) {
         guard prefs.enabledTabs.contains(Tab.agenda.rawValue) else { return }
-        flash(.meeting, title: event.title, subtitle: minutes <= 0 ? "começando agora" : "em \(minutes) min")
+        flash(.meeting, title: event.title, subtitle: minutes <= 0 ? String(localized: "começando agora") : String(localized: "em \(minutes) min"))
         alert("Glass")
     }
 

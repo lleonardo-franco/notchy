@@ -144,7 +144,7 @@ Usa `./install.sh` para probar tus cambios. Firma la app con tu certificado loca
 - **¿Permiso nuevo?** Añádelo a `PermissionCenter`, a la ventana de bienvenida, al texto de uso de `Info.plist` y a la tabla de permisos de todos los README.
 - **Los hooks** usan solo la biblioteca estándar de Python y deben funcionar con el `/usr/bin/python3` del sistema.
 - **Los scripts de shell** deben funcionar con el bash 3.2 que trae macOS.
-- **Los textos de la interfaz** están en portugués de Brasil por ahora. Mantén los textos nuevos coherentes hasta que la app esté localizada.
+- **Los textos de la interfaz** se escriben en portugués de Brasil en el código y se traducen en `i18n/translations.py`. Usa `Text("…")` para textos fijos y `String(localized: "…")` para textos construidos en el código, y luego añade las versiones en inglés y español (mira [Documentación y traducciones](#documentación-y-traducciones)).
 
 ## Mensajes de commit
 
@@ -175,7 +175,8 @@ El README y esta guía existen en inglés, portugués y español.
 
 - Si cambias uno, actualiza también los demás. Si no puedes, dilo en el pull request y alguien te ayudará.
 - Para añadir un idioma, crea `README.<código>.md` y `CONTRIBUTING.<código>.md` (por ejemplo `README.fr.md`) y añade el enlace arriba en todas las versiones.
-- Localizar la interfaz de la app es un cambio mayor. Abre un issue antes para acordar el enfoque (String Catalogs).
+- La interfaz de la app se traduce en `i18n/translations.py`, con el texto en portugués como clave, `%@` para texto y `%lld` para números enteros. Después de editarlo, ejecuta `python3 i18n/generate.py` para generar los archivos `.strings` en `Resources/`, y `python3 i18n/check.py` para listar textos del código que aún no tienen traducción.
+- Para añadir un idioma a la app, añade una columna en `translations.py`, enseña a `generate.py` a usarla y pon el código del idioma en `CFBundleLocalizations` en `Resources/Info.plist`.
 
 Añade una línea describiendo tu cambio en **Unreleased** en [CHANGELOG.md](CHANGELOG.md).
 

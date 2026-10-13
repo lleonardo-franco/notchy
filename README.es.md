@@ -24,10 +24,7 @@ Música, Claude Code, calendario, YouTube y notificaciones justo donde está la 
 
 ---
 
-Notchy convierte el notch en un pequeño centro de control. Recogido, muestra solo lo importante a los lados de la cámara: la portada del álbum, el estado de Claude Code, la cuenta atrás para la próxima reunión, notificaciones. Pasa el ratón y se abre con el reproductor, pestañas y controles. Ciérralo y se apaga como un televisor antiguo.
-
-> [!NOTE]
-> Por ahora la interfaz de la app está en portugués de Brasil. Traducirla es una de las mejores primeras contribuciones, mira [Contribuir](#contribuir).
+Notchy convierte el notch en un pequeño centro de control. Recogido, muestra solo lo importante a los lados de la cámara: la portada del álbum, el estado de Claude Code, la cuenta atrás para la próxima reunión, notificaciones. Pasa el ratón y se abre con el reproductor, pestañas y controles. Ciérralo y se apaga como un televisor antiguo. La interfaz habla español, inglés y portugués, según el idioma de tu Mac.
 
 ## Contenido
 
@@ -204,7 +201,7 @@ Todavía no. Notchy se compila en tu Mac desde el código. Una versión firmada 
 
 ## Hoja de ruta
 
-- [ ] Interfaz en inglés y español ([#1](https://github.com/lleonardo-franco/notchy/issues/1), [#2](https://github.com/lleonardo-franco/notchy/issues/2))
+- [x] Interfaz en inglés, portugués y español
 - [ ] Versiones firmadas y notarizadas ([#9](https://github.com/lleonardo-franco/notchy/issues/9))
 - [ ] Homebrew ([#8](https://github.com/lleonardo-franco/notchy/issues/8))
 - [ ] Más fuentes de notificaciones: Slack, Telegram, Discord ([#4](https://github.com/lleonardo-franco/notchy/issues/4), [#5](https://github.com/lleonardo-franco/notchy/issues/5))
