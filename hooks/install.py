@@ -2,6 +2,7 @@
 import json
 import os
 import shutil
+import subprocess
 import sys
 import time
 
@@ -16,6 +17,30 @@ WITH_MATCHER = {"PreToolUse", "PostToolUse", "PermissionRequest"}
 TIMEOUTS = {"PermissionRequest": 150}
 MARKERS = ("notchy-hook.py", "notchy-statusline.py")
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def language():
+    value = os.environ.get("NOTCHY_LANG", "")
+    if not value:
+        try:
+            output = subprocess.run(["defaults", "read", "-g", "AppleLanguages"], capture_output=True, text=True, timeout=3).stdout
+            lines = [line.strip(' ",') for line in output.splitlines()[1:2]]
+            value = lines[0] if lines else ""
+        except (OSError, subprocess.SubprocessError):
+            value = ""
+    value = value or os.environ.get("LANG", "en")
+    if value.startswith("pt"):
+        return "pt"
+    if value.startswith("es"):
+        return "es"
+    return "en"
+
+
+LANGUAGE = language()
+
+
+def say(pt, en, es):
+    return {"pt": pt, "es": es}.get(LANGUAGE, en)
 
 
 def ours(command):
@@ -77,9 +102,9 @@ def install():
     settings["statusLine"] = {**base, "type": "command", "command": f'python3 "{STATUSLINE}"'}
 
     write_settings(settings)
-    print(f"Hooks e status line instalados em {ROOT}")
+    print(say("Hooks e status line instalados em {}", "Hooks and status line installed in {}", "Hooks y status line instalados en {}").format(ROOT))
     if os.path.exists(ORIGINAL):
-        print("Sua status line antiga continua aparecendo: o Notchy só lê os dados e repassa para ela.")
+        print(say("Sua status line antiga continua aparecendo: o Notchy só lê os dados e repassa para ela.", "Your previous status line still shows up: Notchy only reads the data and passes it along.", "Tu status line anterior sigue apareciendo: Notchy solo lee los datos y se los pasa."))
 
 
 def uninstall():
@@ -103,7 +128,7 @@ def uninstall():
 
     write_settings(settings)
     shutil.rmtree(ROOT, ignore_errors=True)
-    print("Hooks e status line do Notchy removidos.")
+    print(say("Hooks e status line do Notchy removidos.", "Notchy's hooks and status line removed.", "Hooks y status line de Notchy eliminados."))
 
 
 if __name__ == "__main__":

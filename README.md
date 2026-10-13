@@ -141,6 +141,8 @@ notchy setup
 | `notchy update` | Pull the latest version and reinstall |
 | `notchy uninstall` | Remove the app, hooks, settings and command |
 
+The installer and the command follow your Mac's language. Set `NOTCHY_LANG=en`, `pt` or `es` to choose one.
+
 | Gesture on the open notch | Action |
 |---|---|
 | Two fingers right / left | Next / previous track (configurable) |

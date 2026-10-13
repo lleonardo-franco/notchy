@@ -141,6 +141,8 @@ O `notchy setup` compila o app e instala em `/Applications`, igual ao `./install
 | `notchy update` | Baixa a versão mais nova e reinstala |
 | `notchy uninstall` | Remove app, hooks, ajustes e o comando |
 
+O instalador e o comando seguem o idioma do seu Mac. Use `NOTCHY_LANG=pt`, `en` ou `es` para escolher um.
+
 | Gesto com o notch aberto | Ação |
 |---|---|
 | Dois dedos para a direita / esquerda | Próxima / anterior (configurável) |

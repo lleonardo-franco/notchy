@@ -2,6 +2,30 @@
 set -uo pipefail
 cd "$(dirname "$0")" || exit 1
 
+notchy_language() {
+    local value="${NOTCHY_LANG:-}"
+    if [ -z "$value" ]; then
+        value=$(defaults read -g AppleLanguages 2>/dev/null | sed -n '2p' | tr -d ' ",')
+    fi
+    [ -z "$value" ] && value="${LC_ALL:-${LANG:-en}}"
+    case "$value" in
+        pt*) echo pt ;;
+        es*) echo es ;;
+        *) echo en ;;
+    esac
+}
+
+NOTCHY_LANG="$(notchy_language)"
+export NOTCHY_LANG
+
+t() {
+    case "$NOTCHY_LANG" in
+        pt) printf '%s' "$1" ;;
+        es) printf '%s' "$3" ;;
+        *) printf '%s' "$2" ;;
+    esac
+}
+
 FORCE=0
 for arg in "$@"; do
     case "$arg" in
@@ -25,8 +49,24 @@ PERMISSIONS_MARK="$STATE_DIR/permissions-reset-for-certificate"
 PERMISSIONS_RESET=0
 TRUST_MARK="$STATE_DIR/trust-attempted"
 
-TITLES=("Preparando a assinatura" "Compilando o Notchy" "Montando o app" "Instalando em /Applications" "Conectando ao Claude Code" "Instalando o comando notchy" "Abrindo o Notchy")
-DETAILS=("certificado local" "preparando o Swift…" "ícone, Info.plist e assinatura" "fechando a versão antiga" "hooks, aprovações e status line" "notchy · notchy stop · notchy restart" "procurando o notch…")
+TITLES=(
+    "$(t "Preparando a assinatura" "Preparing the signature" "Preparando la firma")"
+    "$(t "Compilando o Notchy" "Building Notchy" "Compilando Notchy")"
+    "$(t "Montando o app" "Assembling the app" "Montando la app")"
+    "$(t "Instalando em /Applications" "Installing in /Applications" "Instalando en /Applications")"
+    "$(t "Conectando ao Claude Code" "Connecting to Claude Code" "Conectando con Claude Code")"
+    "$(t "Instalando o comando notchy" "Installing the notchy command" "Instalando el comando notchy")"
+    "$(t "Abrindo o Notchy" "Opening Notchy" "Abriendo Notchy")"
+)
+DETAILS=(
+    "$(t "certificado local" "local certificate" "certificado local")"
+    "$(t "preparando o Swift…" "warming up Swift…" "preparando Swift…")"
+    "$(t "ícone, Info.plist e assinatura" "icon, Info.plist and signature" "icono, Info.plist y firma")"
+    "$(t "fechando a versão antiga" "closing the old version" "cerrando la versión anterior")"
+    "$(t "hooks, aprovações e status line" "hooks, approvals and status line" "hooks, aprobaciones y status line")"
+    "notchy · notchy stop · notchy restart"
+    "$(t "procurando o notch…" "looking for the notch…" "buscando el notch…")"
+)
 WEIGHTS=(4 58 8 8 10 6 6)
 BUILD_STEP=1
 TOTAL=${#TITLES[@]}
@@ -117,7 +157,7 @@ cleanup() {
 interrupt() {
     [ -n "$JOB" ] && kill "$JOB" 2>/dev/null
     commit ""
-    commit "  ${YELLOW}Instalação cancelada.${R}"
+    commit "  ${YELLOW}$(t "Instalação cancelada." "Installation cancelled." "Instalación cancelada.")${R}"
     exit 130
 }
 
@@ -144,7 +184,7 @@ banner() {
         printf '  %s%sN O T C H Y%s\n' "$B" "$ORANGE" "$R"
     fi
     echo
-    printf '  %sseu notch, menos inútil%s  %s·  música + Claude Code%s  %s%s%s\n\n' "$B" "$R" "$DIM" "$R" "$FAINT" "${VERSION:+v$VERSION}" "$R"
+    printf '  %s%s%s  %s·  %s%s  %s%s%s\n\n' "$B" "$(t "seu notch, menos inútil" "your notch, finally useful" "tu notch, por fin útil")" "$R" "$DIM" "$(t "música + Claude Code" "music + Claude Code" "música + Claude Code")" "$R" "$FAINT" "${VERSION:+v$VERSION}" "$R"
 }
 
 need() {
@@ -154,11 +194,13 @@ need() {
 }
 
 preflight() {
-    [ "$(uname)" = "Darwin" ] || need "O Notchy só roda no macOS." "Rode este instalador num Mac."
-    command -v swift >/dev/null || need "Swift não encontrado." "Instale as ferramentas de linha de comando: xcode-select --install"
-    command -v iconutil >/dev/null || need "iconutil não encontrado." "Instale as ferramentas de linha de comando: xcode-select --install"
-    command -v python3 >/dev/null || need "Python 3 não encontrado." "Instale as ferramentas de linha de comando: xcode-select --install"
-    [ -w /Applications ] || need "Sem permissão para escrever em /Applications." "Use uma conta de administrador."
+    local tools
+    tools="$(t "Instale as ferramentas de linha de comando: xcode-select --install" "Install the command line tools: xcode-select --install" "Instala las herramientas de línea de comandos: xcode-select --install")"
+    [ "$(uname)" = "Darwin" ] || need "$(t "O Notchy só roda no macOS." "Notchy only runs on macOS." "Notchy solo funciona en macOS.")" "$(t "Rode este instalador num Mac." "Run this installer on a Mac." "Ejecuta este instalador en un Mac.")"
+    command -v swift >/dev/null || need "$(t "Swift não encontrado." "Swift not found." "No se encontró Swift.")" "$tools"
+    command -v iconutil >/dev/null || need "$(t "iconutil não encontrado." "iconutil not found." "No se encontró iconutil.")" "$tools"
+    command -v python3 >/dev/null || need "$(t "Python 3 não encontrado." "Python 3 not found." "No se encontró Python 3.")" "$tools"
+    [ -w /Applications ] || need "$(t "Sem permissão para escrever em /Applications." "No permission to write to /Applications." "Sin permiso para escribir en /Applications.")" "$(t "Use uma conta de administrador." "Use an administrator account." "Usa una cuenta de administrador.")"
 }
 
 build_progress() {
@@ -168,12 +210,28 @@ build_progress() {
         local n=${BASH_REMATCH[1]} m=${BASH_REMATCH[2]} what=${BASH_REMATCH[3]}
         [ "$m" -gt 0 ] && SUB=$(( n * 100 / m ))
         [ $SUB -gt 99 ] && SUB=99
-        what=${what/Compiling Notchy /compilando }
-        what=${what/Compiling /compilando }
-        what=${what/Linking /linkando }
-        what=${what/Emitting module /gerando o módulo }
-        what=${what/Write /gravando }
-        what=${what/Planning build/planejando}
+        if [ "$NOTCHY_LANG" = "pt" ]; then
+            what=${what/Compiling Notchy /compilando }
+            what=${what/Compiling /compilando }
+            what=${what/Linking /linkando }
+            what=${what/Emitting module /gerando o módulo }
+            what=${what/Write /gravando }
+            what=${what/Planning build/planejando}
+        elif [ "$NOTCHY_LANG" = "es" ]; then
+            what=${what/Compiling Notchy /compilando }
+            what=${what/Compiling /compilando }
+            what=${what/Linking /enlazando }
+            what=${what/Emitting module /generando el módulo }
+            what=${what/Write /escribiendo }
+            what=${what/Planning build/planificando}
+        else
+            what=${what/Compiling Notchy /compiling }
+            what=${what/Compiling /compiling }
+            what=${what/Linking /linking }
+            what=${what/Emitting module /emitting module }
+            what=${what/Write /writing }
+            what=${what/Planning build/planning}
+        fi
         DETAIL="$what"
     fi
 }
@@ -231,7 +289,8 @@ run() {
         if [ $FANCY -eq 1 ]; then
             commit "  ${RED}✗ ${TITLES[$index]}${R}"
         else
-            echo "falhou"
+            t "falhou" "failed" "falló"
+            echo
         fi
         fail
     fi
@@ -240,13 +299,13 @@ run() {
 skip() {
     local index=$1 reason=$2
     DONE_WEIGHT=$(( DONE_WEIGHT + WEIGHTS[index] ))
-    printf '\n### %s (pulado: %s)\n' "${TITLES[$index]}" "$reason" >>"$LOG"
+    printf '\n### %s (skipped: %s)\n' "${TITLES[$index]}" "$reason" >>"$LOG"
     if [ $FANCY -eq 1 ]; then
         local line
         printf -v line '  %s↷ %-32s %s%s' "$DIM" "${TITLES[$index]}" "$reason" "$R"
         commit "$line"
     else
-        printf '[%d/%d] %s… pulado (%s)\n' $((index + 1)) "$TOTAL" "${TITLES[$index]}" "$reason"
+        printf '[%d/%d] %s… %s (%s)\n' $((index + 1)) "$TOTAL" "${TITLES[$index]}" "$(t "pulado" "skipped" "omitido")" "$reason"
     fi
 }
 
@@ -269,7 +328,7 @@ hooks_current() {
 
 fail() {
     echo
-    printf '  %s%sAlgo deu errado.%s\n\n' "$B" "$RED" "$R"
+    printf '  %s%s%s%s\n\n' "$B" "$RED" "$(t "Algo deu errado." "Something went wrong." "Algo salió mal.")" "$R"
     if grep -q 'error:' "$LOG"; then
         grep 'error:' "$LOG" | head -n 12 | while IFS= read -r line; do
             printf '    %s%s%s\n' "$DIM" "$line" "$R"
@@ -279,7 +338,7 @@ fail() {
             printf '    %s%s%s\n' "$DIM" "$line" "$R"
         done
     fi
-    printf '\n  Log completo: %s\n\n' "$LOG"
+    printf '\n  %s %s\n\n' "$(t "Log completo:" "Full log:" "Log completo:")" "$LOG"
     exit 1
 }
 
@@ -326,27 +385,27 @@ prepare_signing() {
         if [ -f "$TRUST_MARK" ] && [ $FORCE -eq 0 ]; then
             return 0
         fi
-        printf '  %s✱%s %sCriando o certificado local do Notchy%s %s(só desta vez)%s\n' "$ORANGE" "$R" "$B" "$R" "$DIM" "$R"
-        printf '    %sO macOS vai abrir uma janela pedindo sua senha para confiar nele.%s\n' "$DIM" "$R"
+        printf '  %s✱%s %s%s%s %s%s%s\n' "$ORANGE" "$R" "$B" "$(t "Criando o certificado local do Notchy" "Creating Notchy's local certificate" "Creando el certificado local de Notchy")" "$R" "$DIM" "$(t "(só desta vez)" "(only this once)" "(solo esta vez)")" "$R"
+        printf '    %s%s%s\n' "$DIM" "$(t "O macOS vai abrir uma janela pedindo sua senha para confiar nele." "macOS will ask for your password to trust it." "macOS pedirá tu contraseña para confiar en él.")" "$R"
         step_identity >>"$LOG" 2>&1
         touch "$TRUST_MARK"
         rm -f "$KEYCHAIN_MARK"
         if has_identity; then
-            printf '    %s✓ certificado pronto%s\n\n' "$GREEN" "$R"
+            printf '    %s✓ %s%s\n\n' "$GREEN" "$(t "certificado pronto" "certificate ready" "certificado listo")" "$R"
         else
-            printf '    %s✗ não deu para confiar no certificado, vou usar assinatura ad-hoc%s\n\n' "$YELLOW" "$R"
+            printf '    %s✗ %s%s\n\n' "$YELLOW" "$(t "não deu para confiar no certificado, vou usar assinatura ad-hoc" "couldn't trust the certificate, using ad-hoc signing" "no se pudo confiar en el certificado, usaré firma ad-hoc")" "$R"
             return 0
         fi
     fi
     if [ ! -f "$KEYCHAIN_MARK" ]; then
-        printf '  %s✱%s %sLiberando o certificado para o codesign%s %s(só desta vez)%s\n' "$ORANGE" "$R" "$B" "$R" "$DIM" "$R"
-        printf '    %sDigite a senha do seu Mac. Depois disso, as atualizações não pedem mais senha.%s\n' "$DIM" "$R"
+        printf '  %s✱%s %s%s%s %s%s%s\n' "$ORANGE" "$R" "$B" "$(t "Liberando o certificado para o codesign" "Allowing codesign to use the certificate" "Habilitando el certificado para codesign")" "$R" "$DIM" "$(t "(só desta vez)" "(only this once)" "(solo esta vez)")" "$R"
+        printf '    %s%s%s\n' "$DIM" "$(t "Digite a senha do seu Mac. Depois disso, as atualizações não pedem mais senha." "Type your Mac password. After this, updates won't ask for it again." "Escribe la contraseña de tu Mac. Después, las actualizaciones no la pedirán más.")" "$R"
         [ $FANCY -eq 1 ] && printf '\033[?25h'
         if security set-key-partition-list -S apple-tool:,apple:,codesign: -s -l "$IDENTITY" "$KEYCHAIN" >>"$LOG" </dev/tty; then
             touch "$KEYCHAIN_MARK"
-            printf '    %s✓ liberado%s\n\n' "$GREEN" "$R"
+            printf '    %s✓ %s%s\n\n' "$GREEN" "$(t "liberado" "done" "listo")" "$R"
         else
-            printf '    %s✗ não liberou; o macOS pode pedir a senha ao assinar. Rode ./install.sh --force para tentar de novo.%s\n\n' "$YELLOW" "$R"
+            printf '    %s✗ %s%s\n\n' "$YELLOW" "$(t "não liberou; o macOS pode pedir a senha ao assinar. Rode ./install.sh --force para tentar de novo." "not allowed; macOS may ask for the password when signing. Run ./install.sh --force to try again." "no se habilitó; macOS puede pedir la contraseña al firmar. Ejecuta ./install.sh --force para intentarlo de nuevo.")" "$R"
         fi
         [ $FANCY -eq 1 ] && printf '\033[?25l'
     fi
@@ -425,15 +484,15 @@ banner
 preflight
 
 if [ $FORCE -eq 1 ]; then
-    printf '  %sreinstalando tudo (--force)%s\n\n' "$YELLOW" "$R"
+    printf '  %s%s%s\n\n' "$YELLOW" "$(t "reinstalando tudo (--force)" "reinstalling everything (--force)" "reinstalando todo (--force)")" "$R"
 elif [ -n "$INSTALLED_VERSION" ]; then
     if [ "$INSTALLED_VERSION" = "$VERSION" ]; then
-        printf '  %sinstalada%s v%s  %s· conferindo o que mudou%s\n\n' "$DIM" "$R" "$INSTALLED_VERSION" "$DIM" "$R"
+        printf '  %s%s%s v%s  %s· %s%s\n\n' "$DIM" "$(t "instalada" "installed" "instalada")" "$R" "$INSTALLED_VERSION" "$DIM" "$(t "conferindo o que mudou" "checking what changed" "revisando qué cambió")" "$R"
     else
-        printf '  %sinstalada%s v%s  %s→%s  %snova%s %sv%s%s\n\n' "$DIM" "$R" "$INSTALLED_VERSION" "$ORANGE" "$R" "$DIM" "$R" "$B" "$VERSION" "$R"
+        printf '  %s%s%s v%s  %s→%s  %s%s%s %sv%s%s\n\n' "$DIM" "$(t "instalada" "installed" "instalada")" "$R" "$INSTALLED_VERSION" "$ORANGE" "$R" "$DIM" "$(t "nova" "new" "nueva")" "$R" "$B" "$VERSION" "$R"
     fi
 else
-    printf '  %sprimeira instalação%s\n\n' "$DIM" "$R"
+    printf '  %s%s%s\n\n' "$DIM" "$(t "primeira instalação" "first install" "primera instalación")" "$R"
 fi
 
 mkdir -p "$STATE_DIR"
@@ -446,17 +505,17 @@ if [ $FORCE -eq 1 ]; then
 fi
 prepare_signing
 if has_identity; then
-    skip 0 "certificado pronto"
+    skip 0 "$(t "certificado pronto" "certificate ready" "certificado listo")"
 else
-    skip 0 "usando assinatura ad-hoc"
+    skip 0 "$(t "usando assinatura ad-hoc" "using ad-hoc signing" "usando firma ad-hoc")"
 fi
 FINGERPRINT="$(fingerprint)"
 
 if [ $FORCE -eq 0 ] && [ -d "$TARGET" ] && [ "$FINGERPRINT" = "$INSTALLED_FINGERPRINT" ]; then
     APP_CHANGED=0
-    skip 1 "sem mudanças no código"
-    skip 2 "nada para montar"
-    skip 3 "v$INSTALLED_VERSION já instalada"
+    skip 1 "$(t "sem mudanças no código" "no code changes" "sin cambios en el código")"
+    skip 2 "$(t "nada para montar" "nothing to assemble" "nada que montar")"
+    skip 3 "v$INSTALLED_VERSION $(t "já instalada" "already installed" "ya instalada")"
 else
     APP_CHANGED=1
     CHANGED=1
@@ -466,16 +525,16 @@ else
 fi
 
 if [ $FORCE -eq 0 ] && hooks_current; then
-    skip 4 "já conectado"
+    skip 4 "$(t "já conectado" "already connected" "ya conectado")"
 else
     CHANGED=1
     run 4 step_hooks
 fi
 
 if [ "${NOTCHY_HOMEBREW:-0}" = "1" ]; then
-    skip 5 "gerenciado pelo Homebrew"
+    skip 5 "$(t "gerenciado pelo Homebrew" "managed by Homebrew" "gestionado por Homebrew")"
 elif [ $FORCE -eq 0 ] && cmp -s bin/notchy "$BIN_DIR/notchy"; then
-    skip 5 "já instalado"
+    skip 5 "$(t "já instalado" "already installed" "ya instalado")"
 else
     CHANGED=1
     run 5 step_cli
@@ -502,7 +561,7 @@ if [ "$(installed_signature)" = "stable" ] && [ ! -f "$PERMISSIONS_MARK" ]; then
 fi
 
 if [ $APP_CHANGED -eq 0 ] && pgrep -x Notchy >/dev/null; then
-    skip 6 "já está aberto"
+    skip 6 "$(t "já está aberto" "already open" "ya está abierto")"
 else
     run 6 step_open
 fi
@@ -512,39 +571,39 @@ echo
 make_bar 100 "$BAR_WIDTH"
 printf '    %s %s100%%%s\n\n' "$BAR" "$B" "$R"
 if [ $CHANGED -eq 0 ]; then
-    printf '  %s✱%s %sNotchy já está atualizado%s %sv%s · nada para fazer%s\n\n' "$ORANGE" "$R" "$B" "$R" "$DIM" "$VERSION" "$R"
+    printf '  %s✱%s %s%s%s %sv%s · %s%s\n\n' "$ORANGE" "$R" "$B" "$(t "Notchy já está atualizado" "Notchy is up to date" "Notchy ya está actualizado")" "$R" "$DIM" "$VERSION" "$(t "nada para fazer" "nothing to do" "nada que hacer")" "$R"
 elif [ -z "$INSTALLED_VERSION" ]; then
-    printf '  %s✱%s %sNotchy v%s instalado%s %sem %s%s\n\n' "$ORANGE" "$R" "$B" "$VERSION" "$R" "$DIM" "$(fmt_time $TOOK)" "$R"
+    printf '  %s✱%s %s%s%s %s%s %s%s\n\n' "$ORANGE" "$R" "$B" "$(printf "$(t "Notchy v%s instalado" "Notchy v%s installed" "Notchy v%s instalado")" "$VERSION")" "$R" "$DIM" "$(t "em" "in" "en")" "$(fmt_time $TOOK)" "$R"
 elif [ $APP_CHANGED -eq 1 ]; then
-    printf '  %s✱%s %sNotchy atualizado para v%s%s %sem %s%s\n\n' "$ORANGE" "$R" "$B" "$VERSION" "$R" "$DIM" "$(fmt_time $TOOK)" "$R"
+    printf '  %s✱%s %s%s%s %s%s %s%s\n\n' "$ORANGE" "$R" "$B" "$(printf "$(t "Notchy atualizado para v%s" "Notchy updated to v%s" "Notchy actualizado a v%s")" "$VERSION")" "$R" "$DIM" "$(t "em" "in" "en")" "$(fmt_time $TOOK)" "$R"
 else
-    printf '  %s✱%s %sNotchy v%s · ajustes atualizados%s %sem %s%s\n\n' "$ORANGE" "$R" "$B" "$VERSION" "$R" "$DIM" "$(fmt_time $TOOK)" "$R"
+    printf '  %s✱%s %s%s%s %s%s %s%s\n\n' "$ORANGE" "$R" "$B" "$(printf "$(t "Notchy v%s · ajustes atualizados" "Notchy v%s · settings updated" "Notchy v%s · ajustes actualizados")" "$VERSION")" "$R" "$DIM" "$(t "em" "in" "en")" "$(fmt_time $TOOK)" "$R"
 fi
 printf '    %s%-10s%s %s\n' "$DIM" "App" "$R" "$TARGET"
-printf '    %s%-10s%s notchy %s·%s settings %s·%s doctor %s·%s update %s·%s uninstall\n' "$DIM" "Comando" "$R" "$DIM" "$R" "$DIM" "$R" "$DIM" "$R" "$DIM" "$R"
+printf '    %s%-10s%s notchy %s·%s settings %s·%s doctor %s·%s update %s·%s uninstall\n' "$DIM" "$(t "Comando" "Command" "Comando")" "$R" "$DIM" "$R" "$DIM" "$R" "$DIM" "$R" "$DIM" "$R"
 case "$(installed_signature)" in
     stable)
-        printf '    %s%-10s%s %s %s✓ estável, as permissões ficam salvas entre versões%s\n' "$DIM" "Assinatura" "$R" "$IDENTITY" "$GREEN" "$R"
+        printf '    %s%-10s%s %s %s✓ %s%s\n' "$DIM" "$(t "Assinatura" "Signature" "Firma")" "$R" "$IDENTITY" "$GREEN" "$(t "estável, as permissões ficam salvas entre versões" "stable, permissions are kept between versions" "estable, los permisos se conservan entre versiones")" "$R"
         ;;
     adhoc)
-        printf '    %s%-10s%s ad-hoc %s✗ o macOS vai pedir as permissões a cada atualização · rode notchy doctor%s\n' "$DIM" "Assinatura" "$R" "$YELLOW" "$R"
+        printf '    %s%-10s%s ad-hoc %s✗ %s%s\n' "$DIM" "$(t "Assinatura" "Signature" "Firma")" "$R" "$YELLOW" "$(t "o macOS vai pedir as permissões a cada atualização · rode notchy doctor" "macOS will ask for permissions after every update · run notchy doctor" "macOS pedirá los permisos en cada actualización · ejecuta notchy doctor")" "$R"
         ;;
     *)
-        printf '    %s%-10s%s %snão consegui conferir · rode notchy doctor%s\n' "$DIM" "Assinatura" "$R" "$YELLOW" "$R"
+        printf '    %s%-10s%s %s%s%s\n' "$DIM" "$(t "Assinatura" "Signature" "Firma")" "$R" "$YELLOW" "$(t "não consegui conferir · rode notchy doctor" "couldn't check · run notchy doctor" "no se pudo comprobar · ejecuta notchy doctor")" "$R"
         ;;
 esac
 printf '    %s%-10s%s %s\n\n' "$DIM" "Log" "$R" "$LOG"
 if [ $PERMISSIONS_RESET -eq 1 ]; then
-    printf '  %s✱ Limpei as permissões antigas, que eram da assinatura ad-hoc.%s\n' "$ORANGE" "$R"
-    printf '  %s  Autorize uma última vez o que o macOS pedir (Acessibilidade, navegador, Calendário).%s\n' "$DIM" "$R"
-    printf '  %s  Daqui pra frente, as atualizações não pedem mais.%s\n\n' "$DIM" "$R"
+    printf '  %s✱ %s%s\n' "$ORANGE" "$(t "Limpei as permissões antigas, que eram da assinatura ad-hoc." "Cleared the old permissions from the ad-hoc signature." "Borré los permisos antiguos de la firma ad-hoc.")" "$R"
+    printf '  %s  %s%s\n' "$DIM" "$(t "Autorize uma última vez o que o macOS pedir (Acessibilidade, navegador, Calendário)." "Allow what macOS asks one last time (Accessibility, browser, Calendar)." "Autoriza por última vez lo que pida macOS (Accesibilidad, navegador, Calendario).")" "$R"
+    printf '  %s  %s%s\n\n' "$DIM" "$(t "Daqui pra frente, as atualizações não pedem mais." "From now on, updates won't ask again." "A partir de ahora, las actualizaciones no lo pedirán más.")" "$R"
 fi
 if [ $CHANGED -eq 1 ]; then
-    printf '  Passe o mouse no notch pra começar.\n'
-    printf '  %sReinicie as sessões do Claude Code que já estavam abertas.%s\n' "$DIM" "$R"
+    printf '  %s\n' "$(t "Passe o mouse no notch pra começar." "Hover over the notch to get started." "Pasa el ratón por el notch para empezar.")"
+    printf '  %s%s%s\n' "$DIM" "$(t "Reinicie as sessões do Claude Code que já estavam abertas." "Restart any Claude Code sessions that were already open." "Reinicia las sesiones de Claude Code que ya estaban abiertas.")" "$R"
 fi
-printf '  %sPara reinstalar tudo do zero: ./install.sh --force%s\n' "$DIM" "$R"
+printf '  %s%s%s\n' "$DIM" "$(t "Para reinstalar tudo do zero: ./install.sh --force" "To reinstall everything from scratch: ./install.sh --force" "Para reinstalar todo desde cero: ./install.sh --force")" "$R"
 if [ "$NEED_PATH" -eq 1 ]; then
-    printf '  %sAbra um terminal novo para usar o comando notchy.%s\n' "$DIM" "$R"
+    printf '  %s%s%s\n' "$DIM" "$(t "Abra um terminal novo para usar o comando notchy." "Open a new terminal to use the notchy command." "Abre una terminal nueva para usar el comando notchy.")" "$R"
 fi
 echo

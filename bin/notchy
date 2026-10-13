@@ -6,6 +6,37 @@ STATE="$HOME/Library/Application Support/Notchy"
 REPO_URL="https://github.com/lleonardo-franco/notchy.git"
 HOMEBREW="${NOTCHY_HOMEBREW:-0}"
 
+notchy_language() {
+    local value="${NOTCHY_LANG:-}"
+    if [ -z "$value" ]; then
+        value=$(defaults read -g AppleLanguages 2>/dev/null | sed -n '2p' | tr -d ' ",')
+    fi
+    [ -z "$value" ] && value="${LC_ALL:-${LANG:-en}}"
+    case "$value" in
+        pt*) echo pt ;;
+        es*) echo es ;;
+        *) echo en ;;
+    esac
+}
+
+NOTCHY_LANG="$(notchy_language)"
+export NOTCHY_LANG
+
+t() {
+    case "$NOTCHY_LANG" in
+        pt) printf '%s' "$1" ;;
+        es) printf '%s' "$3" ;;
+        *) printf '%s' "$2" ;;
+    esac
+}
+
+confirmed() {
+    case "$1" in
+        s|S|sim|Sim|SIM|y|Y|yes|Yes|YES|si|Si|SI|sí|Sí) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
 running() {
     pgrep -x Notchy >/dev/null
 }
@@ -24,7 +55,8 @@ installed_version() {
 }
 
 usage() {
-    cat <<USAGE
+    case "$NOTCHY_LANG" in
+        pt) cat <<USAGE
 uso: notchy [comando]
 
   (nada) / start     abre o Notchy
@@ -36,61 +68,125 @@ uso: notchy [comando]
   welcome            abre as boas-vindas e as permissões
   city "Cidade"      define a cidade do clima (city auto volta ao automático)
   doctor             diagnóstico de assinatura, certificado e permissões
-  update             baixa a versão mais nova do GitHub e instala
+  update             baixa a versão mais nova e instala
   uninstall          remove o Notchy, os hooks do Claude Code e o comando
   version            versão instalada
+
+Idioma: NOTCHY_LANG=pt|en|es
 USAGE
+        ;;
+        es) cat <<USAGE
+uso: notchy [comando]
+
+  (nada) / start     abre Notchy
+  setup              compila e instala la app (úsalo después de instalar o actualizar con Homebrew)
+  stop               cierra
+  restart            reinicia
+  status             en ejecución o detenido
+  settings           abre los ajustes
+  welcome            abre la bienvenida y los permisos
+  city "Ciudad"      define la ciudad del clima (city auto vuelve a la automática)
+  doctor             diagnóstico de firma, certificado y permisos
+  update             descarga la última versión y la instala
+  uninstall          elimina Notchy, los hooks de Claude Code y el comando
+  version            versión instalada
+
+Idioma: NOTCHY_LANG=pt|en|es
+USAGE
+        ;;
+        *) cat <<USAGE
+usage: notchy [command]
+
+  (none) / start     open Notchy
+  setup              build and install the app (use after installing or upgrading with Homebrew)
+  stop               quit
+  restart            restart
+  status             running or stopped
+  settings           open settings
+  welcome            open the welcome and permissions window
+  city "City"        set the weather city (city auto goes back to automatic)
+  doctor             check signature, certificate and permissions
+  update             download the latest version and install it
+  uninstall          remove Notchy, the Claude Code hooks and this command
+  version            installed version
+
+Language: NOTCHY_LANG=pt|en|es
+USAGE
+        ;;
+    esac
+}
+
+field() {
+    local label="$1:"
+    local width=16
+    local pad=$(( width - ${#label} ))
+    [ $pad -lt 1 ] && pad=1
+    printf '%s%*s%s\n' "$label" "$pad" "" "$2"
 }
 
 doctor() {
-    echo "Notchy · diagnóstico"
+    t "Notchy · diagnóstico" "Notchy · diagnostics" "Notchy · diagnóstico"
+    echo
     echo
     if [ -d "$APP" ]; then
-        echo "App:          $APP (v$(installed_version))"
+        field "App" "$APP (v$(installed_version))"
         info=$(codesign -dvv "$APP" 2>&1)
         if grep -q "Authority=$IDENTITY" <<<"$info"; then
-            echo "Assinatura:   $IDENTITY (estável)"
+            field "$(t "Assinatura" "Signature" "Firma")" "$IDENTITY ($(t "estável" "stable" "estable"))"
         elif grep -q "Signature=adhoc" <<<"$info"; then
-            echo "Assinatura:   ad-hoc (instável: o macOS pede as permissões a cada atualização)"
+            field "$(t "Assinatura" "Signature" "Firma")" "$(t "ad-hoc (instável: o macOS pede as permissões a cada atualização)" "ad-hoc (unstable: macOS asks for permissions after every update)" "ad-hoc (inestable: macOS pide los permisos en cada actualización)")"
         else
-            echo "Assinatura:   $(grep -m1 Authority <<<"$info" || echo desconhecida)"
+            field "$(t "Assinatura" "Signature" "Firma")" "$(grep -m1 Authority <<<"$info" || t "desconhecida" "unknown" "desconocida")"
         fi
-        echo "Requisito:    $(codesign -dr - "$APP" 2>&1 | sed -n 's/^designated => //p')"
+        field "$(t "Requisito" "Requirement" "Requisito")" "$(codesign -dr - "$APP" 2>&1 | sed -n 's/^designated => //p')"
     else
-        echo "App:          não instalado"
+        field "App" "$(t "não instalado" "not installed" "no instalada")"
     fi
     if security find-identity -v -p codesigning 2>/dev/null | grep -q "\"$IDENTITY\""; then
-        echo "Certificado:  válido para assinar"
+        field "$(t "Certificado" "Certificate" "Certificado")" "$(t "válido para assinar" "valid for signing" "válido para firmar")"
     elif security find-certificate -c "$IDENTITY" >/dev/null 2>&1; then
-        echo "Certificado:  existe, mas o macOS não confia nele para assinar"
+        field "$(t "Certificado" "Certificate" "Certificado")" "$(t "existe, mas o macOS não confia nele para assinar" "exists, but macOS doesn't trust it for signing" "existe, pero macOS no confía en él para firmar")"
     else
-        echo "Certificado:  não existe"
+        field "$(t "Certificado" "Certificate" "Certificado")" "$(t "não existe" "missing" "no existe")"
     fi
     if [ -f "$STATE/keychain-ready" ]; then
-        echo "Keychain:     liberado para o codesign"
+        field "Keychain" "$(t "liberado para o codesign" "unlocked for codesign" "habilitado para codesign")"
     else
-        echo "Keychain:     ainda não liberado"
+        field "Keychain" "$(t "ainda não liberado" "not unlocked yet" "aún no habilitado")"
     fi
-    if running; then echo "Rodando:      sim"; else echo "Rodando:      não"; fi
+    if running; then
+        field "$(t "Rodando" "Running" "En ejecución")" "$(t "sim" "yes" "sí")"
+    else
+        field "$(t "Rodando" "Running" "En ejecución")" "$(t "não" "no" "no")"
+    fi
     if [ -f "$STATE/source" ]; then
-        echo "Código-fonte: $(cat "$STATE/source")"
+        field "$(t "Código-fonte" "Source" "Código fuente")" "$(cat "$STATE/source")"
     fi
     if [ -f "$STATE/status.json" ]; then
         echo
-        echo "Permissões (informadas pelo app):"
-        /usr/bin/python3 - "$STATE/status.json" <<'PY'
+        t "Permissões (informadas pelo app):" "Permissions (reported by the app):" "Permisos (informados por la app):"
+        echo
+        /usr/bin/python3 - "$STATE/status.json" "$NOTCHY_LANG" <<'PY'
 import json, sys
-labels = {"granted": "permitido", "denied": "negado", "notDetermined": "não pedido", "notRunning": "app fechado", "notInstalled": "não instalado"}
+language = sys.argv[2]
+texts = {
+    "pt": {"granted": "permitido", "denied": "negado", "notDetermined": "não pedido", "notRunning": "app fechado", "notInstalled": "não instalado",
+           "accessibility": "Acessibilidade", "calendar": "Calendário", "hooks": "hooks instalados", "nohooks": "hooks não instalados", "updated": "atualizado em"},
+    "es": {"granted": "permitido", "denied": "denegado", "notDetermined": "no solicitado", "notRunning": "app cerrada", "notInstalled": "no instalada",
+           "accessibility": "Accesibilidad", "calendar": "Calendario", "hooks": "hooks instalados", "nohooks": "hooks no instalados", "updated": "actualizado el"},
+    "en": {"granted": "granted", "denied": "denied", "notDetermined": "not requested", "notRunning": "app closed", "notInstalled": "not installed",
+           "accessibility": "Accessibility", "calendar": "Calendar", "hooks": "hooks installed", "nohooks": "hooks not installed", "updated": "updated at"},
+}[language if language in ("pt", "es") else "en"]
 data = json.load(open(sys.argv[1]))
 def show(name, value):
-    print(f"  {name:<16}{labels.get(value, value)}")
-show("Acessibilidade", data.get("accessibility", ""))
-show("Calendário", data.get("calendar", ""))
+    print(f"  {name:<16}{texts.get(value, value)}")
+show(texts["accessibility"], data.get("accessibility", ""))
+show(texts["calendar"], data.get("calendar", ""))
 show("Bluetooth", data.get("bluetooth", ""))
 for app, value in sorted(data.get("automation", {}).items()):
     show(app, value)
-print(f"  {'Claude Code':<16}{'hooks instalados' if data.get('hooks') else 'hooks não instalados'}")
-print(f"\n  atualizado em {data.get('updatedAt', '?')}")
+print(f"  {'Claude Code':<16}{texts['hooks'] if data.get('hooks') else texts['nohooks']}")
+print(f"\n  {texts['updated']} {data.get('updatedAt', '?')}")
 PY
     fi
 }
@@ -107,7 +203,8 @@ setup() {
     local source
     source="$(source_dir)"
     if [ -z "$source" ]; then
-        echo "Não achei o código-fonte do Notchy. Rode notchy update ou instale pelo Homebrew."
+        t "Não achei o código-fonte do Notchy. Rode notchy update ou instale pelo Homebrew." "Couldn't find Notchy's source. Run notchy update or install with Homebrew." "No encontré el código fuente de Notchy. Ejecuta notchy update o instálalo con Homebrew."
+        echo
         exit 1
     fi
     exec "$source/install.sh" "$@"
@@ -124,14 +221,14 @@ update() {
         source="$HOME/Projects/notchy"
     fi
     if [ -d "$source/.git" ]; then
-        echo "Atualizando $source"
+        printf "$(t "Atualizando %s" "Updating %s" "Actualizando %s")\n" "$source"
         git -C "$source" pull --ff-only || {
-            echo "Não consegui atualizar com git pull. Confira as mudanças locais em $source e tente de novo."
+            printf "$(t "Não consegui atualizar com git pull. Confira as mudanças locais em %s e tente de novo." "git pull failed. Check the local changes in %s and try again." "No se pudo actualizar con git pull. Revisa los cambios locales en %s e inténtalo de nuevo.")\n" "$source"
             exit 1
         }
     elif [ -e "$source" ]; then
-        echo "$source existe, mas não é um clone do GitHub."
-        echo "Renomeie a pasta e rode de novo: mv \"$source\" \"$source-antigo\" && notchy update"
+        printf "$(t "%s existe, mas não é um clone do GitHub." "%s exists, but it isn't a clone from GitHub." "%s existe, pero no es un clon de GitHub.")\n" "$source"
+        printf "$(t "Renomeie a pasta e rode de novo: %s" "Rename the folder and run again: %s" "Cambia el nombre de la carpeta y vuelve a ejecutarlo: %s")\n" "mv \"$source\" \"$source-old\" && notchy update"
         exit 1
     else
         mkdir -p "$(dirname "$source")"
@@ -141,54 +238,64 @@ update() {
 }
 
 uninstall() {
-    echo "Isto remove:"
+    t "Isto remove:" "This removes:" "Esto elimina:"
+    echo
     echo "  • /Applications/Notchy.app"
-    echo "  • os hooks e a status line do Claude Code (a sua status line antiga volta)"
-    echo "  • o comando notchy, as preferências e as permissões do Notchy"
-    printf "Continuar? [s/N] "
+    echo "  • $(t "os hooks e a status line do Claude Code (a sua status line antiga volta)" "the Claude Code hooks and status line (your previous status line comes back)" "los hooks y la status line de Claude Code (tu status line anterior vuelve)")"
+    echo "  • $(t "o comando notchy, as preferências e as permissões do Notchy" "the notchy command, Notchy's preferences and permissions" "el comando notchy, las preferencias y los permisos de Notchy")"
+    printf "%s " "$(t "Continuar? [s/N]" "Continue? [y/N]" "¿Continuar? [s/N]")"
     read -r answer
-    case "$answer" in
-        s|S|sim|Sim) ;;
-        *) echo "Nada foi removido."; exit 0 ;;
-    esac
+    if ! confirmed "$answer"; then
+        t "Nada foi removido." "Nothing was removed." "No se eliminó nada."
+        echo
+        exit 0
+    fi
 
     running && stop
     if [ -f "$APP/Contents/Resources/hooks/install.py" ]; then
         /usr/bin/python3 "$APP/Contents/Resources/hooks/install.py" --uninstall
     elif [ -f "$HOME/.notchy/notchy-hook.py" ]; then
-        echo "Não achei o desinstalador dos hooks no app; rode python3 hooks/install.py --uninstall na pasta do projeto."
+        t "Não achei o desinstalador dos hooks no app; rode python3 hooks/install.py --uninstall na pasta do projeto." "Couldn't find the hooks uninstaller in the app; run python3 hooks/install.py --uninstall in the project folder." "No encontré el desinstalador de los hooks en la app; ejecuta python3 hooks/install.py --uninstall en la carpeta del proyecto."
+        echo
     fi
     for service in Accessibility AppleEvents Calendar BluetoothAlways; do
         tccutil reset "$service" "$BUNDLE" >/dev/null 2>&1
     done
     defaults delete "$BUNDLE" >/dev/null 2>&1
     rm -rf "$APP" "$STATE"
-    echo "App, hooks, preferências e permissões removidos."
+    t "App, hooks, preferências e permissões removidos." "App, hooks, preferences and permissions removed." "App, hooks, preferencias y permisos eliminados."
+    echo
 
     if security find-certificate -c "$IDENTITY" >/dev/null 2>&1; then
-        printf "Remover também o certificado \"%s\" do Keychain? [s/N] " "$IDENTITY"
+        printf "$(t "Remover também o certificado \"%s\" do Keychain? [s/N]" "Also remove the \"%s\" certificate from the Keychain? [y/N]" "¿Eliminar también el certificado \"%s\" del Keychain? [s/N]") " "$IDENTITY"
         read -r answer
-        case "$answer" in
-            s|S|sim|Sim)
-                security delete-identity -c "$IDENTITY" >/dev/null 2>&1 \
-                    || security delete-certificate -c "$IDENTITY" >/dev/null 2>&1
-                echo "Certificado removido."
-                ;;
-        esac
+        if confirmed "$answer"; then
+            security delete-identity -c "$IDENTITY" >/dev/null 2>&1 \
+                || security delete-certificate -c "$IDENTITY" >/dev/null 2>&1
+            t "Certificado removido." "Certificate removed." "Certificado eliminado."
+            echo
+        fi
     fi
 
     if [ "$HOMEBREW" = "1" ]; then
-        echo "Para remover o comando: brew uninstall notchy"
+        t "Para remover o comando: brew uninstall notchy" "To remove the command: brew uninstall notchy" "Para eliminar el comando: brew uninstall notchy"
+        echo
     else
-        rm -f "$0" 2>/dev/null && echo "Comando notchy removido."
+        rm -f "$0" 2>/dev/null && t "Comando notchy removido." "notchy command removed." "Comando notchy eliminado." && echo
     fi
-    echo "Pronto. Obrigado por usar o Notchy."
+    t "Pronto. Obrigado por usar o Notchy." "Done. Thanks for using Notchy." "Listo. Gracias por usar Notchy."
+    echo
+}
+
+say() {
+    t "$1" "$2" "$3"
+    echo
 }
 
 case "${1:-start}" in
     start|open)
         if [ ! -d "$APP" ]; then
-            echo "Notchy não está em /Applications. Rode o install.sh do projeto ou notchy update."
+            say "Notchy não está em /Applications. Rode o install.sh do projeto ou notchy update." "Notchy isn't in /Applications. Run the project's install.sh or notchy update." "Notchy no está en /Applications. Ejecuta el install.sh del proyecto o notchy update."
             exit 1
         fi
         open "$APP"
@@ -196,23 +303,27 @@ case "${1:-start}" in
     stop|quit)
         if running; then
             stop
-            echo "Notchy fechado"
+            say "Notchy fechado" "Notchy closed" "Notchy cerrado"
         else
-            echo "Notchy não estava rodando"
+            say "Notchy não estava rodando" "Notchy wasn't running" "Notchy no estaba en ejecución"
         fi
         ;;
     restart)
         running && stop
         open "$APP"
-        echo "Notchy reiniciado"
+        say "Notchy reiniciado" "Notchy restarted" "Notchy reiniciado"
         ;;
     status)
-        if running; then echo "Notchy rodando"; else echo "Notchy parado"; fi
+        if running; then
+            say "Notchy rodando" "Notchy is running" "Notchy en ejecución"
+        else
+            say "Notchy parado" "Notchy is stopped" "Notchy detenido"
+        fi
         ;;
     settings|ajustes)
         open "notchy://settings"
         ;;
-    welcome|boas-vindas)
+    welcome|boas-vindas|bienvenida)
         open "notchy://welcome"
         ;;
     doctor|diagnostico)
@@ -222,7 +333,7 @@ case "${1:-start}" in
         shift
         setup "$@"
         ;;
-    update|atualizar)
+    update|atualizar|actualizar)
         update
         ;;
     uninstall|desinstalar)
@@ -231,26 +342,26 @@ case "${1:-start}" in
     version|versao|-v|--version)
         echo "Notchy $(installed_version)"
         ;;
-    city|cidade)
+    city|cidade|ciudad)
         shift
         if [ $# -eq 0 ]; then
             current=$(defaults read "$BUNDLE" weatherCity 2>/dev/null)
-            echo "Cidade do clima: ${current:-automática (pela sua conexão)}"
+            printf "%s %s\n" "$(t "Cidade do clima:" "Weather city:" "Ciudad del clima:")" "${current:-$(t "automática (pela sua conexão)" "automatic (from your connection)" "automática (según tu conexión)")}"
             exit 0
         fi
         if [ "$1" = "auto" ]; then
             defaults delete "$BUNDLE" weatherCity >/dev/null 2>&1
-            echo "Clima voltou para a localização automática"
+            say "Clima voltou para a localização automática" "Weather is back to automatic location" "El clima volvió a la ubicación automática"
         else
             defaults write "$BUNDLE" weatherCity "$*"
-            echo "Clima agora usa: $*"
+            printf "%s %s\n" "$(t "Clima agora usa:" "Weather now uses:" "El clima ahora usa:")" "$*"
         fi
         if running; then
             stop
             open "$APP"
         fi
         ;;
-    help|ajuda|-h|--help)
+    help|ajuda|ayuda|-h|--help)
         usage
         ;;
     *)

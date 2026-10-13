@@ -4,6 +4,8 @@ All notable changes to Notchy are documented here. The format is based on [Keep 
 
 ## Unreleased
 
+- The installer, the `notchy` command and the Claude Code hooks installer follow the Mac's language (English, Portuguese or Spanish), with `NOTCHY_LANG` to force one
+
 - Report a problem from Settings → About: opens a bug report already filled with the version, macOS, Mac model, signature, permissions and settings; or copy the same diagnostics
 
 - Checks GitHub for new versions on launch and once a day, with an alert in the notch and an Update in Terminal button in settings
