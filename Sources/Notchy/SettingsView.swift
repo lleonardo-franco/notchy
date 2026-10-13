@@ -44,6 +44,12 @@ struct SettingsView: View {
                     setLaunchAtLogin(enabled)
                 })
                 Toggle("Som nos avisos", isOn: $prefs.alertsEnabled)
+                Toggle("Mostrar volume e brilho no notch", isOn: Binding {
+                    model.prefs.levelHUD
+                } set: { enabled in
+                    model.setLevelHUD(enabled)
+                })
+                .help("Substitui o aviso do macOS quando você usa as teclas de volume e brilho. Precisa da permissão de Acessibilidade.")
                 LabeledContent("Vibração do trackpad") {
                     HStack(spacing: 8) {
                         Picker("Vibração do trackpad", selection: $prefs.hapticLevel) {

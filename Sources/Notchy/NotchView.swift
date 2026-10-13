@@ -128,10 +128,10 @@ struct CollapsedContent: View {
                 rightEar.frame(width: model.earWidth)
             }
             .frame(width: model.notchWidth + model.earWidth * 2, height: model.notchHeight)
-            .opacity(model.showsEars || model.peek != nil || model.volumeLevel != nil ? 1 : 0)
+            .opacity(model.showsEars || model.peek != nil || model.hud != nil ? 1 : 0)
 
-            if let level = model.volumeLevel {
-                VolumeIndicator(level: level, barWidth: 140)
+            if let hud = model.hud {
+                VolumeIndicator(level: hud.level, barWidth: 140, kind: hud.kind)
                     .frame(maxWidth: .infinity)
                     .frame(height: 30)
                     .transition(.opacity)

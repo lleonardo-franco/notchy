@@ -47,6 +47,14 @@ A full pass before each release, and the relevant sections for every pull reques
 - [ ] Weather shows the right city (or the one set with `notchy city`)
 - [ ] Copying text, an image and a file shows them in Copiados; clicking copies again
 
+## Volume and brightness keys
+
+- [ ] Volume up, down and mute show the bar in the notch and no macOS display
+- [ ] Shift+Option with the volume keys moves in quarter steps
+- [ ] Brightness keys change the built-in display and show the sun bar
+- [ ] With the setting off, the macOS display comes back
+- [ ] In a full-screen app with the notch hidden, the macOS display shows instead
+
 ## Shelf
 
 - [ ] Dragging a file from Finder over the collapsed notch opens it with the two drop zones

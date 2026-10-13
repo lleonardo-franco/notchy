@@ -15,6 +15,26 @@ enum SystemVolume {
         return isMuted(device) ? 0 : Double(value)
     }
 
+    static var canSet: Bool {
+        guard let device = outputDevice() else { return false }
+        var address = volumeAddress
+        var settable: DarwinBoolean = false
+        return AudioObjectHasProperty(device, &address)
+            && AudioObjectIsPropertySettable(device, &address, &settable) == noErr
+            && settable.boolValue
+    }
+
+    static func toggleMute() -> Double? {
+        guard let device = outputDevice() else { return nil }
+        var address = volumeAddress
+        var value = Float32(0)
+        var size = UInt32(MemoryLayout<Float32>.size)
+        guard AudioObjectGetPropertyData(device, &address, 0, nil, &size, &value) == noErr else { return nil }
+        let muted = !isMuted(device)
+        setMute(device, muted)
+        return muted ? 0 : Double(value)
+    }
+
     static func set(_ level: Double) {
         let clamped = min(max(level, 0), 1)
         guard let device = outputDevice(), setVolume(device, clamped) else {

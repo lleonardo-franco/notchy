@@ -85,7 +85,7 @@ Notchy turns the notch into a tiny control center. Collapsed, it shows only what
     </td>
     <td valign="top">
       <h3>✋ Gestures and haptics</h3>
-      Two‑finger swipes change tracks and volume. Trackpad haptics with adjustable strength, and a touchpad‑shaped area to try them out.
+      Two‑finger swipes change tracks and volume, and the volume and brightness keys show their level in the notch instead of the macOS display. Trackpad haptics with adjustable strength, and a touchpad‑shaped area to try them out.
     </td>
   </tr>
 </table>
@@ -149,7 +149,7 @@ Everything is opt‑in. Notchy works with any subset of these.
 
 | Permission | Used for |
 |---|---|
-| Accessibility | Reading unread counts (WhatsApp, Slack, Telegram, Discord, ClickUp) from the Dock |
+| Accessibility | Reading unread counts (WhatsApp, Slack, Telegram, Discord, ClickUp) from the Dock, and showing the volume and brightness keys in the notch |
 | Automation: Safari, Chrome | Finding YouTube videos, pausing the tab and resuming at the same spot |
 | Automation: Spotify, Music | Showing and controlling playback |
 | Automation: Terminal, iTerm | Jumping to the right Claude Code session |

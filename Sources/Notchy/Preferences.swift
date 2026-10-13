@@ -131,6 +131,10 @@ final class Preferences {
         didSet { defaults.set(BadgeApp.allCases.map(\.rawValue).filter(disabledBadges.contains), forKey: "disabledBadges") }
     }
 
+    var levelHUD: Bool {
+        didSet { defaults.set(levelHUD, forKey: "levelHUD") }
+    }
+
     var otherPlayers: Bool {
         didSet { defaults.set(otherPlayers, forKey: "otherPlayers") }
     }
@@ -171,6 +175,7 @@ final class Preferences {
         stored.set(Self.allTabs, forKey: "knownTabs")
         youtubeEnabled = stored.object(forKey: "youtubeEnabled") as? Bool ?? true
         otherPlayers = stored.object(forKey: "otherPlayers") as? Bool ?? true
+        levelHUD = stored.object(forKey: "levelHUD") as? Bool ?? true
         bluetoothAlerts = stored.object(forKey: "bluetoothAlerts") as? Bool ?? true
         meetingLead = stored.object(forKey: "meetingLead") as? Int ?? 5
         meetingCountdown = stored.object(forKey: "meetingCountdown") as? Bool ?? true
