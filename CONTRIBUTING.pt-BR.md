@@ -140,6 +140,7 @@ Use o `./install.sh` para testar suas mudanças. Ele assina o app com o seu cert
 - **Swift e SwiftUI.** Os modelos usam `@Observable`; o código de interface roda no main actor. Os serviços cuidam dos efeitos colaterais; as views ficam enxutas.
 - **Sem comentários no código.** Prefira nomes claros e funções pequenas que se explicam sozinhas.
 - **Siga os padrões ao redor.** Use a mesma nomenclatura, organização e formatação do código que você está editando.
+- **Dê nome ao que você adicionar.** Botões só com ícone precisam de `help:` (ele também vira o rótulo do VoiceOver); controles próprios precisam de `accessibilityLabel` e, quando mostram um valor, `accessibilityValue`.
 - **Nunca trave a thread principal.** Rode AppleScript pelo `AppleScript.run`, que tem tempo limite.
 - **Respeite o modo de repouso e o bloqueio.** Timers e verificações periódicas não devem rodar enquanto `SystemActivity.shared.paused` for verdadeiro.
 - **Permissão nova?** Adicione no `PermissionCenter`, na janela de boas-vindas, no texto de uso do `Info.plist` e na tabela de permissões de todos os READMEs.

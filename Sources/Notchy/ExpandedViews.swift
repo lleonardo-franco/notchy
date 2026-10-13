@@ -75,6 +75,7 @@ struct ExpandedContent: View {
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("\(snapshot.city): \(Int(snapshot.temperature.rounded()))°, \(WeatherCondition.text(snapshot.code))")
             }
             Spacer()
             HStack(spacing: 8) {
@@ -93,6 +94,7 @@ struct ExpandedContent: View {
                     }
                     .buttonStyle(.plain)
                     .help("\(device.name): \(device.batteryText)")
+                    .accessibilityLabel("\(device.name): \(device.batteryText)")
                 }
                 ForEach(model.visibleBadges) { item in
                     Button {
@@ -109,6 +111,7 @@ struct ExpandedContent: View {
                     }
                     .buttonStyle(.plain)
                     .help("Abrir o \(item.app.rawValue)")
+                    .accessibilityLabel("\(item.app.rawValue): \(item.app.describe(item.label))")
                 }
                 HStack(spacing: 0) {
                     IconButton(symbol: "gearshape.fill", help: "Ajustes") {
@@ -133,6 +136,7 @@ struct MusicSection: View {
                     music.openPlayer()
                 } label: {
                     Artwork(image: music.artwork, size: 64, radius: 10)
+                        .accessibilityLabel(Text("Abrir o player"))
                         .shadow(color: .black.opacity(0.35), radius: 6, y: 3)
                         .overlay(alignment: .bottomTrailing) {
                             AppIcon(bundleIDs: [track.source.bundleID], size: 22, fallback: "music.note")
@@ -156,9 +160,9 @@ struct MusicSection: View {
                 }
 
                 HStack(spacing: 6) {
-                    IconButton(symbol: "backward.fill", size: 14) { music.previous() }
-                    IconButton(symbol: music.isPlaying ? "pause.fill" : "play.fill", size: 20, frame: 34) { music.playPause() }
-                    IconButton(symbol: "forward.fill", size: 14) { music.next() }
+                    IconButton(symbol: "backward.fill", size: 14, help: "Anterior") { music.previous() }
+                    IconButton(symbol: music.isPlaying ? "pause.fill" : "play.fill", size: 20, frame: 34, help: "Tocar ou pausar") { music.playPause() }
+                    IconButton(symbol: "forward.fill", size: 14, help: "Próxima") { music.next() }
                 }
             }
         } else {
@@ -216,6 +220,16 @@ struct PlaybackProgress: View {
                     .onHover { hovering = $0 }
                 }
                 .frame(height: 12)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(Text("Posição"))
+                .accessibilityValue(Text("\(Self.format(position)) de \(Self.format(duration))"))
+                .accessibilityAdjustableAction { direction in
+                    switch direction {
+                    case .increment: music.seek(to: position + 10)
+                    case .decrement: music.seek(to: max(position - 10, 0))
+                    @unknown default: break
+                    }
+                }
 
                 HStack {
                     Text(Self.format(position))
@@ -314,6 +328,8 @@ struct SessionRow: View {
         .buttonStyle(.plain)
         .padding(.horizontal, -6)
         .onHover { hovering = $0 }
+        .accessibilityElement(children: .combine)
+        .accessibilityHint(Text("Abre o terminal da sessão"))
     }
 
     static func elapsed(from start: Date, to end: Date) -> String {
@@ -354,5 +370,8 @@ struct UsageGauge: View {
         .font(.system(size: 10, weight: .semibold).monospacedDigit())
         .contentShape(Rectangle())
         .onHover { hovering = $0 }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("Uso do Claude (\(label))"))
+        .accessibilityValue("\(Int(window.usedPercentage.rounded()))%")
     }
 }

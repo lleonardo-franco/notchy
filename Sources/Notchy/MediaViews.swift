@@ -115,6 +115,8 @@ struct RateButton: View {
         .onHover { hovering = $0 }
         .animation(.snappy, value: rate)
         .help("Velocidade")
+        .accessibilityLabel(Text("Velocidade"))
+        .accessibilityValue(VideoPlayer.rateLabel(rate))
     }
 }
 
@@ -184,6 +186,9 @@ struct BatteryGlyph: View {
                 .font(.system(size: 13))
         }
         .foregroundStyle(level <= 20 ? Color.red : .white.opacity(0.75))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("Bateria"))
+        .accessibilityValue("\(level)%")
     }
 }
 

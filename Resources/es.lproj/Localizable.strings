@@ -1,3 +1,4 @@
+"%@ de %@" = "%@ de %@";
 "%@ mensagens" = "%@ mensajes";
 "%@ menções" = "%@ menciones";
 "%@ notificações" = "%@ notificaciones";
@@ -13,6 +14,7 @@
 "Abas" = "Pestañas";
 "Aberto no %@" = "Abierto en %@";
 "Abra o app para pedir" = "Abre la app para solicitarlo";
+"Abre o terminal da sessão" = "Abre la terminal de la sesión";
 "Abrir" = "Abrir";
 "Abrir Ajustes" = "Abrir Ajustes";
 "Abrir Ajustes do Sistema" = "Abrir Ajustes del Sistema";
@@ -22,6 +24,7 @@
 "Abrir no YouTube" = "Abrir en YouTube";
 "Abrir o %@" = "Abrir %@";
 "Abrir o notch" = "Abrir el notch";
+"Abrir o player" = "Abrir el reproductor";
 "Abriria o notch" = "Abriría el notch";
 "Acessibilidade" = "Accesibilidad";
 "Acesso ao Calendário" = "Acceso al Calendario";
@@ -31,6 +34,7 @@
 "Agora: %@, %lld°" = "Ahora: %@, %lld°";
 "Ajustes" = "Ajustes";
 "Ajustes do Notchy" = "Ajustes de Notchy";
+"Anterior" = "Anterior";
 "Ao clicar" = "Al hacer clic";
 "Ao passar o mouse" = "Al pasar el ratón";
 "Aparência" = "Apariencia";
@@ -52,9 +56,11 @@
 "Avisar quando o carregador do Mac for conectado e quando a bateria estiver baixa" = "Avisar cuando se conecte el cargador del Mac y cuando la batería esté baja";
 "Azul" = "Azul";
 "Bandeja" = "Bandeja";
+"Bateria" = "Batería";
 "Bateria dos fones e de outros dispositivos." = "Batería de los auriculares y otros dispositivos.";
 "Bateria em %lld%%" = "Batería al %lld%%";
 "Bem-vindo ao Notchy" = "Bienvenido a Notchy";
+"Brilho" = "Brillo";
 "Calendário" = "Calendario";
 "Carregando" = "Cargando";
 "Carregando o clima…" = "Cargando el clima…";
@@ -173,11 +179,13 @@
 "Permitido" = "Permitido";
 "Permitir" = "Permitir";
 "Permitir acesso ao Calendário" = "Permitir acceso al Calendario";
+"Posição" = "Posición";
 "Procurando atualizações…" = "Buscando actualizaciones…";
 "Procurar agora" = "Buscar ahora";
 "Procurar atualizações automaticamente" = "Buscar actualizaciones automáticamente";
 "Pronto" = "Listo";
 "Pronto · %@" = "Listo · %@";
+"Próxima" = "Siguiente";
 "Próxima música" = "Siguiente canción";
 "Próximas reuniões, botão Entrar e contagem regressiva." = "Próximas reuniones, botón Unirse y cuenta atrás.";
 "Quase limpo" = "Mayormente despejado";
@@ -213,6 +221,7 @@
 "Trovoadas com granizo" = "Tormenta con granizo";
 "Usado para %@." = "Se usa para %@.";
 "Use dois dedos com o cursor em cima do notch. No notch aberto, o volume responde em cima do player; nas listas, deslizar continua rolando." = "Usa dos dedos con el puntero sobre el notch. Con el notch abierto, el volumen responde sobre el reproductor; en las listas, deslizar sigue desplazando.";
+"Uso do Claude (%@)" = "Uso de Claude (%@)";
 "Veja suas próximas reuniões aqui" = "Mira aquí tus próximas reuniones";
 "Velocidade" = "Velocidad";
 "Velocidade das animações" = "Velocidad de las animaciones";

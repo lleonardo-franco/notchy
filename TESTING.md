@@ -96,6 +96,12 @@ A full pass before each release, and the relevant sections for every pull reques
 - [ ] Settings → About shows the new version; "Update in Terminal" opens Terminal running `notchy update`
 - [ ] "Check now" says you're on the latest version when you are
 
+## VoiceOver
+
+- [ ] With VoiceOver on, every button in the open notch reads a name (settings, quit, music controls, video controls)
+- [ ] The playback position reads "1:15 of 4:05" and swiping up or down seeks
+- [ ] Shelf items read their file name and offer Show in Finder, AirDrop and Remove in the actions rotor
+
 ## Quit and uninstall
 
 - [ ] The power button and `notchy stop` play the power‑off animation

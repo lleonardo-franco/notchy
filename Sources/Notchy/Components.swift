@@ -104,6 +104,7 @@ struct AppGlyph: View {
     var body: some View {
         AppIcon(bundleIDs: app.bundleIDs, size: size, fallback: app.symbol)
             .foregroundStyle(LinearGradient(colors: app.colors, startPoint: .top, endPoint: .bottom))
+            .accessibilityLabel(app.rawValue)
             .scaleEffect(bump ? 1.25 : 1)
             .onChange(of: trigger) { old, new in
                 guard BadgeService.value(new) > BadgeService.value(old) else { return }
@@ -134,6 +135,8 @@ struct EarBadge: View {
             NotificationBadge(text: item.label, colors: item.app.colors)
         }
         .help(item.app.describe(item.label))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(item.app.rawValue): \(item.app.describe(item.label))")
     }
 }
 
@@ -142,6 +145,22 @@ struct StatusIcon: View {
     var size: CGFloat = 13
 
     var body: some View {
+        icon
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text(label))
+    }
+
+    private var label: LocalizedStringKey {
+        switch status {
+        case .working: return "Trabalhando…"
+        case .waiting: return "Esperando você"
+        case .done: return "Pronto"
+        case .idle: return "Ocioso"
+        }
+    }
+
+    @ViewBuilder
+    private var icon: some View {
         switch status {
         case .working:
             TimelineView(.animation) { context in
@@ -184,6 +203,7 @@ struct Equalizer: View {
             }
             .frame(height: 14)
         }
+        .accessibilityHidden(true)
     }
 }
 
@@ -231,6 +251,7 @@ struct IconButton: View {
         .buttonStyle(.plain)
         .onHover { hovering = $0 }
         .help(help)
+        .accessibilityLabel(Text(help))
     }
 }
 
@@ -301,5 +322,8 @@ struct VolumeIndicator: View {
                 .frame(width: 24, alignment: .trailing)
                 .contentTransition(.numericText())
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(kind == .brightness ? Text("Brilho") : Text("Volume"))
+        .accessibilityValue("\(Int((level * 100).rounded()))%")
     }
 }

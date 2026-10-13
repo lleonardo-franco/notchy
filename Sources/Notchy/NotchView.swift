@@ -140,6 +140,7 @@ struct CollapsedContent: View {
             } else if let peek = model.peek {
                 HStack(spacing: 6) {
                     PeekIcon(style: peek.style)
+                        .accessibilityHidden(true)
                     Text(peek.title)
                         .fontWeight(.semibold)
                     Text(peek.subtitle)

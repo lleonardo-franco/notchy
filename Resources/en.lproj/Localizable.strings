@@ -1,3 +1,4 @@
+"%@ de %@" = "%@ of %@";
 "%@ mensagens" = "%@ messages";
 "%@ menções" = "%@ mentions";
 "%@ notificações" = "%@ notifications";
@@ -13,6 +14,7 @@
 "Abas" = "Tabs";
 "Aberto no %@" = "Open in %@";
 "Abra o app para pedir" = "Open the app to request";
+"Abre o terminal da sessão" = "Opens the session's terminal";
 "Abrir" = "Open";
 "Abrir Ajustes" = "Open Settings";
 "Abrir Ajustes do Sistema" = "Open System Settings";
@@ -22,6 +24,7 @@
 "Abrir no YouTube" = "Open on YouTube";
 "Abrir o %@" = "Open %@";
 "Abrir o notch" = "Open the notch";
+"Abrir o player" = "Open the player";
 "Abriria o notch" = "Would open the notch";
 "Acessibilidade" = "Accessibility";
 "Acesso ao Calendário" = "Calendar access";
@@ -31,6 +34,7 @@
 "Agora: %@, %lld°" = "Now: %@, %lld°";
 "Ajustes" = "Settings";
 "Ajustes do Notchy" = "Notchy Settings";
+"Anterior" = "Previous";
 "Ao clicar" = "On click";
 "Ao passar o mouse" = "On hover";
 "Aparência" = "Appearance";
@@ -52,9 +56,11 @@
 "Avisar quando o carregador do Mac for conectado e quando a bateria estiver baixa" = "Alert when the Mac's charger is connected and when its battery is low";
 "Azul" = "Blue";
 "Bandeja" = "Shelf";
+"Bateria" = "Battery";
 "Bateria dos fones e de outros dispositivos." = "Battery for headphones and other devices.";
 "Bateria em %lld%%" = "Battery at %lld%%";
 "Bem-vindo ao Notchy" = "Welcome to Notchy";
+"Brilho" = "Brightness";
 "Calendário" = "Calendar";
 "Carregando" = "Charging";
 "Carregando o clima…" = "Loading weather…";
@@ -173,11 +179,13 @@
 "Permitido" = "Allowed";
 "Permitir" = "Allow";
 "Permitir acesso ao Calendário" = "Allow Calendar access";
+"Posição" = "Position";
 "Procurando atualizações…" = "Checking for updates…";
 "Procurar agora" = "Check now";
 "Procurar atualizações automaticamente" = "Check for updates automatically";
 "Pronto" = "Done";
 "Pronto · %@" = "Done · %@";
+"Próxima" = "Next";
 "Próxima música" = "Next track";
 "Próximas reuniões, botão Entrar e contagem regressiva." = "Upcoming meetings, Join button and countdown.";
 "Quase limpo" = "Mostly clear";
@@ -213,6 +221,7 @@
 "Trovoadas com granizo" = "Thunderstorm with hail";
 "Usado para %@." = "Used for %@.";
 "Use dois dedos com o cursor em cima do notch. No notch aberto, o volume responde em cima do player; nas listas, deslizar continua rolando." = "Use two fingers with the pointer over the notch. With the notch open, volume works over the player; in lists, swiping keeps scrolling.";
+"Uso do Claude (%@)" = "Claude usage (%@)";
 "Veja suas próximas reuniões aqui" = "See your upcoming meetings here";
 "Velocidade" = "Speed";
 "Velocidade das animações" = "Animation speed";
