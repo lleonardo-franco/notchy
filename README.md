@@ -1,56 +1,100 @@
-<p align="center">
-  <img src="docs/icon.png" width="128" alt="Ícone do Notchy">
-</p>
+<div align="center">
 
-<h1 align="center">Notchy</h1>
+<img src="docs/icon.png" width="112" alt="Notchy icon">
 
-<p align="center">Seu notch, menos inútil. Música, Claude Code, agenda, vídeo e notificações no notch do MacBook.</p>
+# Notchy
 
-<p align="center">
-  <img src="https://img.shields.io/badge/macOS-14%2B-black" alt="macOS 14+">
-  <img src="https://img.shields.io/badge/Swift-SwiftUI-orange" alt="Swift e SwiftUI">
-  <img src="https://img.shields.io/badge/versão-1.0.0-d97757" alt="Versão 1.0.0">
-</p>
+**Your MacBook notch, finally useful.**<br>
+Music, Claude Code, calendar, YouTube and notifications, right where the camera lives.
+
+[![Release](https://img.shields.io/github/v/release/lleonardo-franco/notchy?color=d97757&label=release)](https://github.com/lleonardo-franco/notchy/releases)
+[![Build](https://github.com/lleonardo-franco/notchy/actions/workflows/build.yml/badge.svg)](https://github.com/lleonardo-franco/notchy/actions/workflows/build.yml)
+[![macOS 14+](https://img.shields.io/badge/macOS-14%2B-111?logo=apple)](#requirements)
+[![Swift](https://img.shields.io/badge/Swift-SwiftUI-F05138?logo=swift&logoColor=white)](Package.swift)
+[![License: MIT](https://img.shields.io/badge/license-MIT-3b82f6)](LICENSE)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-22c55e)](CONTRIBUTING.md)
+
+**English** · [Português](README.pt-BR.md) · [Español](README.es.md)
+
+<br>
+
+<img src="docs/hero.svg" width="100%" alt="Notchy expanded under the MacBook notch, showing the current song, Claude Code sessions and tabs">
+
+</div>
 
 ---
 
-O Notchy transforma o notch do MacBook numa pequena central. Recolhido, ele mostra só o que importa nas laterais do notch: a capa da música, o status do Claude, a contagem para a próxima reunião, notificações. Passando o mouse, ele abre com o player, abas e controles.
+Notchy turns the notch into a tiny control center. Collapsed, it shows only what matters on each side of the camera: album art, your Claude Code status, a countdown to the next meeting, unread badges. Hover it and it opens into a player with tabs and controls. Close it and it powers off like an old CRT.
 
-## O que tem
+> [!NOTE]
+> The app interface is currently in Brazilian Portuguese. Translating it is one of the best first contributions you can make, see [Contributing](#contributing).
 
-### Música
-- Spotify e Apple Music: capa, título, artista, play/pause, anterior/próxima
-- Barra de progresso arrastável para pular trechos
-- Fundo do notch tingido com a cor da capa
+## Contents
 
-### YouTube no notch
-- Com um vídeo aberto no Safari, Chrome, Brave, Edge ou Chromium, aparece **Assistir no notch**
-- A aba pausa e o vídeo continua do mesmo segundo num mini player embaixo do notch, visível enquanto você navega
-- Avançar e voltar 10 s, tamanho pequeno ou grande, voltar para a aba no mesmo ponto
+- [Features](#features)
+- [Requirements](#requirements)
+- [Install](#install)
+- [Usage](#usage)
+- [Permissions](#permissions)
+- [How it works](#how-it-works)
+- [FAQ](#faq)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
 
-### Claude Code
-- Status de cada sessão: trabalhando, esperando você, terminou
-- **Aprovar pelo notch**: quando o Claude pede permissão, aparecem Permitir, Negar e Responder no terminal
-- Clique numa sessão para ir até a aba certa do Terminal ou do iTerm
-- Cota de 5 horas e de 7 dias, com aviso em 80% e 95%
-- Tempo da tarefa em andamento no notch recolhido
+## Features
 
-### Agenda e reuniões
-- Próximos compromissos do Calendário com botão **Entrar** para Zoom, Meet, Teams e Webex
-- Contagem regressiva no notch recolhido e aviso antes da reunião
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>🎵 Music</h3>
+      Spotify and Apple Music with artwork, title and controls. Drag the progress bar to seek. The notch picks up a tint from the album cover.
+    </td>
+    <td width="50%" valign="top">
+      <h3>🤖 Claude Code</h3>
+      Live status of every session. <b>Approve or deny permission requests from the notch</b>, jump to the right Terminal or iTerm tab, and keep an eye on your 5‑hour and 7‑day quota.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <h3>▶️ YouTube in the notch</h3>
+      Playing a video in Safari, Chrome, Brave, Edge or Chromium? Send it to a mini player under the notch. It resumes at the same second and hands back to the tab when you are done.
+    </td>
+    <td valign="top">
+      <h3>📅 Calendar</h3>
+      Upcoming events with a <b>Join</b> button for Zoom, Meet, Teams and Webex, plus a countdown in the collapsed notch before each meeting.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <h3>🔔 Notifications</h3>
+      Animated unread counters for WhatsApp and ClickUp, read from their Dock badges.
+    </td>
+    <td valign="top">
+      <h3>🎧 Bluetooth</h3>
+      Battery for headphones and other devices, AirPods left, right and case included, with low‑battery alerts.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <h3>🌤️ Weather and clipboard</h3>
+      Temperature next to the clock with an hourly forecast (Open‑Meteo), and the last 30 things you copied, kept in memory only.
+    </td>
+    <td valign="top">
+      <h3>✋ Gestures and haptics</h3>
+      Two‑finger swipes change tracks and volume. Trackpad haptics with adjustable strength, and a touchpad‑shaped area to try them out.
+    </td>
+  </tr>
+</table>
 
-### E mais
-- **Clima**: temperatura ao lado do relógio e previsão das próximas horas (Open-Meteo)
-- **Copiados**: histórico dos últimos 30 itens copiados, só na memória
-- **Notificações**: contador animado do WhatsApp e do ClickUp
-- **Bluetooth**: bateria dos fones (AirPods com esquerdo, direito e estojo) e aviso de bateria baixa
-- **Gestos**: dois dedos para os lados trocam de música, para cima e para baixo mudam o volume
-- **Vibração no trackpad** com intensidade configurável e uma área para testar
-- **Animação ao desligar**, no estilo de TV antiga
+## Requirements
 
-## Instalação
+- A Mac with macOS 14 Sonoma or later. Macs without a notch work too, using a virtual notch on the main screen.
+- Xcode Command Line Tools: `xcode-select --install`
+- Python 3, which ships with the Command Line Tools
+- [Claude Code](https://docs.claude.com/en/docs/claude-code) is optional and only needed for the Claude tab
 
-Precisa de macOS 14 ou mais novo, das ferramentas de linha de comando do Xcode (`xcode-select --install`) e de Python 3, que vem com elas.
+## Install
 
 ```bash
 git clone https://github.com/lleonardo-franco/notchy.git ~/Projects/notchy
@@ -58,65 +102,126 @@ cd ~/Projects/notchy
 ./install.sh
 ```
 
-O instalador compila o app, instala em `/Applications`, conecta os hooks do Claude Code e instala o comando `notchy`. Na primeira vez ele:
+The installer builds the app, copies it to `/Applications`, wires up the Claude Code hooks and installs the `notchy` command. The first run also:
 
-1. cria um certificado local, **Notchy Local Signing**, e pede a senha do Mac uma vez para confiar nele e liberar o `codesign`;
-2. abre a janela de boas-vindas, onde você libera só as permissões que for usar.
+1. creates a local code signing certificate, **Notchy Local Signing**, and asks for your Mac password once to trust it;
+2. opens a welcome window where you grant only the permissions you want.
 
-Como o app é sempre assinado com o mesmo certificado, as permissões ficam salvas entre as versões. Nas atualizações seguintes o instalador só refaz o que mudou.
+Because every build is signed with the same certificate, macOS keeps your permissions across updates, and later runs only rebuild what changed.
 
-## Comando `notchy`
+**Update** with `notchy update`. **Remove everything** with `notchy uninstall`.
 
-```bash
-notchy              # abre
-notchy stop         # fecha
-notchy restart      # reinicia
-notchy settings     # ajustes
-notchy welcome      # boas-vindas e permissões
-notchy city "Farroupilha"   # cidade do clima (notchy city auto volta ao automático)
-notchy doctor       # diagnóstico de assinatura, certificado e permissões
-notchy update       # baixa a versão mais nova do GitHub e instala
-notchy uninstall    # remove tudo
-```
+## Usage
 
-## Permissões
-
-| Permissão | Para quê |
+| Command | What it does |
 |---|---|
-| Acessibilidade | Ler o número de notificações do WhatsApp e do ClickUp no Dock |
-| Automação (Safari, Chrome) | Ver vídeos do YouTube abertos, pausar a aba e voltar no mesmo ponto |
-| Automação (Spotify, Music) | Mostrar e controlar a música |
-| Automação (Terminal, iTerm) | Ir até a sessão certa do Claude Code |
-| Calendário | Próximas reuniões |
-| Bluetooth | Bateria dos dispositivos |
+| `notchy` | Start |
+| `notchy stop` / `restart` | Quit with the power‑off animation / restart |
+| `notchy settings` | Open settings |
+| `notchy welcome` | Show the welcome and permissions window |
+| `notchy city "Lisbon"` | Set the weather city (`notchy city auto` to go back to automatic) |
+| `notchy doctor` | Check signature, certificate and permissions |
+| `notchy update` | Pull the latest version and reinstall |
+| `notchy uninstall` | Remove the app, hooks, settings and command |
 
-Para o vídeo continuar do mesmo segundo, ative **Permitir JavaScript de Eventos Apple** no menu Desenvolvedor do navegador. No Safari, mostre esse menu em Ajustes → Avançado → Mostrar recursos para desenvolvedores da Web.
-
-## Como funciona
-
-| Parte | Como |
+| Gesture on the open notch | Action |
 |---|---|
-| Janela | `NSPanel` acima da barra de menus, posicionado pelo `safeAreaInsets` da tela com notch |
-| Música | Notificações distribuídas do Spotify e do Music + AppleScript |
-| Claude Code | Hooks gravam o estado de cada sessão em `~/.notchy/sessions`; o hook `PermissionRequest` espera a resposta do notch; a status line fornece a cota |
-| Vídeo | AppleScript lê as abas do navegador; o player usa a API de iframe do YouTube num `WKWebView` |
-| Notificações | Número do ícone no Dock, lido pela API de Acessibilidade |
+| Two fingers right / left | Next / previous track (configurable) |
+| Two fingers up / down | Volume |
+| Two fingers sideways on a video | Skip ±10 s |
+
+## Permissions
+
+Everything is opt‑in. Notchy works with any subset of these.
+
+| Permission | Used for |
+|---|---|
+| Accessibility | Reading WhatsApp and ClickUp badge counts from the Dock |
+| Automation: Safari, Chrome | Finding YouTube videos, pausing the tab and resuming at the same spot |
+| Automation: Spotify, Music | Showing and controlling playback |
+| Automation: Terminal, iTerm | Jumping to the right Claude Code session |
+| Calendars | Upcoming meetings |
+| Bluetooth | Device battery levels |
+
+> [!TIP]
+> To resume videos at the exact second, enable **Allow JavaScript from Apple Events** in the browser's Develop menu. In Safari, turn on the Develop menu in Settings → Advanced → Show features for web developers.
+
+## How it works
+
+<details>
+<summary>Architecture overview</summary>
+
+<br>
+
+| Piece | How |
+|---|---|
+| Window | An `NSPanel` above the menu bar, positioned from the notched screen's `safeAreaInsets` |
+| Music | Distributed notifications from Spotify and Music, plus AppleScript |
+| Claude Code | Hooks write each session's state to `~/.notchy/sessions`; the `PermissionRequest` hook waits for the notch's answer; a status line wrapper provides the quota |
+| Video | AppleScript reads browser tabs; the player is the YouTube IFrame API in a `WKWebView` |
+| Notifications | Dock badge labels via the Accessibility API |
 | Bluetooth | `system_profiler SPBluetoothDataType` |
-| Vibração | Motor do trackpad direto, para funcionar mesmo com o app em segundo plano |
-| Tela cheia | Detecta Spaces de tela cheia para esconder o notch |
+| Haptics | The trackpad actuator directly, so it works while the app is in the background |
+| Full screen | Detects full‑screen Spaces to hide the notch |
 
-O app pausa as verificações periódicas quando a tela bloqueia ou o Mac dorme, e diminui o ritmo com o notch fechado.
+Periodic checks pause while the screen is locked or the Mac is asleep, and slow down while the notch is closed.
 
-## Desenvolvimento
-
-```bash
-swift build             # compila
-./build.sh              # gera build/Notchy.app
-./install.sh --force    # reinstala tudo do zero
+```
+Sources/Notchy/   SwiftUI app, services and views
+hooks/            Claude Code hooks and status line (Python, stdlib only)
+bin/notchy        Command line tool
+install.sh        Installer, signing and incremental updates
+build.sh          Builds build/Notchy.app
 ```
 
-Antes de publicar uma versão, siga o [roteiro de teste](TESTING.md). As mudanças de cada versão estão no [CHANGELOG](CHANGELOG.md).
+</details>
 
-## Licença
+## FAQ
+
+<details>
+<summary><b>Why does it ask for my password during the first install?</b></summary>
+<br>
+To trust the local signing certificate and let <code>codesign</code> use it without prompting again. It happens once. Without a stable signature, macOS would ask for every permission again after each update.
+</details>
+
+<details>
+<summary><b>Does it send my data anywhere?</b></summary>
+<br>
+No. The only network calls are to Open‑Meteo and an IP geolocation service for the weather, and to YouTube when you play a video in the notch. The clipboard history lives in memory and disappears when the app quits.
+</details>
+
+<details>
+<summary><b>Will it mess with my Claude Code status line?</b></summary>
+<br>
+No. The installer wraps your existing status line and keeps it. <code>notchy uninstall</code> restores the original.
+</details>
+
+<details>
+<summary><b>Is there a prebuilt download?</b></summary>
+<br>
+Not yet. Notchy is built from source on your Mac. A signed and notarized build is on the roadmap.
+</details>
+
+## Roadmap
+
+- [ ] Interface in English and Spanish
+- [ ] Signed and notarized releases
+- [ ] Homebrew cask
+- [ ] More badge sources (Slack, Mail, Telegram)
+- [ ] Screenshots and a demo video in this README
+
+Have an idea? [Open a feature request](https://github.com/lleonardo-franco/notchy/issues/new/choose).
+
+## Contributing
+
+Contributions of every size are welcome: bug reports, ideas, translations, docs and code. Read the [contributing guide](CONTRIBUTING.md) to learn how to fork the repo, set up the project and open a pull request. Look for issues labeled [`good first issue`](https://github.com/lleonardo-franco/notchy/labels/good%20first%20issue) to get started.
+
+Everyone taking part is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md). Found a security problem? See [SECURITY.md](SECURITY.md).
+
+## License
 
 [MIT](LICENSE) © Leonardo Franco Lima
+
+<div align="center">
+<sub>If Notchy made your notch a little less useless, consider giving it a ⭐</sub>
+</div>

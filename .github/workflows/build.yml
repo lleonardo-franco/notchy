@@ -1,0 +1,54 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    name: App
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sw_vers
+          swift --version
+
+      - name: Compile
+        run: swift build -c release
+
+      - name: App bundle
+        run: ./build.sh
+
+      - name: Check bundle
+        run: |
+          plutil -lint build/Notchy.app/Contents/Info.plist
+          codesign --verify --verbose build/Notchy.app
+          test -f build/Notchy.app/Contents/Resources/AppIcon.icns
+          test -f build/Notchy.app/Contents/Resources/hooks/install.py
+
+  scripts:
+    name: Scripts
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Shell syntax
+        run: |
+          for file in install.sh build.sh bin/notchy; do
+            /bin/bash -n "$file"
+          done
+
+      - name: Python hooks
+        run: /usr/bin/python3 -m py_compile hooks/*.py

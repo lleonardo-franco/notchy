@@ -1,0 +1,39 @@
+name: 💡 Feature request
+description: Suggest an idea or an improvement
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the idea! Português e español também são bem-vindos / también son bienvenidos.
+        Please check the [roadmap](https://github.com/lleonardo-franco/notchy#roadmap) and [existing issues](https://github.com/lleonardo-franco/notchy/issues?q=is%3Aissue) first.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the situation where you miss this feature.
+      placeholder: When I'm in a call, I'd like to ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: What would you like to happen?
+      description: How it could look and behave in the notch. Sketches and mockups are welcome.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered
+      description: Other apps, workarounds or different approaches.
+
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I'd like to work on this myself

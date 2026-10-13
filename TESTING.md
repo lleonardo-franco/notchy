@@ -1,66 +1,66 @@
-# Roteiro de teste
+# Test plan
 
-Uma passada por tudo antes de publicar uma versão. Marque cada item; se algo falhar, rode `notchy doctor` e anote a saída.
+A full pass before each release, and the relevant sections for every pull request. Tick each item; if something fails, run `notchy doctor` and include its output in the issue or pull request.
 
-## Instalação
+## Install
 
-- [ ] `./install.sh --force` termina sem erro e sem warnings no log (`grep -i warning` no caminho do log)
-- [ ] O resumo mostra **Assinatura: Notchy Local Signing ✓ estável**
-- [ ] Rodar `./install.sh` de novo pula tudo e mostra "já está atualizado"
-- [ ] Mudar um arquivo Swift e rodar de novo recompila e reinstala sem pedir permissões
-- [ ] `notchy doctor` mostra assinatura estável, certificado válido e as permissões dadas
+- [ ] `./install.sh --force` finishes without errors or warnings in the log (`grep -i warning` on the log path it prints)
+- [ ] The summary shows **Assinatura: Notchy Local Signing ✓ estável** (stable signature)
+- [ ] Running `./install.sh` again skips everything and says it is already up to date
+- [ ] Changing a Swift file and running it again rebuilds and reinstalls without asking for permissions
+- [ ] `notchy doctor` shows a stable signature, a valid certificate and the granted permissions
 
-## Boas-vindas e ajustes
+## Welcome and settings
 
-- [ ] As boas-vindas abrem na primeira vez e cada botão "Permitir" leva ao pedido certo
-- [ ] Cada linha vira "Pronto" depois de liberar
-- [ ] `notchy settings`, a engrenagem no notch e abrir o app pelo Spotlight abrem os ajustes
-- [ ] Desligar uma aba nos ajustes tira ela do notch
+- [ ] The welcome window opens on first launch and each **Permitir** button triggers the right request
+- [ ] Each row turns into **Pronto** once granted
+- [ ] `notchy settings`, the gear in the notch and opening the app from Spotlight all open settings
+- [ ] Turning a tab off in settings removes it from the notch
 
 ## Notch
 
-- [ ] Passar o mouse abre; tirar o mouse fecha
-- [ ] Com "Ao clicar", só abre clicando
-- [ ] Com um app em tela cheia, o notch some e volta ao sair
-- [ ] Ligar um monitor externo e trocar "Onde mostrar" reposiciona o notch
-- [ ] Bloquear a tela e desbloquear: tudo volta a atualizar
+- [ ] Hovering opens it; moving the mouse away closes it
+- [ ] With "Ao clicar" (on click), it only opens on click
+- [ ] With an app in full screen, the notch hides and comes back when leaving
+- [ ] Connecting an external display and changing "Onde mostrar" (where to show) moves the notch
+- [ ] Locking and unlocking the screen: everything resumes updating
 
-## Música e gestos
+## Music and gestures
 
-- [ ] Spotify e Music mostram capa, título e controles
-- [ ] Arrastar a barra pula o trecho
-- [ ] Dois dedos para a direita: próxima música; esquerda: anterior (e o contrário com a opção invertida)
-- [ ] Dois dedos para cima e para baixo mudam o volume, com a barra aparecendo
-- [ ] A vibração muda com a intensidade escolhida; a área de teste responde a clique e gestos
+- [ ] Spotify and Music show artwork, title and controls
+- [ ] Dragging the progress bar seeks
+- [ ] Two fingers right: next track; left: previous (and the opposite with the inverted option)
+- [ ] Two fingers up and down change the volume, with the level bar showing
+- [ ] Haptics follow the chosen strength; the test area responds to clicks and gestures
 
 ## Claude Code
 
-- [ ] Uma sessão nova aparece na aba Claude com o que está fazendo
-- [ ] Pedido de permissão aparece no notch; Permitir, Negar e Responder no terminal funcionam
-- [ ] Clicar na sessão leva à aba certa do Terminal ou do iTerm
-- [ ] Os medidores de cota aparecem depois da primeira resposta
+- [ ] A new session shows up in the Claude tab with what it is doing
+- [ ] A permission request shows up in the notch; Allow, Deny and Answer in terminal all work
+- [ ] Clicking a session jumps to the right Terminal or iTerm tab
+- [ ] The quota gauges appear after the first response
 
-## Agenda, clima, copiados
+## Calendar, weather, clipboard
 
-- [ ] Eventos de hoje, de amanhã e de outros dias com o rótulo certo
-- [ ] Botão Entrar abre a reunião; contagem regressiva no notch recolhido antes dela
-- [ ] Clima mostra a cidade certa (ou a definida com `notchy city`)
-- [ ] Copiar texto, imagem e arquivo aparece em Copiados; clicar copia de novo
+- [ ] Events today, tomorrow and on other days have the right label
+- [ ] The Join button opens the meeting; the collapsed notch counts down before it
+- [ ] Weather shows the right city (or the one set with `notchy city`)
+- [ ] Copying text, an image and a file shows them in Copiados; clicking copies again
 
-## Notificações e Bluetooth
+## Notifications and Bluetooth
 
-- [ ] Mensagem nova no WhatsApp e notificação no ClickUp animam o contador e mostram o aviso
-- [ ] Conectar os fones mostra o aviso com a bateria; a aba Bluetooth lista os dispositivos
+- [ ] A new WhatsApp message and a ClickUp notification animate the counter and show the alert
+- [ ] Connecting headphones shows the alert with the battery; the Bluetooth tab lists the devices
 
-## Vídeo
+## Video
 
-- [ ] Com um vídeo no Safari: "Assistir no notch" pausa a aba e continua do mesmo segundo
-- [ ] Voltar para a aba retoma no navegador no ponto certo
-- [ ] O mesmo no Chrome
-- [ ] Dois dedos para os lados no vídeo avançam e voltam 10 s
-- [ ] Fechar o vídeo volta ao notch normal
+- [ ] With a video in Safari: "Assistir no notch" pauses the tab and resumes at the same second
+- [ ] Returning to the tab resumes in the browser at the right spot
+- [ ] The same in Chrome
+- [ ] Two fingers sideways on the video skip forward and back 10 s
+- [ ] Closing the video goes back to the normal notch
 
-## Fechar e desinstalar
+## Quit and uninstall
 
-- [ ] O botão de power e `notchy stop` mostram a animação de desligar
-- [ ] `notchy uninstall` remove app, hooks e comando e devolve a status line antiga do Claude Code
+- [ ] The power button and `notchy stop` play the power‑off animation
+- [ ] `notchy uninstall` removes the app, hooks and command and restores the previous Claude Code status line

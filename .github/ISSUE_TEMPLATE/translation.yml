@@ -1,0 +1,43 @@
+name: 🌍 Translation
+description: Add or improve a translation of the docs or the app
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Notchy's docs are available in English, Portuguese and Spanish, and the interface is in Brazilian Portuguese for now.
+        See [Docs and translations](https://github.com/lleonardo-franco/notchy/blob/main/CONTRIBUTING.md#docs-and-translations) in the contributing guide.
+
+  - type: input
+    id: language
+    attributes:
+      label: Language
+      placeholder: "French (fr)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: What do you want to translate or fix?
+      multiple: true
+      options:
+        - README
+        - Contributing guide
+        - App interface
+        - Fix an existing translation
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: For fixes, point to the file and the text that should change.
+
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I'd like to do this translation myself
