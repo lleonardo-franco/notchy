@@ -62,6 +62,16 @@ final class NotchModel {
         }
     }
 
+    enum LevelKind: Equatable {
+        case volume
+        case brightness
+    }
+
+    struct LevelHUD: Equatable {
+        let kind: LevelKind
+        let level: Double
+    }
+
     struct Peek: Equatable {
         let id = UUID()
         let style: PeekStyle
@@ -86,10 +96,12 @@ final class NotchModel {
     private(set) var farewell: Farewell?
     private(set) var glowWidth: CGFloat = 0
     private(set) var glowOpacity: Double = 0
-    private(set) var volumeLevel: Double?
+    private(set) var hud: LevelHUD?
+    @ObservationIgnored var onScreen = true
     private(set) var fileDrag = false
 
-    @ObservationIgnored private var volumeToken = UUID()
+    @ObservationIgnored private var hudToken = UUID()
+    @ObservationIgnored let mediaKeys = MediaKeyMonitor()
 
     let prefs = Preferences()
     let music = MusicService()
@@ -146,6 +158,12 @@ final class NotchModel {
         browser.start()
         bluetooth.start()
         permissions.start(calendar: calendar)
+        mediaKeys.handler = { [weak self] key, isRepeat, modifiers in
+            self?.handleMediaKey(key, fine: modifiers.contains(.shift) && modifiers.contains(.option)) ?? false
+        }
+        if prefs.levelHUD {
+            mediaKeys.start()
+        }
         if !UserDefaults.standard.bool(forKey: WelcomeWindow.seenKey) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { [weak self] in
                 MainActor.assumeIsolated {
@@ -159,7 +177,17 @@ final class NotchModel {
 
     func stop() {
         claude.stop()
+        mediaKeys.stop()
         music.setOtherPlayers(false)
+    }
+
+    func setLevelHUD(_ enabled: Bool) {
+        prefs.levelHUD = enabled
+        if enabled {
+            mediaKeys.start()
+        } else {
+            mediaKeys.stop()
+        }
     }
 
     func setOtherPlayers(_ enabled: Bool) {
@@ -347,21 +375,54 @@ final class NotchModel {
         haptic()
     }
 
+    var volumeLevel: Double? { hud?.kind == .volume ? hud?.level : nil }
+
     func changeVolume(by steps: Int) {
         let current = volumeLevel ?? SystemVolume.get() ?? 0.5
-        let notch = (current * SystemVolume.steps).rounded()
-        let next = min(max(notch + Double(steps), 0), SystemVolume.steps) / SystemVolume.steps
+        let next = Self.stepped(current, by: steps, divisions: SystemVolume.steps)
         SystemVolume.set(next)
-        if next != current, next == 0 || next == 1 {
+        showLevel(.volume, next, from: current)
+    }
+
+    func handleMediaKey(_ key: MediaKeyMonitor.Key, fine: Bool) -> Bool {
+        guard onScreen, farewell == nil else { return false }
+        let divisions = fine ? SystemVolume.steps * 4 : SystemVolume.steps
+        switch key {
+        case .volumeUp, .volumeDown:
+            guard SystemVolume.canSet, let current = SystemVolume.get() else { return false }
+            let next = Self.stepped(current, by: key == .volumeUp ? 1 : -1, divisions: divisions)
+            SystemVolume.set(next)
+            showLevel(.volume, next, from: current)
+            return true
+        case .mute:
+            guard let level = SystemVolume.toggleMute() else { return false }
+            showLevel(.volume, level, from: nil)
+            return true
+        case .brightnessUp, .brightnessDown:
+            guard let current = DisplayBrightness.get() else { return false }
+            let next = Self.stepped(current, by: key == .brightnessUp ? 1 : -1, divisions: divisions)
+            guard DisplayBrightness.set(next) else { return false }
+            showLevel(.brightness, next, from: current)
+            return true
+        }
+    }
+
+    nonisolated static func stepped(_ current: Double, by steps: Int, divisions: Double) -> Double {
+        let notch = (current * divisions).rounded()
+        return min(max(notch + Double(steps), 0), divisions) / divisions
+    }
+
+    private func showLevel(_ kind: LevelKind, _ level: Double, from previous: Double?) {
+        if let previous, level != previous, level == 0 || level == 1 {
             Haptics.shared.perform(.subtle)
         }
-        volumeLevel = next
+        hud = LevelHUD(kind: kind, level: level)
         let token = UUID()
-        volumeToken = token
+        hudToken = token
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) { [weak self] in
             MainActor.assumeIsolated {
-                guard let self, self.volumeToken == token else { return }
-                self.volumeLevel = nil
+                guard let self, self.hudToken == token else { return }
+                self.hud = nil
             }
         }
     }
@@ -425,7 +486,7 @@ final class NotchModel {
         if pendingApproval != nil { return .approval }
         if video.video != nil { return .video }
         if state == .expanded { return .expanded }
-        if peek != nil || volumeLevel != nil { return .peek }
+        if peek != nil || hud != nil { return .peek }
         return .collapsed
     }
 

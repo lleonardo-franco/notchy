@@ -50,15 +50,15 @@ struct ExpandedContent: View {
 
     private var header: some View {
         HStack(spacing: 10) {
-            if model.volumeLevel == nil {
+            if model.hud == nil {
                 TimelineView(.everyMinute) { context in
                     Text(context.date, format: .dateTime.hour().minute())
                         .font(.system(size: 12, weight: .semibold).monospacedDigit())
                         .foregroundStyle(.white.opacity(0.7))
                 }
             }
-            if let level = model.volumeLevel {
-                VolumeIndicator(level: level, barWidth: 64)
+            if let hud = model.hud {
+                VolumeIndicator(level: hud.level, barWidth: 64, kind: hud.kind)
                     .transition(.opacity)
             } else if let snapshot = model.weather.snapshot, model.tabs.contains(.weather) {
                 Button {

@@ -53,8 +53,8 @@ struct VideoContent: View {
     private var controls: some View {
         let player = model.video
         return HStack(spacing: 2) {
-            if let level = model.volumeLevel {
-                VolumeIndicator(level: level, barWidth: 70)
+            if let hud = model.hud {
+                VolumeIndicator(level: hud.level, barWidth: 70, kind: hud.kind)
                     .transition(.opacity)
             } else {
                 Image(systemName: "play.rectangle.fill")

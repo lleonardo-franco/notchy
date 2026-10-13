@@ -181,6 +181,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func setHidden(_ value: Bool) {
+        model.onScreen = !value
         if value {
             if !hidden {
                 hidden = true

@@ -233,6 +233,8 @@ T = {
 "Mostrar no Finder": ("Show in Finder", "Mostrar en el Finder"),
 "Enviar por AirDrop": ("Send with AirDrop", "Enviar por AirDrop"),
 "Enviar tudo por AirDrop": ("Send everything with AirDrop", "Enviar todo por AirDrop"),
+"Mostrar volume e brilho no notch": ("Show volume and brightness in the notch", "Mostrar volumen y brillo en el notch"),
+"Substitui o aviso do macOS quando você usa as teclas de volume e brilho. Precisa da permissão de Acessibilidade.": ("Replaces the macOS on-screen display when you use the volume and brightness keys. Needs the Accessibility permission.", "Sustituye el aviso de macOS cuando usas las teclas de volumen y brillo. Necesita el permiso de Accesibilidad."),
 }
 
 INFO = {

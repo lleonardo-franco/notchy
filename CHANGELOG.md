@@ -4,6 +4,7 @@ All notable changes to Notchy are documented here. The format is based on [Keep 
 
 ## Unreleased
 
+- Volume and brightness keys show their level in the notch instead of the macOS display, with Shift+Option for fine steps; can be turned off in settings
 - Shelf: drag files onto the notch to keep them, drag them out again, or drop them on AirDrop
 
 ## 1.1.0

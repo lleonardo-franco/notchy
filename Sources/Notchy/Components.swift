@@ -257,8 +257,10 @@ struct PillButton: View {
 struct VolumeIndicator: View {
     let level: Double
     let barWidth: CGFloat
+    var kind: NotchModel.LevelKind = .volume
 
     private var symbol: String {
+        if kind == .brightness { return level < 0.5 ? "sun.min.fill" : "sun.max.fill" }
         if level <= 0 { return "speaker.slash.fill" }
         if level < 0.34 { return "speaker.wave.1.fill" }
         if level < 0.67 { return "speaker.wave.2.fill" }

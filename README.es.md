@@ -85,7 +85,7 @@ Notchy convierte el notch en un pequeño centro de control. Recogido, muestra so
     </td>
     <td valign="top">
       <h3>✋ Gestos y vibración</h3>
-      Dos dedos cambian de canción y ajustan el volumen. Vibración del trackpad con intensidad ajustable y un área con forma de touchpad para probarla.
+      Dos dedos cambian de canción y ajustan el volumen, y las teclas de volumen y brillo muestran el nivel en el notch en lugar del aviso de macOS. Vibración del trackpad con intensidad ajustable y un área con forma de touchpad para probarla.
     </td>
   </tr>
 </table>
@@ -149,7 +149,7 @@ Todo es opcional. Notchy funciona con cualquier combinación de ellos.
 
 | Permiso | Para qué |
 |---|---|
-| Accesibilidad | Leer los contadores (WhatsApp, Slack, Telegram, Discord, ClickUp) en el Dock |
+| Accesibilidad | Leer los contadores (WhatsApp, Slack, Telegram, Discord, ClickUp) en el Dock y mostrar las teclas de volumen y brillo en el notch |
 | Automatización: Safari, Chrome | Encontrar vídeos de YouTube, pausar la pestaña y seguir en el mismo punto |
 | Automatización: Spotify, Music | Mostrar y controlar la música |
 | Automatización: Terminal, iTerm | Ir a la sesión correcta de Claude Code |

@@ -106,6 +106,7 @@
 "Mostrar boas-vindas e permissões" = "Mostrar boas-vindas e permissões";
 "Mostrar no Finder" = "Mostrar no Finder";
 "Mostrar o que toca em qualquer app" = "Mostrar o que toca em qualquer app";
+"Mostrar volume e brilho no notch" = "Mostrar volume e brilho no notch";
 "Médio" = "Médio";
 "Música" = "Música";
 "Música anterior" = "Música anterior";
@@ -167,6 +168,7 @@
 "Som nos avisos" = "Som nos avisos";
 "Spotify e Music sempre aparecem. Com esta opção, o notch também mostra e controla o que toca no navegador, Podcasts, VLC e outros apps, nas versões do macOS que liberam o \"Tocando agora\" para outros apps." = "Spotify e Music sempre aparecem. Com esta opção, o notch também mostra e controla o que toca no navegador, Podcasts, VLC e outros apps, nas versões do macOS que liberam o \"Tocando agora\" para outros apps.";
 "Status das sessões, aprovar pelo notch e uso da cota." = "Status das sessões, aprovar pelo notch e uso da cota.";
+"Substitui o aviso do macOS quando você usa as teclas de volume e brilho. Precisa da permissão de Acessibilidade." = "Substitui o aviso do macOS quando você usa as teclas de volume e brilho. Precisa da permissão de Acessibilidade.";
 "Só em telas com notch" = "Só em telas com notch";
 "Tela com notch ou a principal" = "Tela com notch ou a principal";
 "Tentar de novo" = "Tentar de novo";
