@@ -68,7 +68,7 @@ final class Preferences {
         }
     }
 
-    static let allTabs = ["claude", "agenda", "weather", "clipboard", "bluetooth"]
+    static let allTabs = ["claude", "agenda", "weather", "clipboard", "bluetooth", "shelf"]
     static let layoutChanged = Notification.Name("NotchyLayoutChanged")
 
     @ObservationIgnored private let defaults = UserDefaults.standard

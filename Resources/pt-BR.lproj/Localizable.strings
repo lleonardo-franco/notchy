@@ -12,6 +12,7 @@
 "Abas" = "Abas";
 "Aberto no %@" = "Aberto no %@";
 "Abra o app para pedir" = "Abra o app para pedir";
+"Abrir" = "Abrir";
 "Abrir Ajustes" = "Abrir Ajustes";
 "Abrir Ajustes do Sistema" = "Abrir Ajustes do Sistema";
 "Abrir ajustes" = "Abrir ajustes";
@@ -33,6 +34,7 @@
 "Ao passar o mouse" = "Ao passar o mouse";
 "Aplicar" = "Aplicar";
 "Aqui" = "Aqui";
+"Arraste arquivos para o notch para guardar aqui" = "Arraste arquivos para o notch para guardar aqui";
 "Assistir no notch" = "Assistir no notch";
 "Ativada" = "Ativada";
 "Ativar" = "Ativar";
@@ -43,6 +45,7 @@
 "Avançar 10 s" = "Avançar 10 s";
 "Avisar antes da reunião" = "Avisar antes da reunião";
 "Avisar quando fones conectarem e quando a bateria estiver baixa" = "Avisar quando fones conectarem e quando a bateria estiver baixa";
+"Bandeja" = "Bandeja";
 "Bateria dos fones e de outros dispositivos." = "Bateria dos fones e de outros dispositivos.";
 "Bem-vindo ao Notchy" = "Bem-vindo ao Notchy";
 "Calendário" = "Calendário";
@@ -75,6 +78,8 @@
 "Dois dedos para os lados trocam de música; para cima e para baixo mudam o volume." = "Dois dedos para os lados trocam de música; para cima e para baixo mudam o volume.";
 "E %lld%%" = "E %lld%%";
 "Entrar" = "Entrar";
+"Enviar por AirDrop" = "Enviar por AirDrop";
+"Enviar tudo por AirDrop" = "Enviar tudo por AirDrop";
 "Esconder quando um app estiver em tela cheia" = "Esconder quando um app estiver em tela cheia";
 "Espera antes de abrir" = "Espera antes de abrir";
 "Esperando você" = "Esperando você";
@@ -89,6 +94,7 @@
 "Gesto vertical desligado" = "Gesto vertical desligado";
 "Gestos no trackpad" = "Gestos no trackpad";
 "Grãos de neve" = "Grãos de neve";
+"Guardar na bandeja" = "Guardar na bandeja";
 "Hooks do Claude Code" = "Hooks do Claude Code";
 "Imagem %lld×%lld" = "Imagem %lld×%lld";
 "Instalados" = "Instalados";
@@ -98,6 +104,7 @@
 "Limite %@" = "Limite %@";
 "Limpar" = "Limpar";
 "Mostrar boas-vindas e permissões" = "Mostrar boas-vindas e permissões";
+"Mostrar no Finder" = "Mostrar no Finder";
 "Mostrar o que toca em qualquer app" = "Mostrar o que toca em qualquer app";
 "Médio" = "Médio";
 "Música" = "Música";

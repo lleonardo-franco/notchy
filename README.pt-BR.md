@@ -68,6 +68,12 @@ O Notchy transforma o notch numa pequena central. Recolhido, ele mostra só o qu
       Contadores animados do WhatsApp, Slack, Telegram, Discord e ClickUp, com o ícone de cada app.
     </td>
     <td valign="top">
+      <h3>🗂️ Bandeja e AirDrop</h3>
+      Arraste arquivos até o notch para deixá-los à mão, arraste de volta quando precisar, ou solte no AirDrop para enviar na hora.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
       <h3>🎧 Bluetooth</h3>
       Bateria dos fones e de outros dispositivos, incluindo AirPods esquerdo, direito e estojo, com aviso de bateria baixa.
     </td>

@@ -68,6 +68,12 @@ Notchy turns the notch into a tiny control center. Collapsed, it shows only what
       Animated unread counters for WhatsApp, Slack, Telegram, Discord and ClickUp, shown with each app's own icon.
     </td>
     <td valign="top">
+      <h3>🗂️ Shelf and AirDrop</h3>
+      Drag files onto the notch to keep them at hand, drag them out later, or drop them on AirDrop to send them right away.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
       <h3>🎧 Bluetooth</h3>
       Battery for headphones and other devices, AirPods left, right and case included, with low‑battery alerts.
     </td>

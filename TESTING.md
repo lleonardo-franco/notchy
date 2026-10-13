@@ -47,6 +47,15 @@ A full pass before each release, and the relevant sections for every pull reques
 - [ ] Weather shows the right city (or the one set with `notchy city`)
 - [ ] Copying text, an image and a file shows them in Copiados; clicking copies again
 
+## Shelf
+
+- [ ] Dragging a file from Finder over the collapsed notch opens it with the two drop zones
+- [ ] Dropping on "Keep in the shelf" adds the file; it is still there after `notchy restart`
+- [ ] Dropping on AirDrop opens the AirDrop window with the file
+- [ ] Dragging a file out of the shelf to the Desktop copies it; double-click opens it
+- [ ] Right-click offers Open, Show in Finder, AirDrop and Remove; Clear empties the shelf
+- [ ] Dragging something out of the notch does not switch to the drop zones
+
 ## Notifications and Bluetooth
 
 - [ ] A new WhatsApp message and a ClickUp notification animate the counter and show the alert
