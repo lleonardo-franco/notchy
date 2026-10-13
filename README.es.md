@@ -90,7 +90,7 @@ Notchy convierte el notch en un pequeño centro de control. Recogido, muestra so
 ## Requisitos
 
 - Un Mac con macOS 14 Sonoma o posterior. Los Mac sin notch también funcionan, con el panel en la pantalla principal.
-- Herramientas de línea de comandos de Xcode: `xcode-select --install`
+- Xcode 16 o posterior, o sus herramientas de línea de comandos: `xcode-select --install`
 - Python 3, que viene con ellas
 - [Claude Code](https://docs.claude.com/en/docs/claude-code) es opcional y solo hace falta para la pestaña Claude
 

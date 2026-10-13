@@ -90,7 +90,7 @@ Notchy turns the notch into a tiny control center. Collapsed, it shows only what
 ## Requirements
 
 - A Mac with macOS 14 Sonoma or later. Macs without a notch work too, using a virtual notch on the main screen.
-- Xcode Command Line Tools: `xcode-select --install`
+- Xcode 16 or later, or its Command Line Tools: `xcode-select --install`
 - Python 3, which ships with the Command Line Tools
 - [Claude Code](https://docs.claude.com/en/docs/claude-code) is optional and only needed for the Claude tab
 

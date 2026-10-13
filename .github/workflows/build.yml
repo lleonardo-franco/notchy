@@ -16,9 +16,9 @@ concurrency:
 jobs:
   app:
     name: App
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Toolchain
         run: |
@@ -40,9 +40,9 @@ jobs:
 
   scripts:
     name: Scripts
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Shell syntax
         run: |

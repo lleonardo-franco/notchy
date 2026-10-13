@@ -98,7 +98,7 @@ git push --force-with-lease
 
 ## Preparar el entorno
 
-**Requisitos:** macOS 14 o posterior, herramientas de línea de comandos de Xcode (`xcode-select --install`), Python 3.
+**Requisitos:** macOS 14 o posterior, Xcode 16 o sus herramientas de línea de comandos (`xcode-select --install`), Python 3.
 
 ```bash
 swift build              # comprobación rápida de compilación

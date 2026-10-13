@@ -98,7 +98,7 @@ git push --force-with-lease
 
 ## Development setup
 
-**Requirements:** macOS 14 or later, Xcode Command Line Tools (`xcode-select --install`), Python 3.
+**Requirements:** macOS 14 or later, Xcode 16 or its Command Line Tools (`xcode-select --install`), Python 3.
 
 ```bash
 swift build              # quick compile check
