@@ -55,7 +55,7 @@ O Notchy transforma o notch numa pequena central. Recolhido, ele mostra só o qu
   <tr>
     <td valign="top">
       <h3>▶️ YouTube no notch</h3>
-      Tem um vídeo tocando no Safari, Chrome, Brave, Edge ou Chromium? Mande para um mini player embaixo do notch. Ele continua do mesmo segundo e devolve para a aba quando você terminar.
+      Tem um vídeo tocando no Safari, Chrome, Brave, Edge ou Chromium? Mande para um mini player embaixo do notch. Ele continua do mesmo segundo e na mesma velocidade, e devolve para a aba quando você terminar.
     </td>
     <td valign="top">
       <h3>📅 Agenda</h3>

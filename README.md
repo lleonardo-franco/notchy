@@ -58,7 +58,7 @@ Notchy turns the notch into a tiny control center. Collapsed, it shows only what
   <tr>
     <td valign="top">
       <h3>▶️ YouTube in the notch</h3>
-      Playing a video in Safari, Chrome, Brave, Edge or Chromium? Send it to a mini player under the notch. It resumes at the same second and hands back to the tab when you are done.
+      Playing a video in Safari, Chrome, Brave, Edge or Chromium? Send it to a mini player under the notch. It resumes at the same second and speed, and hands back to the tab when you are done.
     </td>
     <td valign="top">
       <h3>📅 Calendar</h3>
