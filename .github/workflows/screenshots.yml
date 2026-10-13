@@ -3,6 +3,10 @@ name: Screenshots
 on:
   push:
     branches: ["shots/**"]
+    paths:
+      - "Sources/**"
+      - "Resources/**"
+      - "scripts/screenshots.py"
   workflow_dispatch:
 
 permissions:
