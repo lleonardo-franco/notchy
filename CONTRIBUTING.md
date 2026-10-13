@@ -181,6 +181,7 @@ The README and this guide exist in English, Portuguese and Spanish.
 - To add a language, create `README.<code>.md` and `CONTRIBUTING.<code>.md` (for example `README.fr.md`) and add it to the language links at the top of every version.
 - The app interface is translated in `i18n/translations.py`, keyed by the Portuguese text with `%@` for text and `%lld` for whole numbers. After editing it, run `python3 i18n/generate.py` to rebuild the `.strings` files in `Resources/`, and `python3 i18n/check.py` to list strings in the code that have no translation yet.
 - To add a language to the app, add a column to `translations.py`, teach `generate.py` about it and add the language code to `CFBundleLocalizations` in `Resources/Info.plist`.
+- The README screenshots and the animated tour are drawn by the app's own views with sample data (`Sources/Notchy/Showcase.swift`). If your change alters how the notch or settings look, run the **Screenshots** workflow from the Actions tab, or push a branch named `shots/<something>` and it commits the new images to that branch. Locally: `swift build`, `NOTCHY_CONFIGURATION=debug scripts/bundle.sh build/Showcase.app`, then `NOTCHY_SHOWCASE=build/showcase/en build/Showcase.app/Contents/MacOS/Notchy -AppleLanguages '(en)'` for each language and `python3 scripts/screenshots.py build/showcase docs/screenshots` (needs Pillow).
 
 Add a line describing your change under **Unreleased** in [CHANGELOG.md](CHANGELOG.md).
 

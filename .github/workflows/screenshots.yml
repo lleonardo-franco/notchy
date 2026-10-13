@@ -42,7 +42,7 @@ jobs:
           build/venv/bin/pip install --quiet pillow
           build/venv/bin/python scripts/screenshots.py build/showcase docs/screenshots
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: screenshots
           path: |

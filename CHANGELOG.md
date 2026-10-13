@@ -4,6 +4,9 @@ All notable changes to Notchy are documented here. The format is based on [Keep 
 
 ## Unreleased
 
+- The tab bar switches to icons, keeping the open tab's name, when all tabs don't fit next to the Claude quota or other controls
+- README tour with screenshots and an animated walkthrough in English, Portuguese and Spanish, rendered from the app's own views by a new Screenshots workflow
+
 ## 1.3.0
 
 - Appearance settings: size of the open notch, accent color and animation speed, respecting Reduce Motion

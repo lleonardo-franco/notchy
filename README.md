@@ -18,7 +18,7 @@ Music, Claude Code, calendar, YouTube and notifications, right where the camera 
 
 <br>
 
-<img src="docs/hero.svg" width="100%" alt="Notchy expanded under the MacBook notch, showing the current song, Claude Code sessions and tabs">
+<img src="docs/screenshots/en/tour.webp" width="100%" alt="Notchy opening under the MacBook notch: music player, Claude Code sessions, calendar, weather, shelf, Bluetooth and approvals">
 
 </div>
 
@@ -28,6 +28,7 @@ Notchy turns the notch into a tiny control center. Collapsed, it shows only what
 
 ## Contents
 
+- [Take the tour](#take-the-tour)
 - [Features](#features)
 - [Requirements](#requirements)
 - [Install](#install)
@@ -38,6 +39,95 @@ Notchy turns the notch into a tiny control center. Collapsed, it shows only what
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
+
+## Take the tour
+
+Nine moments from a normal day with Notchy. Hover the notch and everything below is one glance away; move the mouse off and it gets out of your way.
+
+### Quiet until you need it
+
+Collapsed, Notchy stays on both sides of the camera and shows only what deserves your attention: the album art on the left, your Claude Code status and unread counts on the right. The rest of the menu bar stays exactly as it was.
+
+<p align="center"><img src="docs/screenshots/en/collapsed.png" width="80%" alt="Collapsed notch with album art, the Claude Code status and a WhatsApp unread count"></p>
+
+### Hover, and it opens
+
+The notch unfolds into a full player with artwork, scrubbing and controls, tinted with the colors of the album cover. Below it, tabs for everything else. When the tabs don't fit, they turn into icons so nothing gets cut off.
+
+<p align="center"><img src="docs/screenshots/en/music-claude.png" width="80%" alt="Open notch with the music player and three Claude Code sessions"></p>
+
+### Claude Code, without switching windows
+
+Every session shows what it is doing right now, how long ago it last moved and how much context it has used, next to your 5‑hour and 7‑day quota. When Claude asks to run a command, the notch drops down with the exact command so you can **allow or deny it without leaving what you are doing**, or jump straight to the right terminal tab. When a task finishes, you hear about it.
+
+<p align="center"><img src="docs/screenshots/en/approval.png" width="80%" alt="A Claude Code permission request for git push with Allow and Deny buttons"></p>
+
+<p align="center"><img src="docs/screenshots/en/peek-done.png" width="60%" alt="Alert saying a Claude Code session finished"></p>
+
+### Never late for a meeting
+
+Your next events at a glance, with a **Join** button for Zoom, Meet, Teams and Webex. A few minutes before each meeting, the collapsed notch starts a countdown.
+
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="docs/screenshots/en/agenda.png" width="100%" alt="Calendar tab with three events and Join buttons"></td>
+    <td width="50%" align="center"><img src="docs/screenshots/en/peek-meeting.png" width="100%" alt="Meeting reminder in the collapsed notch"></td>
+  </tr>
+</table>
+
+### Drop it on the notch
+
+Drag any file to the top of the screen and the notch opens two drop zones: keep it in the shelf for later, or send it with AirDrop on the spot. Drag it back out whenever you need it.
+
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="docs/screenshots/en/shelf-drop.png" width="100%" alt="Dragging a file onto the notch shows the shelf and AirDrop drop zones"></td>
+    <td width="50%" align="center"><img src="docs/screenshots/en/shelf.png" width="100%" alt="The shelf with four files"></td>
+  </tr>
+</table>
+
+### Everything with a battery
+
+Your Mac, AirPods (left, right and case), keyboard and mouse in one list. Plug in the charger or connect your headphones and the notch tells you the level, wattage and time to full.
+
+<p align="center"><img src="docs/screenshots/en/bluetooth.png" width="80%" alt="Bluetooth tab listing this Mac, AirPods Pro, Magic Keyboard and Magic Mouse with battery levels"></p>
+
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="docs/screenshots/en/peek-battery.png" width="100%" alt="Charging alert with level, wattage and time to full"></td>
+    <td width="50%" align="center"><img src="docs/screenshots/en/peek-airpods.png" width="100%" alt="AirPods connected alert with battery for each earbud and the case"></td>
+  </tr>
+</table>
+
+### The keys you already press
+
+Volume and brightness keys show their level right in the notch instead of the big macOS overlay in the middle of your screen. Hold Shift and Option for fine steps.
+
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="docs/screenshots/en/volume.png" width="100%" alt="Volume level in the notch"></td>
+    <td width="50%" align="center"><img src="docs/screenshots/en/brightness.png" width="100%" alt="Brightness level in the notch"></td>
+  </tr>
+</table>
+
+### Weather and clipboard, one glance away
+
+The temperature sits next to the clock, with an hourly forecast and chance of rain one click away. Clipboard keeps the last things you copied, text, images and files, in memory only.
+
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="docs/screenshots/en/weather.png" width="100%" alt="Weather tab with the hourly forecast"></td>
+    <td width="50%" align="center"><img src="docs/screenshots/en/clipboard.png" width="100%" alt="Clipboard tab with recent text, an image and a file"></td>
+  </tr>
+</table>
+
+### Yours to tune
+
+A welcome window asks only for the permissions you want, one at a time. Settings let you pick the size of the open notch, the accent color, animation speed, gestures, haptics and which tabs to show.
+
+<p align="center"><img src="docs/screenshots/en/windows.png" width="100%" alt="The welcome window with permissions and the settings window with appearance options"></p>
+
+<sub>Screenshots are drawn by Notchy's own SwiftUI views with sample data, in each of the three languages, by the <a href=".github/workflows/screenshots.yml">Screenshots workflow</a>. Songs, projects and events are fictional.</sub>
 
 ## Features
 
@@ -226,7 +316,7 @@ No. Notchy is built from source on your Mac, either with `./install.sh` or with 
 - [x] Interface in English, Portuguese and Spanish
 - [x] Homebrew
 - [x] More badge sources: Slack, Telegram, Discord
-- [ ] Screenshots and a demo video in this README ([#3](https://github.com/lleonardo-franco/notchy/issues/3))
+- [x] Screenshots and an animated tour in this README
 
 Have an idea? [Open a feature request](https://github.com/lleonardo-franco/notchy/issues/new/choose).
 
