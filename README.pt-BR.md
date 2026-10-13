@@ -45,7 +45,7 @@ O Notchy transforma o notch numa pequena central. Recolhido, ele mostra só o qu
   <tr>
     <td width="50%" valign="top">
       <h3>🎵 Música</h3>
-      Spotify e Apple Music com capa, título e controles. Arraste a barra de progresso para pular trechos. O notch ganha um tom da cor da capa.
+      Spotify e Apple Music com capa, título e controles, e também outros apps (navegador, Podcasts, VLC…) nas versões do macOS que liberam o "Tocando agora" para outros apps. Arraste a barra de progresso para pular trechos. O notch ganha um tom da cor da capa.
     </td>
     <td width="50%" valign="top">
       <h3>🤖 Claude Code</h3>

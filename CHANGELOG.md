@@ -10,6 +10,7 @@ All notable changes to Notchy are documented here. The format is based on [Keep 
 - Build check on GitHub Actions for every pull request
 - Real app icons for notification badges, the music player, the browser of a YouTube video and the permission list
 - Unread badges for Slack, Telegram and Discord
+- Music from any app (browsers, Podcasts, VLC and others) through the system Now Playing, with play, pause, skip and seek, on macOS versions that allow third-party apps to read it; can be turned off in settings
 - Playback speed in the YouTube mini player (1×, 1.25×, 1.5×, 2×), carried over from and back to the browser tab
 
 ## 1.0.0

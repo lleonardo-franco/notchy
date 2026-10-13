@@ -252,7 +252,7 @@ skip() {
 
 fingerprint() {
     {
-        find Sources Resources hooks Package.swift -type f ! -name '.DS_Store' ! -name '*.pyc' -print0 | sort -z | xargs -0 shasum -a 256
+        find Sources Resources hooks scripts Package.swift -type f ! -name '.DS_Store' ! -name '*.pyc' -print0 | sort -z | xargs -0 shasum -a 256
         if has_identity; then echo "signed:$IDENTITY"; else echo "signed:adhoc"; fi
     } | shasum -a 256 | cut -d' ' -f1
 }
@@ -284,7 +284,7 @@ fail() {
 }
 
 step_build() {
-    swift build -c release
+    scripts/compile.sh
 }
 
 has_identity() {
@@ -365,19 +365,7 @@ installed_signature() {
 }
 
 step_bundle() {
-    rm -rf "$STAGE" || return 1
-    mkdir -p "$STAGE/Contents/MacOS" "$STAGE/Contents/Resources" || return 1
-    cp .build/release/Notchy "$STAGE/Contents/MacOS/Notchy" || return 1
-    cp Resources/Info.plist "$STAGE/Contents/Info.plist" || return 1
-    iconutil -c icns Resources/AppIcon.iconset -o "$STAGE/Contents/Resources/AppIcon.icns" || return 1
-    mkdir -p "$STAGE/Contents/Resources/hooks" || return 1
-    cp hooks/*.py "$STAGE/Contents/Resources/hooks/" || return 1
-    printf '%s' "$FINGERPRINT" > "$STAGE/Contents/Resources/build.fingerprint" || return 1
-    if has_identity; then
-        codesign --force --sign "$IDENTITY" "$STAGE"
-    else
-        codesign --force --sign - "$STAGE"
-    fi
+    NOTCHY_FINGERPRINT="$FINGERPRINT" scripts/bundle.sh "$STAGE"
 }
 
 step_applications() {

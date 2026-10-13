@@ -122,6 +122,7 @@ final class NotchModel {
             self.browser.refresh()
             self.bluetooth.refresh()
             self.calendar.refresh()
+            self.music.resumeOtherPlayers()
         }
         SystemActivity.shared.start()
         bluetooth.onConnect = { [weak self] device in
@@ -135,6 +136,7 @@ final class NotchModel {
         }
         Haptics.shared.preferences = prefs
         music.start()
+        music.setOtherPlayers(prefs.otherPlayers)
         claude.start()
         weather.start()
         clipboard.start()
@@ -156,6 +158,12 @@ final class NotchModel {
 
     func stop() {
         claude.stop()
+        music.setOtherPlayers(false)
+    }
+
+    func setOtherPlayers(_ enabled: Bool) {
+        prefs.otherPlayers = enabled
+        music.setOtherPlayers(enabled)
     }
 
     func configure(for screen: NSScreen) {

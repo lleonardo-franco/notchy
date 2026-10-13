@@ -48,7 +48,7 @@ Notchy convierte el notch en un pequeño centro de control. Recogido, muestra so
   <tr>
     <td width="50%" valign="top">
       <h3>🎵 Música</h3>
-      Spotify y Apple Music con portada, título y controles. Arrastra la barra de progreso para saltar. El notch toma un tono del color de la portada.
+      Spotify y Apple Music con portada, título y controles, y también otras apps (navegador, Podcasts, VLC…) en las versiones de macOS que permiten leer "Ahora suena" a otras apps. Arrastra la barra de progreso para saltar. El notch toma un tono del color de la portada.
     </td>
     <td width="50%" valign="top">
       <h3>🤖 Claude Code</h3>
