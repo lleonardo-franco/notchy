@@ -270,6 +270,15 @@ struct PeekIcon: View {
             Image(systemName: symbol)
                 .font(.system(size: 12))
                 .foregroundStyle(.white)
+        case .power(let level, let charging):
+            if charging {
+                Image(systemName: "battery.100percent.bolt")
+                    .font(.system(size: 13))
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(.green, .white.opacity(0.85))
+            } else {
+                BatteryGlyph(level: level)
+            }
         }
     }
 }

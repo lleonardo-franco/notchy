@@ -77,6 +77,10 @@ Notchy convierte el notch en un pequeño centro de control. Recogido, muestra so
       <h3>🎧 Bluetooth</h3>
       Batería de auriculares y otros dispositivos, incluidos AirPods izquierdo, derecho y estuche, con avisos de batería baja.
     </td>
+    <td valign="top">
+      <h3>🔋 Batería del Mac</h3>
+      Un aviso al conectar o quitar el cargador, con el nivel, la potencia del cargador y el tiempo hasta llenarse o el tiempo restante, además de avisos de batería baja.
+    </td>
   </tr>
   <tr>
     <td valign="top">

@@ -4,6 +4,7 @@ All notable changes to Notchy are documented here. The format is based on [Keep 
 
 ## Unreleased
 
+- Mac battery: alerts when the charger is plugged in or removed (level, wattage, time to full or left), low battery at 20% and 10%, and the Mac at the top of the Bluetooth tab
 - Volume and brightness keys show their level in the notch instead of the macOS display, with Shift+Option for fine steps; can be turned off in settings
 - Shelf: drag files onto the notch to keep them, drag them out again, or drop them on AirDrop
 

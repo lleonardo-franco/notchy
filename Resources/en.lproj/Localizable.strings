@@ -1,6 +1,7 @@
 "%@ mensagens" = "%@ messages";
 "%@ menções" = "%@ mentions";
 "%@ notificações" = "%@ notifications";
+"%@ restantes" = "%@ left";
 "%lld%% usado" = "%lld%% used";
 "1 mensagem" = "1 message";
 "1 menção" = "1 mention";
@@ -45,10 +46,13 @@
 "Avançar 10 s" = "Forward 10 s";
 "Avisar antes da reunião" = "Alert before meetings";
 "Avisar quando fones conectarem e quando a bateria estiver baixa" = "Alert when headphones connect and when the battery is low";
+"Avisar quando o carregador do Mac for conectado e quando a bateria estiver baixa" = "Alert when the Mac's charger is connected and when its battery is low";
 "Bandeja" = "Shelf";
 "Bateria dos fones e de outros dispositivos." = "Battery for headphones and other devices.";
+"Bateria em %lld%%" = "Battery at %lld%%";
 "Bem-vindo ao Notchy" = "Welcome to Notchy";
 "Calendário" = "Calendar";
+"Carregando" = "Charging";
 "Carregando o clima…" = "Loading weather…";
 "Carregando…" = "Loading…";
 "Chuva" = "Rain";
@@ -60,6 +64,7 @@
 "Clique para copiar de novo" = "Click to copy again";
 "Com um vídeo do YouTube aberto, use \"Assistir no notch\"." = "With a YouTube video open, use \"Watch in the notch\".";
 "Começar" = "Get started";
+"Conectado ao carregador" = "Plugged in";
 "Contadores do WhatsApp, Slack, Telegram, Discord e ClickUp." = "Unread counts for WhatsApp, Slack, Telegram, Discord and ClickUp.";
 "Contagem regressiva no notch recolhido" = "Countdown in the collapsed notch";
 "Controlar o %@" = "Control %@";
@@ -83,6 +88,7 @@
 "Esconder quando um app estiver em tela cheia" = "Hide when an app is in full screen";
 "Espera antes de abrir" = "Delay before opening";
 "Esperando você" = "Waiting for you";
+"Este Mac" = "This Mac";
 "Fechar o vídeo" = "Close video";
 "Fecharia o notch" = "Would close the notch";
 "Forte" = "Strong";
@@ -110,6 +116,7 @@
 "Médio" = "Medium";
 "Música" = "Music";
 "Música anterior" = "Previous track";
+"Na bateria" = "On battery";
 "Nada" = "Nothing";
 "Nada na agenda pelas próximas horas" = "Nothing on your calendar for the next few hours";
 "Nada tocando" = "Nothing playing";
@@ -200,9 +207,13 @@
 "agora · termina às %@" = "now · ends at %@";
 "amanhã" = "tomorrow";
 "bateria em %lld%%" = "battery at %lld%%";
+"carregada" = "charged";
+"carregando" = "charging";
+"cheio em %@" = "full in %@";
 "clique no notch" = "click the notch";
 "começando agora" = "starting now";
 "conectado" = "connected";
+"conecte o carregador" = "plug in the charger";
 "de 5h" = "5-hour";
 "desligando o Notchy" = "turning Notchy off";
 "em %lld h" = "in %lld h";

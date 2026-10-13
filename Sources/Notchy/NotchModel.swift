@@ -33,6 +33,7 @@ final class NotchModel {
         case meeting
         case app(BadgeApp)
         case device(String)
+        case power(level: Int, charging: Bool)
     }
 
     enum Tab: String, CaseIterable {
@@ -115,6 +116,7 @@ final class NotchModel {
     let bluetooth = BluetoothService()
     let permissions = PermissionCenter()
     let shelf = ShelfService()
+    let power = PowerService()
 
     func start() {
         claude.onEvent = { [weak self] event in
@@ -136,6 +138,7 @@ final class NotchModel {
             self.bluetooth.refresh()
             self.calendar.refresh()
             self.music.resumeOtherPlayers()
+            self.power.refresh()
         }
         SystemActivity.shared.start()
         bluetooth.onConnect = { [weak self] device in
@@ -143,6 +146,9 @@ final class NotchModel {
         }
         bluetooth.onLow = { [weak self] device, level in
             self?.deviceLow(device, level)
+        }
+        power.onEvent = { [weak self] event in
+            self?.powerChanged(event)
         }
         calendar.onReminder = { [weak self] event, minutes in
             self?.remind(event, minutes)
@@ -157,6 +163,7 @@ final class NotchModel {
         calendar.start(preferences: prefs)
         browser.start()
         bluetooth.start()
+        power.start()
         permissions.start(calendar: calendar)
         mediaKeys.handler = { [weak self] key, isRepeat, modifiers in
             self?.handleMediaKey(key, fine: modifiers.contains(.shift) && modifiers.contains(.option)) ?? false
@@ -355,6 +362,21 @@ final class NotchModel {
         guard prefs.bluetoothAlerts else { return }
         flash(.device(device.symbol), title: device.name, subtitle: device.batteryText)
         Haptics.shared.perform(.subtle)
+    }
+
+    private func powerChanged(_ event: PowerService.Event) {
+        guard prefs.batteryAlerts else { return }
+        switch event {
+        case .pluggedIn(let state):
+            let title = state.charging ? String(localized: "Carregando") : String(localized: "Conectado ao carregador")
+            flash(.power(level: state.level, charging: true), title: title, subtitle: state.summary)
+            Haptics.shared.perform(.subtle)
+        case .unplugged(let state):
+            flash(.power(level: state.level, charging: false), title: String(localized: "Na bateria"), subtitle: state.summary)
+        case .low(let level):
+            flash(.warning, title: String(localized: "Bateria em \(level)%"), subtitle: String(localized: "conecte o carregador"))
+            alert("Funk")
+        }
     }
 
     private func deviceLow(_ device: BluetoothDevice, _ level: Int) {
