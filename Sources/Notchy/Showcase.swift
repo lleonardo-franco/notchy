@@ -58,7 +58,22 @@ enum Showcase {
                         tool: "Bash",
                         summary: "$ git push origin feature/rate-limit",
                         body: "git push origin feature/rate-limit",
-                        createdAt: Date().timeIntervalSince1970
+                        createdAt: Date().timeIntervalSince1970,
+                        agent: "claude",
+                        command: "git push origin feature/rate-limit",
+                        canEdit: true
+                    ), ApprovalRequest(
+                        id: "demo-2",
+                        sessionId: "copilot-1",
+                        pid: ProcessInfo.processInfo.processIdentifier,
+                        cwd: "/Users/demo/code/mobile-app",
+                        tool: "Bash",
+                        summary: "$ pod install",
+                        body: "pod install",
+                        createdAt: Date().timeIntervalSince1970 + 1,
+                        agent: "copilot",
+                        command: "pod install",
+                        canEdit: false
                     )],
                     usage: copy.usage,
                     contexts: ["notchy": 37, "api": 61]
@@ -91,7 +106,7 @@ enum Showcase {
                 model.demo(expanded: false, hud: NotchModel.LevelHUD(kind: .brightness, level: 0.8))
             },
             Shot(name: "peek-done") { model in
-                model.demo(expanded: false, peek: NotchModel.Peek(style: .done, title: "landing-page", subtitle: String(localized: "terminou")))
+                model.demo(expanded: false, peek: NotchModel.Peek(style: .done, title: "landing-page", subtitle: String(localized: "terminou · \(TurnSummary(files: 4, commands: 2, added: 86, removed: 21).text)")))
             },
             Shot(name: "peek-battery") { model in
                 let state = PowerState(level: 86, pluggedIn: true, charging: true, charged: false, minutesToEmpty: nil, minutesToFull: 38, adapterWatts: 70)
@@ -422,9 +437,10 @@ struct ShowcaseCopy {
     func sessions() -> [ClaudeSession] {
         let now = Date().timeIntervalSince1970
         return [
-            ClaudeSession(id: "notchy", cwd: "/Users/demo/code/notchy", status: .working, detail: "$ swift test", prompt: nil, promptAt: now - 154, tty: nil, claudePid: nil, app: nil, termProgram: nil, updatedAt: now - 8),
-            ClaudeSession(id: "api", cwd: "/Users/demo/code/api-gateway", status: .waiting, detail: nil, prompt: nil, promptAt: now - 610, tty: nil, claudePid: nil, app: nil, termProgram: nil, updatedAt: now - 74),
-            ClaudeSession(id: "landing", cwd: "/Users/demo/code/landing-page", status: .done, detail: nil, prompt: doneprompt, promptAt: now - 900, tty: nil, claudePid: nil, app: nil, termProgram: nil, updatedAt: now - 240)
+            ClaudeSession(id: "notchy", cwd: "/Users/demo/code/notchy", status: .working, detail: "$ swift test", prompt: nil, promptAt: now - 154, tty: nil, claudePid: nil, app: nil, termProgram: nil, updatedAt: now - 8, tasks: TaskProgress(done: 3, total: 5), subagents: 2),
+            ClaudeSession(id: "api", cwd: "/Users/demo/code/api-gateway", status: .waiting, detail: nil, prompt: nil, promptAt: now - 610, tty: nil, claudePid: nil, app: nil, termProgram: nil, updatedAt: now - 74, mode: "acceptEdits"),
+            ClaudeSession(id: "codex-docs", cwd: "/Users/demo/code/docs-site", status: .working, detail: "$ npm run build", prompt: nil, promptAt: now - 95, tty: nil, claudePid: nil, app: nil, termProgram: nil, updatedAt: now - 3, agent: "codex"),
+            ClaudeSession(id: "landing", cwd: "/Users/demo/code/landing-page", status: .done, detail: nil, prompt: doneprompt, promptAt: now - 900, tty: nil, claudePid: nil, app: nil, termProgram: nil, updatedAt: now - 240, summary: TurnSummary(files: 4, commands: 2, added: 86, removed: 21))
         ]
     }
 

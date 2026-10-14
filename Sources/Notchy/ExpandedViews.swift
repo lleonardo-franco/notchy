@@ -258,7 +258,7 @@ struct ClaudePanel: View {
 
     var body: some View {
         if model.claude.sessions.isEmpty {
-            EmptyState(symbol: "asterisk", text: "Nenhuma sessão do Claude Code")
+            EmptyState(symbol: "asterisk", text: "Nenhuma sessão de agente aberta")
         } else {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 0) {
@@ -289,10 +289,38 @@ struct SessionRow: View {
                 StatusIcon(status: session.effectiveStatus, size: 13)
                     .frame(width: 18)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(session.project)
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(.white)
-                        .lineLimit(1)
+                    HStack(spacing: 5) {
+                        Text(session.project)
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundStyle(.white)
+                            .lineLimit(1)
+                        if session.codingAgent != .claude {
+                            AgentBadge(agent: session.codingAgent)
+                        }
+                        if let mode = session.mode {
+                            ModeBadge(mode: mode)
+                        }
+                        if let tasks = session.tasks, tasks.total > 0 {
+                            Label {
+                                Text(verbatim: "\(tasks.done)/\(tasks.total)")
+                            } icon: {
+                                Image(systemName: tasks.done >= tasks.total ? "checklist.checked" : "checklist")
+                            }
+                            .labelStyle(CompactLabelStyle())
+                            .help(Text("Tarefas: \(tasks.done) de \(tasks.total)"))
+                            .accessibilityLabel(Text("Tarefas: \(tasks.done) de \(tasks.total)"))
+                        }
+                        if let subagents = session.subagents, subagents > 0 {
+                            Label {
+                                Text(verbatim: "\(subagents)")
+                            } icon: {
+                                Image(systemName: "arrow.triangle.branch")
+                            }
+                            .labelStyle(CompactLabelStyle())
+                            .help(Text("\(subagents) subagentes rodando"))
+                            .accessibilityLabel(Text("\(subagents) subagentes rodando"))
+                        }
+                    }
                     Text(session.subtitle)
                         .font(.system(size: 11))
                         .foregroundStyle(.white.opacity(0.55))
@@ -340,9 +368,22 @@ struct SessionRow: View {
     }
 }
 
+struct CompactLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(spacing: 3) {
+            configuration.icon
+            configuration.title
+        }
+        .font(.system(size: 10, weight: .semibold).monospacedDigit())
+        .foregroundStyle(.white.opacity(0.5))
+        .fixedSize()
+    }
+}
+
 struct UsageGauge: View {
     let label: String
     let window: UsageWindow
+    var length: TimeInterval = 5 * 3600
 
     @State var hovering = false
 
@@ -370,8 +411,16 @@ struct UsageGauge: View {
         .font(.system(size: 10, weight: .semibold).monospacedDigit())
         .contentShape(Rectangle())
         .onHover { hovering = $0 }
+        .help(forecast)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("Uso do Claude (\(label))"))
         .accessibilityValue("\(Int(window.usedPercentage.rounded()))%")
+    }
+
+    private var forecast: Text {
+        if let date = window.exhaustion(length: length) {
+            return Text("No ritmo atual, acaba por volta de \(date.formatted(date: .omitted, time: .shortened)); renova em \(window.resetText)")
+        }
+        return Text("Renova em \(window.resetText)")
     }
 }

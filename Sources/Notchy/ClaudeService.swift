@@ -7,6 +7,7 @@ struct ClaudeSession: Identifiable, Decodable, Equatable {
         case working
         case waiting
         case done
+        case failed
     }
 
     let id: String
@@ -20,7 +21,15 @@ struct ClaudeSession: Identifiable, Decodable, Equatable {
     let app: String?
     let termProgram: String?
     let updatedAt: Double
+    var agent: String? = nil
+    var mode: String? = nil
+    var tasks: TaskProgress? = nil
+    var subagents: Int? = nil
+    var summary: TurnSummary? = nil
+    var error: String? = nil
+    var compactedAt: Double? = nil
 
+    var codingAgent: CodingAgent { CodingAgent(key: agent) }
     var project: String { URL(fileURLWithPath: cwd).lastPathComponent }
     var updated: Date { Date(timeIntervalSince1970: updatedAt) }
     var promptDate: Date { Date(timeIntervalSince1970: promptAt ?? updatedAt) }
@@ -30,6 +39,7 @@ struct ClaudeSession: Identifiable, Decodable, Equatable {
         switch status {
         case .working where age > 900: return .idle
         case .done where age > 600: return .idle
+        case .failed where age > 1800: return .idle
         default: return status
         }
     }
@@ -38,7 +48,10 @@ struct ClaudeSession: Identifiable, Decodable, Equatable {
         switch effectiveStatus {
         case .working: return detail ?? String(localized: "Trabalhando…")
         case .waiting: return detail ?? String(localized: "Esperando você")
-        case .done: return prompt.map { String(localized: "Pronto · \($0)") } ?? String(localized: "Pronto")
+        case .done:
+            let parts = [String(localized: "Pronto"), summary?.text, prompt].compactMap { $0?.isEmpty == false ? $0 : nil }
+            return parts.joined(separator: " · ")
+        case .failed: return String(localized: "Falhou") + (error.map { " · \($0)" } ?? "")
         case .idle: return prompt ?? String(localized: "Ocioso")
         }
     }
@@ -46,9 +59,10 @@ struct ClaudeSession: Identifiable, Decodable, Equatable {
     var rank: Int {
         switch effectiveStatus {
         case .waiting: return 0
-        case .working: return 1
-        case .done: return 2
-        case .idle: return 3
+        case .failed: return 1
+        case .working: return 2
+        case .done: return 3
+        case .idle: return 4
         }
     }
 }
@@ -62,7 +76,11 @@ struct ApprovalRequest: Identifiable, Decodable, Equatable {
     let summary: String
     let body: String
     let createdAt: Double
+    var agent: String? = nil
+    var command: String? = nil
+    var canEdit: Bool? = nil
 
+    var codingAgent: CodingAgent { CodingAgent(key: agent) }
     var project: String { URL(fileURLWithPath: cwd).lastPathComponent }
     var isAlive: Bool { kill(pid, 0) == 0 || errno == EPERM }
 }
@@ -101,8 +119,12 @@ private struct StatusRecord: Decodable {
 enum ClaudeEvent {
     case needsYou(ClaudeSession)
     case finished(ClaudeSession)
+    case failed(ClaudeSession)
     case approval(ApprovalRequest)
     case limit(label: String, percent: Int)
+    case forecast(label: String, date: Date)
+    case contextHigh(ClaudeSession, percent: Int)
+    case compacted(ClaudeSession)
 }
 
 @MainActor
@@ -113,11 +135,13 @@ final class ClaudeService {
     nonisolated static let approvalsDirectory = root.appendingPathComponent("approvals", isDirectory: true)
     nonisolated static let statusDirectory = root.appendingPathComponent("statusline", isDirectory: true)
     nonisolated static let pidFile = root.appendingPathComponent("app.pid")
+    nonisolated static let rulesFile = root.appendingPathComponent("rules.json")
 
     private(set) var sessions: [ClaudeSession] = []
     private(set) var approvals: [ApprovalRequest] = []
     private(set) var usage = Usage()
     private(set) var contexts: [String: Double] = [:]
+    private(set) var rules: [PermissionRule] = []
 
     @ObservationIgnored var onEvent: (@MainActor (ClaudeEvent) -> Void)?
     @ObservationIgnored private var timer: Timer?
@@ -126,6 +150,7 @@ final class ClaudeService {
     @ObservationIgnored private var knownApprovals: Set<String> = []
     @ObservationIgnored private var answered: Set<String> = []
     @ObservationIgnored private var warned: Set<String> = []
+    @ObservationIgnored private var compactions: [String: Double] = [:]
     @ObservationIgnored private var primed = false
 
     func start() {
@@ -149,13 +174,27 @@ final class ClaudeService {
         try? FileManager.default.removeItem(at: Self.pidFile)
     }
 
-    func respond(to request: ApprovalRequest, with behavior: String) {
+    func respond(to request: ApprovalRequest, with behavior: String, command: String? = nil, remember: Bool = false) {
         answered.insert(request.id)
         approvals.removeAll { $0.id == request.id }
         let url = Self.approvalsDirectory.appendingPathComponent("\(request.id).response")
-        if let data = try? JSONSerialization.data(withJSONObject: ["behavior": behavior]) {
+        var response: [String: Any] = ["behavior": behavior]
+        if let command, command != request.command {
+            response["command"] = command
+        }
+        if remember {
+            response["remember"] = true
+        }
+        if let data = try? JSONSerialization.data(withJSONObject: response) {
             try? data.write(to: url, options: .atomic)
         }
+    }
+
+    func removeRule(_ rule: PermissionRule) {
+        let next = rules.filter { $0 != rule }
+        guard let data = try? JSONEncoder().encode(next) else { return }
+        try? data.write(to: Self.rulesFile, options: .atomic)
+        rules = next
     }
 
     func session(for request: ApprovalRequest) -> ClaudeSession? {
@@ -180,6 +219,7 @@ final class ClaudeService {
         loadApprovals()
         loadSessions()
         loadUsage()
+        loadRules()
         detectEvents()
         primed = true
     }
@@ -287,6 +327,13 @@ final class ClaudeService {
         }
     }
 
+    private func loadRules() {
+        let next = (try? Data(contentsOf: Self.rulesFile)).flatMap { try? JSONDecoder().decode([PermissionRule].self, from: $0) } ?? []
+        if next != rules {
+            rules = next
+        }
+    }
+
     private func detectEvents() {
         if primed {
             for request in approvals where !knownApprovals.contains(request.id) {
@@ -301,15 +348,43 @@ final class ClaudeService {
                     onEvent?(.needsYou(session))
                 } else if session.status == .done, previous == .working {
                     onEvent?(.finished(session))
+                } else if session.status == .failed, previous != nil {
+                    onEvent?(.failed(session))
                 }
+            }
+
+            for session in sessions {
+                if let compacted = session.compactedAt, let known = compactions[session.id], compacted > known {
+                    onEvent?(.compacted(session))
+                }
+                if let context = contexts[session.id], context >= 85, warned.insert("context-\(session.id)").inserted {
+                    onEvent?(.contextHigh(session, percent: Int(context.rounded())))
+                }
+            }
+        }
+
+        for session in sessions {
+            compactions[session.id] = session.compactedAt ?? compactions[session.id] ?? 0
+            if let context = contexts[session.id], context < 60 {
+                warned.remove("context-\(session.id)")
             }
         }
 
         checkLimit(String(localized: "de 5h"), usage.fiveHour)
         checkLimit(String(localized: "semanal"), usage.sevenDay)
+        checkForecast(String(localized: "de 5h"), usage.fiveHour, length: 5 * 3600)
+        checkForecast(String(localized: "semanal"), usage.sevenDay, length: 7 * 86400)
 
         knownApprovals = Set(approvals.map(\.id))
         lastStatus = Dictionary(uniqueKeysWithValues: sessions.map { ($0.id, $0.status) })
+    }
+
+    private func checkForecast(_ label: String, _ window: UsageWindow?, length: TimeInterval) {
+        guard let window, window.usedPercentage >= 50, window.usedPercentage < 80,
+              let date = window.exhaustion(length: length) else { return }
+        if warned.insert("forecast-\(label)-\(Int(window.resetsAt))").inserted, primed {
+            onEvent?(.forecast(label: label, date: date))
+        }
     }
 
     private func checkLimit(_ label: String, _ window: UsageWindow?) {

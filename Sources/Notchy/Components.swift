@@ -155,6 +155,7 @@ struct StatusIcon: View {
         case .working: return "Trabalhando…"
         case .waiting: return "Esperando você"
         case .done: return "Pronto"
+        case .failed: return "Falhou"
         case .idle: return "Ocioso"
         }
     }
@@ -179,6 +180,10 @@ struct StatusIcon: View {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: size))
                 .foregroundStyle(.green)
+        case .failed:
+            Image(systemName: "xmark.octagon.fill")
+                .font(.system(size: size))
+                .foregroundStyle(.red)
         case .idle:
             Circle()
                 .fill(.white.opacity(0.3))

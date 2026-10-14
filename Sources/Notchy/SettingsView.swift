@@ -254,10 +254,43 @@ struct SettingsView: View {
                     }
                     .disabled(model.permissions.installingHooks || HooksInstaller.bundledInstaller == nil)
                 }
+                AgentToggles()
             } header: {
-                Text("Claude Code")
+                Text("Agentes de código")
             } footer: {
-                Text("Depois de instalar, reinicie as sessões do Claude Code que já estavam abertas.")
+                Text("Codex e Gemini mostram o status; Claude Code, Copilot e Cursor também podem ser aprovados pelo notch. Depois de conectar, reinicie as sessões que já estavam abertas.")
+            }
+
+            if !model.claude.rules.isEmpty {
+                Section {
+                    ForEach(model.claude.rules) { rule in
+                        HStack(spacing: 8) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(rule.summary)
+                                    .font(.system(size: 12, design: .monospaced))
+                                    .lineLimit(1)
+                                    .truncationMode(.middle)
+                                Text(rule.project)
+                                    .font(.system(size: 11))
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            AgentBadge(agent: CodingAgent(key: rule.agent))
+                            Button {
+                                model.claude.removeRule(rule)
+                            } label: {
+                                Image(systemName: "trash")
+                            }
+                            .buttonStyle(.borderless)
+                            .help("Remover esta regra")
+                            .accessibilityLabel(Text("Remover esta regra"))
+                        }
+                    }
+                } header: {
+                    Text("Sempre permitidos")
+                } footer: {
+                    Text("Criados com \"Sempre permitir\" no notch. Valem só para o mesmo comando, no mesmo projeto e no mesmo agente.")
+                }
             }
 
             Section("Sobre") {
@@ -407,6 +440,61 @@ struct SettingsView: View {
             model.prefs.isEnabled(app)
         } set: { enabled in
             model.prefs.setEnabled(app, enabled)
+        }
+    }
+}
+
+struct AgentToggles: View {
+    @State var connected: [CodingAgent: Bool] = [:]
+    @State var cursorApprovals = AgentInstaller.cursorApprovals
+    @State var busy = false
+
+    private let agents = CodingAgent.allCases.filter { $0 != .claude }
+
+    var body: some View {
+        ForEach(agents) { agent in
+            Toggle(agent.title, isOn: Binding {
+                connected[agent] ?? false
+            } set: { enabled in
+                apply(agent, enabled: enabled)
+            })
+            .disabled(busy || HooksInstaller.bundledInstaller == nil)
+        }
+        if connected[.cursor] == true {
+            Toggle("Aprovar comandos do Cursor pelo notch", isOn: Binding {
+                cursorApprovals
+            } set: { enabled in
+                cursorApprovals = enabled
+                apply(.cursor, enabled: true)
+            })
+            .disabled(busy)
+            .help("Cada comando de terminal e MCP do agente do Cursor passa pelo notch antes de rodar")
+        }
+        Color.clear.frame(height: 0)
+            .onAppear(perform: reload)
+    }
+
+    private func reload() {
+        var next: [CodingAgent: Bool] = [:]
+        for agent in agents {
+            next[agent] = agent.isConnected
+        }
+        connected = next
+        cursorApprovals = AgentInstaller.cursorApprovals
+    }
+
+    private func apply(_ agent: CodingAgent, enabled: Bool) {
+        busy = true
+        connected[agent] = enabled
+        let approvals = cursorApprovals
+        DispatchQueue.global(qos: .userInitiated).async {
+            _ = AgentInstaller.set(agent, enabled: enabled, approvals: approvals)
+            DispatchQueue.main.async {
+                MainActor.assumeIsolated {
+                    busy = false
+                    reload()
+                }
+            }
         }
     }
 }

@@ -46,7 +46,7 @@ final class NotchModel {
 
         var title: String {
             switch self {
-            case .claude: return "Claude"
+            case .claude: return String(localized: "Agentes")
             case .agenda: return String(localized: "Agenda")
             case .weather: return String(localized: "Clima")
             case .clipboard: return String(localized: "Copiados")
@@ -68,7 +68,7 @@ final class NotchModel {
 
         var settingsTitle: String {
             switch self {
-            case .claude: return "Claude Code"
+            case .claude: return String(localized: "Agentes de código")
             default: return title
             }
         }
@@ -110,6 +110,9 @@ final class NotchModel {
     private(set) var hud: LevelHUD?
     @ObservationIgnored var onScreen = true
     private(set) var fileDrag = false
+    private(set) var approvalIndex = 0
+    private(set) var editingApproval = false
+    @ObservationIgnored var keyboardHandler: ((Bool) -> Void)?
 
     @ObservationIgnored private var hudToken = UUID()
     @ObservationIgnored let mediaKeys = MediaKeyMonitor()
@@ -338,15 +341,36 @@ final class NotchModel {
         }
     }
 
-    func approve(_ request: ApprovalRequest) {
-        claude.respond(to: request, with: "allow")
+    func approve(_ request: ApprovalRequest, command: String? = nil, remember: Bool = false) {
+        endEditing()
+        claude.respond(to: request, with: "allow", command: command, remember: remember)
     }
 
     func deny(_ request: ApprovalRequest) {
+        endEditing()
         claude.respond(to: request, with: "deny")
     }
 
+    func showApproval(offset: Int) {
+        let count = claude.approvals.count
+        guard count > 1 else { return }
+        endEditing()
+        approvalIndex = (min(approvalIndex, count - 1) + offset + count) % count
+    }
+
+    func beginEditing() {
+        editingApproval = true
+        keyboardHandler?(true)
+    }
+
+    func endEditing() {
+        guard editingApproval else { return }
+        editingApproval = false
+        keyboardHandler?(false)
+    }
+
     func answerInTerminal(_ request: ApprovalRequest) {
+        endEditing()
         let session = claude.session(for: request)
         claude.respond(to: request, with: "terminal")
         if let session {
@@ -498,8 +522,18 @@ final class NotchModel {
             flash(.waiting, title: session.project, subtitle: String(localized: "precisa de você"))
             alert("Glass")
         case .finished(let session):
-            flash(.done, title: session.project, subtitle: String(localized: "terminou"))
+            let summary = session.summary?.text ?? ""
+            flash(.done, title: session.project, subtitle: summary.isEmpty ? String(localized: "terminou") : String(localized: "terminou · \(summary)"))
             alert("Tink")
+        case .failed(let session):
+            flash(.warning, title: session.project, subtitle: session.error.map { String(localized: "falhou · \($0)") } ?? String(localized: "falhou"))
+            alert("Funk")
+        case .forecast(let label, let date):
+            flash(.warning, title: String(localized: "Cota \(label)"), subtitle: String(localized: "acaba por volta de \(date.formatted(date: .omitted, time: .shortened)) no ritmo atual"))
+        case .contextHigh(let session, let percent):
+            flash(.info, title: session.project, subtitle: String(localized: "contexto em \(percent)%, vai compactar logo"))
+        case .compacted(let session):
+            flash(.info, title: session.project, subtitle: String(localized: "contexto compactado"))
         case .limit(let label, let percent):
             flash(.warning, title: String(localized: "Limite \(label)"), subtitle: String(localized: "\(percent)% usado"))
             alert("Funk")
@@ -532,7 +566,11 @@ final class NotchModel {
 
     var currentTab: Tab? { tabs.contains(tab) ? tab : tabs.first }
 
-    var pendingApproval: ApprovalRequest? { claude.approvals.first }
+    var pendingApproval: ApprovalRequest? {
+        let approvals = claude.approvals
+        guard !approvals.isEmpty else { return nil }
+        return approvals[min(approvalIndex, approvals.count - 1)]
+    }
 
     var mode: Mode {
         if let farewell { return farewell == .goodbye ? .farewell : .closing }

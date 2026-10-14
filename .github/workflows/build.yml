@@ -26,10 +26,14 @@ jobs:
           swift --version
 
       - name: Compile
-        run: swift build -c release
+        run: |
+          set -o pipefail
+          swift build -c release 2>&1 | tee build.log || { grep -E "error:" build.log | sort -u | head -30 | sed 's/^/::error::/'; exit 1; }
 
       - name: Tests
-        run: swift test
+        run: |
+          set -o pipefail
+          swift test 2>&1 | tee test.log || { grep -E "error:|✘|failed" test.log | sort -u | head -40 | sed 's/^/::error::/'; exit 1; }
 
       - name: App bundle
         run: ./build.sh
@@ -56,7 +60,9 @@ jobs:
           done
 
       - name: Python hooks
-        run: /usr/bin/python3 -m py_compile hooks/*.py scripts/*.py
+        run: |
+          /usr/bin/python3 -m py_compile hooks/*.py scripts/*.py
+          /usr/bin/python3 -m unittest discover -s hooks/tests -v
 
       - name: Homebrew formula
         env:

@@ -163,7 +163,7 @@ Mantén cada commit centrado en un solo cambio. Un cuerpo corto explicando el *p
 
 ## Pruebas
 
-Las pruebas unitarias están en `Tests/NotchyTests` y usan [Swift Testing](https://developer.apple.com/xcode/swift-testing/). Ejecútalas con `swift test`; necesitan Xcode 16, porque las herramientas de línea de comandos por sí solas pueden no incluir los frameworks de pruebas. La lógica pura (etiquetas de fecha, gestos, parsing) debería venir con pruebas.
+Las pruebas unitarias están en `Tests/NotchyTests` y usan [Swift Testing](https://developer.apple.com/xcode/swift-testing/). Ejecútalas con `swift test`; necesitan Xcode 16, porque las herramientas de línea de comandos por sí solas pueden no incluir los frameworks de pruebas. La lógica pura (etiquetas de fecha, gestos, parsing) debería venir con pruebas. Los scripts de hook tienen sus propias pruebas: `python3 -m unittest discover -s hooks/tests` ejecuta los adaptadores de agentes, las aprobaciones y las reglas en una carpeta temporal, sin tocar tu `~/.notchy` real.
 
 No hay pruebas automáticas de interfaz, así que las pruebas manuales siguen importando:
 

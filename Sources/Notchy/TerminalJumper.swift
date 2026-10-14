@@ -6,11 +6,7 @@ struct ProcessRow {
     let tty: String?
     let args: String
 
-    var isClaude: Bool {
-        args.split(separator: " ").prefix(2).contains { token in
-            (String(token) as NSString).lastPathComponent == "claude" || token.contains("@anthropic-ai/claude-code")
-        }
-    }
+    var isAgent: Bool { CodingAgent.matches(args) }
 }
 
 enum ProcessTable {
@@ -99,14 +95,14 @@ enum TerminalJumper {
 
     private static func resolve(_ session: ClaudeSession) -> Target {
         let table = ProcessTable.snapshot()
-        var pid = session.claudePid.flatMap { table[$0]?.isClaude == true ? $0 : nil }
+        var pid = session.claudePid.flatMap { table[$0]?.isAgent == true ? $0 : nil }
 
         if pid == nil, let tty = session.tty {
-            pid = table.values.first { $0.isClaude && $0.tty == tty }?.pid
+            pid = table.values.first { $0.isAgent && $0.tty == tty }?.pid
         }
 
         if pid == nil {
-            let candidates = table.values.filter(\.isClaude).map(\.pid)
+            let candidates = table.values.filter(\.isAgent).map(\.pid)
             let directories = ProcessTable.workingDirectories(of: candidates)
             let wanted = URL(fileURLWithPath: session.cwd).standardizedFileURL.path
             pid = candidates.first { candidate in
