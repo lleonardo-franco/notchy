@@ -47,6 +47,19 @@ A full pass before each release, and the relevant sections for every pull reques
 - [ ] Clicking a session jumps to the right Terminal or iTerm tab
 - [ ] The quota gauges appear after the first response
 
+## Agents
+
+- [ ] With two Claude Code permission requests at once, the notch shows 1/2 and the arrows switch between them
+- [ ] The pencil edits a Bash command; Return allows the edited version and Claude runs it
+- [ ] "Always allow" runs the command; the same command in the same project is no longer asked; the rule shows in settings and removing it brings the question back
+- [ ] A session in plan mode shows the "plan" badge; with `--dangerously-skip-permissions` it shows "no permissions" in red
+- [ ] A task list shows 2/5 in the row; a subagent shows the branch counter while it runs
+- [ ] When a turn finishes, the alert shows files, lines and commands
+- [ ] `notchy agents enable codex gemini copilot cursor` connects them and `notchy agents` lists them; Settings → Coding agents shows the same switches
+- [ ] A Codex, Gemini, Copilot and Cursor session each show up with their badge and status
+- [ ] A Copilot permission request and, with `--approvals`, a Cursor terminal command can be allowed and denied from the notch
+- [ ] `notchy agents disable …` and `notchy uninstall` remove the hooks from each agent's config and keep the user's own hooks
+
 ## Calendar, weather, clipboard
 
 - [ ] Events today, tomorrow and on other days have the right label

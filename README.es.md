@@ -5,7 +5,7 @@
 # Notchy
 
 **El notch de tu MacBook, por fin útil.**<br>
-Música, Claude Code, calendario, YouTube y notificaciones justo donde está la cámara.
+Música, Claude Code y otros agentes de código, calendario, YouTube y notificaciones justo donde está la cámara.
 
 [![Release](https://img.shields.io/github/v/release/lleonardo-franco/notchy?color=d97757&label=versión)](https://github.com/lleonardo-franco/notchy/releases)
 [![Build](https://github.com/lleonardo-franco/notchy/actions/workflows/build.yml/badge.svg)](https://github.com/lleonardo-franco/notchy/actions/workflows/build.yml)
@@ -54,15 +54,15 @@ Recogido, Notchy se queda a los dos lados de la cámara y muestra solo lo que me
 
 El notch se despliega en un reproductor completo, con portada, barra de progreso y controles, teñido con los colores del álbum. Debajo, pestañas para todo lo demás. Cuando las pestañas no caben, se convierten en iconos para que nada quede cortado.
 
-<p align="center"><img src="docs/screenshots/es/music-claude.png" width="80%" alt="Notch abierto con el reproductor y tres sesiones de Claude Code"></p>
+<p align="center"><img src="docs/screenshots/es/music-claude.png" width="80%" alt="Notch abierto con el reproductor y sesiones de Claude Code y Codex con tareas, subagentes y modos"></p>
 
-### Claude Code sin cambiar de ventana
+### Tus agentes de código sin cambiar de ventana
 
-Cada sesión muestra qué está haciendo ahora, hace cuánto se movió por última vez y cuánto contexto ha usado, junto a tu cuota de 5 horas y de 7 días. Cuando Claude pide ejecutar un comando, el notch baja con el comando exacto para que **lo permitas o lo rechaces sin dejar lo que estás haciendo**, o saltes directo a la pestaña correcta del terminal. Cuando una tarea termina, te enteras.
+Sesiones de Claude Code, Codex, Gemini, Copilot y Cursor lado a lado. Cada una muestra qué está haciendo ahora, el progreso de su lista de tareas, los subagentes en ejecución, si está en modo de planificación o ejecutando sin pedir permiso y cuánto contexto ha usado, junto a tu cuota de 5 horas y de 7 días y una previsión de cuándo se acaba a este ritmo. Cuando un agente pide ejecutar un comando, el notch baja con el comando exacto para que **lo permitas o lo rechaces sin dejar lo que estás haciendo**, lo edites antes, le digas a Notchy que lo permita siempre en ese proyecto o saltes directo a la pestaña correcta del terminal. ¿Varias solicitudes a la vez? Pasa de una a otra. Cuando una tarea termina, llega un resumen de archivos, líneas y comandos; cuando falla, ves el motivo.
 
-<p align="center"><img src="docs/screenshots/es/approval.png" width="80%" alt="Solicitud de permiso de Claude Code para git push con los botones Permitir y Denegar"></p>
+<p align="center"><img src="docs/screenshots/es/approval.png" width="80%" alt="Solicitud de permiso para git push con los botones Permitir siempre, Denegar y Permitir y una cola de dos solicitudes"></p>
 
-<p align="center"><img src="docs/screenshots/es/peek-done.png" width="60%" alt="Aviso de que una sesión de Claude Code terminó"></p>
+<p align="center"><img src="docs/screenshots/es/peek-done.png" width="60%" alt="Aviso de que una sesión terminó, con los archivos, líneas y comandos que cambió"></p>
 
 ### Nunca más tarde a una reunión
 
@@ -138,8 +138,8 @@ La ventana de bienvenida pide solo los permisos que quieras, uno a uno. En los a
       Spotify y Apple Music con portada, título y controles, y también otras apps (navegador, Podcasts, VLC…) en las versiones de macOS que permiten leer "Ahora suena" a otras apps. Arrastra la barra de progreso para saltar. El notch toma un tono del color de la portada.
     </td>
     <td width="50%" valign="top">
-      <h3>🤖 Claude Code</h3>
-      Estado de cada sesión en tiempo real. <b>Aprueba o rechaza solicitudes de permiso desde el notch</b>, salta a la pestaña correcta de Terminal o iTerm y sigue tu cuota de 5 horas y de 7 días.
+      <h3>🤖 Claude Code y otros agentes</h3>
+      Estado en tiempo real de las sesiones de Claude Code, Codex, Gemini, Copilot y Cursor, con tareas, subagentes y un resumen al terminar. <b>Aprueba, edita o permite siempre comandos desde el notch</b>, salta a la pestaña correcta del terminal y mira tu cuota con previsión.
     </td>
   </tr>
   <tr>
@@ -189,7 +189,7 @@ La ventana de bienvenida pide solo los permisos que quieras, uno a uno. En los a
 - Un Mac con macOS 14 Sonoma o posterior. Los Mac sin notch también funcionan, con el panel en la pantalla principal.
 - Xcode 16 o posterior, o sus herramientas de línea de comandos: `xcode-select --install`
 - Python 3, que viene con ellas
-- [Claude Code](https://docs.claude.com/en/docs/claude-code) es opcional y solo hace falta para la pestaña Claude
+- [Claude Code](https://docs.claude.com/en/docs/claude-code) u otro agente de código es opcional y solo hace falta para la pestaña Agentes
 
 ## Instalación
 
@@ -229,6 +229,7 @@ notchy setup
 | `notchy city "Madrid"` | Define la ciudad del clima (`notchy city auto` vuelve a la automática) |
 | `notchy doctor` | Revisa firma, certificado y permisos |
 | `notchy update` | Descarga la última versión y reinstala |
+| `notchy agents` | Conecta o desconecta Codex, Gemini, Copilot y Cursor (ver abajo) |
 | `notchy uninstall` | Elimina la app, los hooks, los ajustes y el comando |
 
 El instalador y el comando siguen el idioma de tu Mac. Usa `NOTCHY_LANG=es`, `en` o `pt` para elegir uno.
@@ -238,6 +239,27 @@ El instalador y el comando siguen el idioma de tu Mac. Usa `NOTCHY_LANG=es`, `en
 | Dos dedos a la derecha / izquierda | Siguiente / anterior (configurable) |
 | Dos dedos arriba / abajo | Volumen |
 | Dos dedos a los lados en un vídeo | Avanza o retrocede 10 s |
+
+### Agentes de código
+
+Claude Code lo conecta el instalador. Los demás agentes están a un comando, o a un interruptor en Ajustes → Agentes de código:
+
+```bash
+notchy agents                      # qué está conectado
+notchy agents enable codex gemini  # conecta uno o varios
+notchy agents enable cursor --approvals
+notchy agents disable copilot
+```
+
+| Agente | Estado en el notch | Aprobar desde el notch |
+|---|---|---|
+| Claude Code | ✅ | ✅ incluso editar el comando y "Permitir siempre" |
+| GitHub Copilot CLI | ✅ | ✅ |
+| Cursor (agente) | ✅ | ✅ opcional con `--approvals`, para comandos de terminal y MCP |
+| Codex CLI | ✅ | — los hooks de Codex solo bloquean, no conceden |
+| Gemini CLI | ✅ | — |
+
+El sistema de hooks de cada agente es nuevo y cambia a menudo, así que el soporte para todo lo que no es Claude Code es experimental. Si algo deja de funcionar tras actualizar un agente, [abre una issue](https://github.com/lleonardo-franco/notchy/issues/new/choose).
 
 ## Permisos
 
@@ -266,7 +288,7 @@ Todo es opcional. Notchy funciona con cualquier combinación de ellos.
 |---|---|
 | Ventana | Un `NSPanel` sobre la barra de menús, posicionado con el `safeAreaInsets` de la pantalla con notch |
 | Música | Notificaciones distribuidas de Spotify y Music, más AppleScript |
-| Claude Code | Los hooks guardan el estado de cada sesión en `~/.notchy/sessions`; el hook `PermissionRequest` espera la respuesta del notch; un wrapper de la status line aporta la cuota |
+| Agentes de código | Un script de hook con un adaptador por agente guarda el estado de cada sesión en `~/.notchy/sessions`; los hooks de permiso esperan la respuesta del notch y las reglas de "Permitir siempre" están en `~/.notchy/rules.json`; un wrapper de la status line aporta la cuota de Claude |
 | Vídeo | AppleScript lee las pestañas del navegador; el reproductor es la API IFrame de YouTube en un `WKWebView` |
 | Notificaciones | Contadores del Dock mediante la API de Accesibilidad |
 | Bluetooth | `system_profiler SPBluetoothDataType` |

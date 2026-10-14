@@ -163,7 +163,7 @@ Keep each commit focused on one change. A short body explaining *why* is always 
 
 ## Testing
 
-Unit tests live in `Tests/NotchyTests` and use [Swift Testing](https://developer.apple.com/xcode/swift-testing/). Run them with `swift test`; they need Xcode 16, as the Command Line Tools alone may not ship the testing frameworks. Pure logic (date labels, gestures, parsing) should come with tests.
+Unit tests live in `Tests/NotchyTests` and use [Swift Testing](https://developer.apple.com/xcode/swift-testing/). Run them with `swift test`; they need Xcode 16, as the Command Line Tools alone may not ship the testing frameworks. Pure logic (date labels, gestures, parsing) should come with tests. The hook scripts have their own tests: `python3 -m unittest discover -s hooks/tests` runs the agent adapters, approvals and rules against a temporary folder, without touching your real `~/.notchy`.
 
 There are no automated UI tests, so manual testing still matters:
 

@@ -163,7 +163,7 @@ Mantenha cada commit focado em uma mudança. Um corpo curto explicando o *porqu�
 
 ## Testes
 
-Os testes unitários ficam em `Tests/NotchyTests` e usam [Swift Testing](https://developer.apple.com/xcode/swift-testing/). Rode com `swift test`; eles precisam do Xcode 16, porque só as ferramentas de linha de comando podem não trazer os frameworks de teste. Lógica pura (rótulos de data, gestos, parsing) deve vir com testes.
+Os testes unitários ficam em `Tests/NotchyTests` e usam [Swift Testing](https://developer.apple.com/xcode/swift-testing/). Rode com `swift test`; eles precisam do Xcode 16, porque só as ferramentas de linha de comando podem não trazer os frameworks de teste. Lógica pura (rótulos de data, gestos, parsing) deve vir com testes. Os scripts de hook têm testes próprios: `python3 -m unittest discover -s hooks/tests` roda os adaptadores dos agentes, as aprovações e as regras numa pasta temporária, sem mexer no seu `~/.notchy` de verdade.
 
 Não há testes automatizados de interface, então o teste manual continua importando:
 

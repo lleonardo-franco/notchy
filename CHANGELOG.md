@@ -4,6 +4,12 @@ All notable changes to Notchy are documented here. The format is based on [Keep 
 
 ## Unreleased
 
+- Coding agents: Codex CLI, Gemini CLI, GitHub Copilot CLI and Cursor sessions show up next to Claude Code, connected with `notchy agents enable …` or from Settings → Coding agents; Copilot and Cursor (opt-in) can be approved from the notch
+- Approvals: flip through several pending requests, edit a Claude Code command before allowing it, and "Always allow" a command in a project (rules listed and removable in settings)
+- Sessions show their task list progress, running subagents, plan mode or skipped permissions, a summary of files, lines and commands when they finish, and why they failed
+- Alerts when the quota is on pace to run out before it resets, when the context passes 85% and when it gets compacted; the quota gauges show the forecast on hover
+- The Claude tab is now called Agents
+
 - The tab bar switches to icons, keeping the open tab's name, when all tabs don't fit next to the Claude quota or other controls
 - README tour with screenshots and an animated walkthrough in English, Portuguese and Spanish, rendered from the app's own views by a new Screenshots workflow
 
