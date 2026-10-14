@@ -38,10 +38,10 @@ struct TabBar: View {
         case .claude?:
             HStack(spacing: 10) {
                 if let window = model.claude.usage.fiveHour {
-                    UsageGauge(label: "5h", window: window)
+                    UsageGauge(label: "5h", window: window, length: 5 * 3600)
                 }
                 if let window = model.claude.usage.sevenDay {
-                    UsageGauge(label: "7d", window: window)
+                    UsageGauge(label: "7d", window: window, length: 7 * 86400)
                 }
             }
         case .weather?:

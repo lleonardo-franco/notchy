@@ -24,6 +24,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         host.sizingOptions = []
         panel.contentView = host
         layoutPanel()
+        model.keyboardHandler = { [weak self] enabled in
+            guard let self else { return }
+            self.panel.acceptsKeyboard = enabled
+            if enabled {
+                self.panel.makeKey()
+            } else {
+                self.panel.resignKey()
+            }
+        }
         model.start()
         listenForTermination()
 

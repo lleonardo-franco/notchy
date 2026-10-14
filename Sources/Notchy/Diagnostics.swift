@@ -59,6 +59,7 @@ enum Diagnostics {
         }
         lines += [
             "  Claude Code hooks: \(permissions.hooksInstalled ? "installed" : "not installed")",
+            "  Other agents: \(CodingAgent.connectedSummary)",
             "",
             "Settings:",
             "  Open: \(model.prefs.openMode.rawValue), screen: \(model.prefs.screenMode.rawValue), size: \(model.prefs.notchSize.rawValue)",

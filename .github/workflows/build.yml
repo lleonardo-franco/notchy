@@ -56,7 +56,9 @@ jobs:
           done
 
       - name: Python hooks
-        run: /usr/bin/python3 -m py_compile hooks/*.py scripts/*.py
+        run: |
+          /usr/bin/python3 -m py_compile hooks/*.py scripts/*.py
+          /usr/bin/python3 -m unittest discover -s hooks/tests -v
 
       - name: Homebrew formula
         env:

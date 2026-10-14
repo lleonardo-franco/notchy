@@ -68,6 +68,9 @@ uso: notchy [comando]
   welcome            abre as boas-vindas e as permissões
   city "Cidade"      define a cidade do clima (city auto volta ao automático)
   doctor             diagnóstico de assinatura, certificado e permissões
+  agents             agentes conectados ao notch
+  agents enable X    conecta codex, gemini, copilot ou cursor (cursor --approvals aprova pelo notch)
+  agents disable X   desconecta um agente
   update             baixa a versão mais nova e instala
   uninstall          remove o Notchy, os hooks do Claude Code e o comando
   version            versão instalada
@@ -87,6 +90,9 @@ uso: notchy [comando]
   welcome            abre la bienvenida y los permisos
   city "Ciudad"      define la ciudad del clima (city auto vuelve a la automática)
   doctor             diagnóstico de firma, certificado y permisos
+  agents             agentes conectados al notch
+  agents enable X    conecta codex, gemini, copilot o cursor (cursor --approvals aprueba desde el notch)
+  agents disable X   desconecta un agente
   update             descarga la última versión y la instala
   uninstall          elimina Notchy, los hooks de Claude Code y el comando
   version            versión instalada
@@ -106,6 +112,9 @@ usage: notchy [command]
   welcome            open the welcome and permissions window
   city "City"        set the weather city (city auto goes back to automatic)
   doctor             check signature, certificate and permissions
+  agents             coding agents connected to the notch
+  agents enable X    connect codex, gemini, copilot or cursor (cursor --approvals approves from the notch)
+  agents disable X   disconnect an agent
   update             download the latest version and install it
   uninstall          remove Notchy, the Claude Code hooks and this command
   version            installed version
@@ -335,6 +344,16 @@ case "${1:-start}" in
         ;;
     update|atualizar|actualizar)
         update
+        ;;
+    agents|agentes)
+        shift
+        installer="$APP/Contents/Resources/hooks/install.py"
+        if [ ! -f "$installer" ]; then
+            say "Notchy não está instalado em /Applications." "Notchy isn't installed in /Applications." "Notchy no está instalado en /Applications."
+            exit 1
+        fi
+        [ $# -eq 0 ] && set -- list
+        /usr/bin/python3 "$installer" --agents "$@"
         ;;
     uninstall|desinstalar)
         uninstall
